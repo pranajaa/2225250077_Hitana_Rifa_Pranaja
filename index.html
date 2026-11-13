@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="description" content="RELAFUN — belajar Relasi dan Fungsi untuk siswa SMP kelas VIII">
+  <meta name="theme-color" content="#1468D6">
+  <meta name="color-scheme" content="dark">
+  <meta name="format-detection" content="telephone=no">
+  <title>RELAFUN — Relasi dan Fungsi</title>
+
+  <!-- PWA: dapat dipasang dari browser tanpa Play Store / App Store -->
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="icon" type="image/png" sizes="32x32" href="./assets/icons/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="./assets/icons/icon-192.png">
+  <!-- iPhone/iPad (Safari → Bagikan → Tambahkan ke Layar Utama) -->
+  <link rel="apple-touch-icon" href="./assets/icons/apple-touch-icon.png">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="RELAFUN">
+  <link rel="stylesheet" href="./css/tokens.css">
+  <link rel="stylesheet" href="./css/base.css">
+  <link rel="stylesheet" href="./css/components.css">
+  <script type="module" src="./js/app.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#app">Lewati ke konten</a>
+  <!-- Latar bawah laut + maskot (pose berganti per menu lewat body[data-section], lihat css/components.css) -->
+  <div class="backdrop" aria-hidden="true">
+    <div class="backdrop__school backdrop__school--a"></div>
+    <div class="backdrop__school backdrop__school--b"></div>
+    <div class="backdrop__mascot"></div>
+  </div>
+
+  <div class="shell">
+    <nav class="nav" aria-label="Navigasi utama">
+      <div class="nav__brand" aria-hidden="true">RELAFUN</div>
+      <a class="nav__item" href="#/" data-nav="/">
+        <span class="nav__icon" aria-hidden="true">🏠</span><span>Beranda</span>
+      </a>
+      <a class="nav__item" href="#/materi" data-nav="/materi">
+        <span class="nav__icon" aria-hidden="true">📘</span><span>Materi</span>
+      </a>
+      <a class="nav__item" href="#/kenali" data-nav="/kenali">
+        <span class="nav__icon" aria-hidden="true">🔍</span><span>Kenali</span>
+      </a>
+      <a class="nav__item" href="#/bedah" data-nav="/bedah">
+        <span class="nav__icon" aria-hidden="true">🧩</span><span>Bedah</span>
+      </a>
+      <a class="nav__item" href="#/progres" data-nav="/progres">
+        <span class="nav__icon" aria-hidden="true">📊</span><span>Progres</span>
+      </a>
+    </nav>
+
+    <main id="app" class="main" tabindex="-1">
+      <noscript>RELAFUN membutuhkan JavaScript. Aktifkan JavaScript di browser kamu.</noscript>
+      <!-- Browser lama (tanpa ES Modules) tidak menjalankan app.js; tampilkan pesan, bukan layar kosong. -->
+      <script nomodule>
+        document.getElementById('app').innerHTML =
+          '<div class="card"><h1>Browser terlalu lama</h1><p>Perbarui Chrome atau buka RELAFUN di Chrome versi terbaru.</p></div>';
+      </script>
+    </main>
+  </div>
+</body>
+</html>

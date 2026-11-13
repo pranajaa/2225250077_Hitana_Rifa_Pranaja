@@ -1,0 +1,191 @@
+/* Reset ringan, tipografi, latar "bawah laut", dan tata letak shell (mobile-first) */
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  font-size: calc(100% * var(--font-scale));
+  -webkit-text-size-adjust: 100%;
+  background: var(--c-bg-deep);
+}
+
+body {
+  margin: 0;
+  min-height: 100dvh;
+  font-family: var(--font-body);
+  font-size: var(--fs-base);
+  line-height: 1.55;
+  color: var(--c-text);
+  background: transparent;
+  overflow-x: hidden;
+  overscroll-behavior-y: none;        /* tanpa efek tarik-segarkan yang mengganggu saat mengerjakan soal */
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Latar laut dalam: gradasi + berkas cahaya statis dari permukaan (tanpa animasi, tanpa gambar). */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    /* berkas cahaya miring */
+    linear-gradient(105deg, transparent 18%, rgb(255 255 255 / 0.1) 22%, transparent 27%),
+    linear-gradient(100deg, transparent 38%, rgb(255 255 255 / 0.07) 43%, transparent 50%),
+    linear-gradient(110deg, transparent 58%, rgb(255 255 255 / 0.08) 62%, transparent 66%),
+    /* kilau permukaan air di atas */
+    radial-gradient(120% 45% at 50% -8%, rgb(200 250 255 / 0.6), transparent 70%),
+    /* kedalaman */
+    linear-gradient(180deg, #5fdcff 0%, #2aa4f0 22%, #1468d6 55%, var(--c-bg-deep) 100%);
+}
+/* Cahaya memudar ke dasar agar teks di bawah tetap kontras */
+body::after {
+  content: "";
+  position: fixed;
+  inset: auto 0 0 0;
+  height: 40vh;
+  z-index: -1;
+  pointer-events: none;
+  background: linear-gradient(180deg, transparent, rgb(6 30 100 / 0.45));
+}
+
+/* Sentuhan di HP: tanpa jeda ketuk-ganda, tanpa memilih teks tak sengaja pada tombol */
+a, button, input, label, select, summary, [role="button"] { touch-action: manipulation; }
+button, .btn, .nav, .tile, .menu-item { -webkit-user-select: none; user-select: none; }
+
+/* iOS memperbesar layar bila ukuran huruf input < 16px */
+input, select, textarea { font-size: max(16px, 1rem); }
+
+h1, h2, h3 {
+  font-family: var(--font-display);
+  font-style: italic;
+  line-height: 1.1;
+  margin: 0 0 var(--space-3);
+  letter-spacing: 0.01em;
+}
+h1 {
+  font-size: var(--fs-2xl);
+  font-weight: 800;
+  text-shadow: 3px 3px 0 var(--c-primary-ink);
+}
+h2 { font-size: var(--fs-xl); font-weight: 700; }
+h3 { font-size: var(--fs-lg); font-weight: 700; }
+p { margin: 0 0 var(--space-3); }
+a { color: var(--c-primary); }
+img, svg { max-width: 100%; }
+button, input, select, textarea { font: inherit; color: inherit; }
+
+:focus-visible {
+  outline: 3px solid var(--c-highlight);
+  outline-offset: 2px;
+}
+
+.skip-link {
+  position: absolute;
+  left: var(--space-2);
+  top: -100px;
+  padding: var(--space-2) var(--space-3);
+  background: var(--c-surface-solid);
+  z-index: 100;
+}
+.skip-link:focus { top: var(--space-2); }
+
+.visually-hidden {
+  position: absolute !important;
+  width: 1px; height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.math { font-family: var(--font-math); font-style: italic; }
+
+/* ---------- Shell ---------- */
+.main {
+  max-width: var(--content-max);
+  margin: 0 auto;
+  padding: var(--space-4) var(--space-4) calc(var(--nav-h) + var(--space-5) + env(safe-area-inset-bottom));
+  outline: none;
+}
+
+.nav {
+  position: fixed;
+  inset: auto 0 0 0;
+  height: calc(var(--nav-h) + env(safe-area-inset-bottom));
+  padding-bottom: env(safe-area-inset-bottom);
+  display: flex;
+  justify-content: space-around;
+  background: rgb(6 30 104 / 0.92);
+  border-top: 2px solid var(--c-primary);
+  z-index: 10;
+}
+
+.nav__brand { display: none; }
+
+.nav__item {
+  position: relative;
+  isolation: isolate;
+  flex: 1;
+  min-width: var(--tap);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--c-muted);
+  text-decoration: none;
+}
+.nav__icon { font-size: 1.25rem; line-height: 1; font-style: normal; }
+.nav__item[aria-current="page"] { color: var(--c-primary-ink); }
+.nav__item[aria-current="page"]::before {
+  content: "";
+  position: absolute;
+  inset: 6px 4px;
+  z-index: -1;
+  background: var(--c-primary);
+  transform: skewX(var(--skew));
+}
+
+/* ---------- Desktop: navigasi pindah ke kiri ---------- */
+@media (min-width: 900px) {
+  .shell { display: grid; grid-template-columns: 240px 1fr; min-height: 100dvh; }
+  .nav {
+    position: sticky;
+    top: 0;
+    height: 100dvh;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: var(--space-2);
+    padding: var(--space-5) var(--space-3);
+    border-top: 0;
+    border-right: 2px solid var(--c-primary);
+    background: rgb(6 30 104 / 0.55);
+  }
+  .nav__brand {
+    display: block;
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 800;
+    font-size: 2.25rem;
+    line-height: 1;
+    color: var(--c-highlight);
+    text-shadow: 3px 3px 0 var(--c-primary-ink);
+    padding: 0 var(--space-3) var(--space-5);
+  }
+  .nav__item {
+    flex: 0 0 auto;
+    flex-direction: row;
+    justify-content: flex-start;
+    gap: var(--space-3);
+    min-height: 48px;
+    padding: 0 var(--space-4);
+    font-size: var(--fs-lg);
+    transition: transform var(--dur);
+  }
+  .nav__item:hover { color: var(--c-text); transform: translateX(6px); }
+  .nav__item[aria-current="page"]::before { inset: 0; }
+  .main { padding: var(--space-6) var(--space-5); width: 100%; }
+}

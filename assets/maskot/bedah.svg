@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 900" width="420" height="900">
+  <!-- Maskot RELAFUN (tokoh orisinal). Dibuat oleh tools/buat_maskot.py — jangan diedit manual. -->
+  <defs>
+    <style>
+    .upper { animation: breathe 4s ease-in-out infinite; }
+    .head { transform-origin: 200px 196px; animation: look 7s ease-in-out infinite; }
+    .move { transform-origin: 250px 228px; animation: swing 3.0s ease-in-out infinite; }
+    .eyes { animation: blink 5.5s infinite; }
+    .twinkle { animation: twinkle 1.8s ease-in-out infinite; }
+    @keyframes breathe { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-4px); } }
+    @keyframes look { 0%, 100% { transform: rotate(0deg); } 30% { transform: rotate(2deg); }
+                       65% { transform: rotate(-2deg); } }
+    @keyframes swing { 0%, 100% { transform: rotate(0deg); } 50% { transform: rotate(-7deg); } }
+    @keyframes blink { 0%, 93%, 100% { transform: scaleY(1); } 95% { transform: scaleY(0.1); } }
+    @keyframes twinkle { 0%, 100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.18); opacity: 0.7; } }
+    @media (prefers-reduced-motion: reduce) { * { animation: none !important; } }
+    </style>
+    <filter id="rim" x="-10%" y="-10%" width="120%" height="120%">
+      <feMorphology in="SourceAlpha" operator="dilate" radius="3" result="fat"/>
+      <feFlood flood-color="#bdf7ff"/>
+      <feComposite in2="fat" operator="in" result="edge"/>
+      <feGaussianBlur in="edge" stdDeviation="5" result="glow"/>
+      <feMerge><feMergeNode in="glow"/><feMergeNode in="edge"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <ellipse cx="202" cy="858" rx="120" ry="16" fill="#ffffff" opacity="0.22"/>
+  <ellipse cx="202" cy="858" rx="70" ry="8" fill="#ffffff" opacity="0.3"/>
+  <g filter="url(#rim)">
+    
+    <line x1="182" y1="448" x2="170" y2="648" stroke="#0d2a78" stroke-width="46" stroke-linecap="round"/><line x1="170" y1="648" x2="186" y2="826" stroke="#0d2a78" stroke-width="40" stroke-linecap="round"/><ellipse cx="176" cy="840" rx="34" ry="15" fill="#04123d"/><line x1="218" y1="448" x2="232" y2="640" stroke="#0d2a78" stroke-width="46" stroke-linecap="round"/><line x1="232" y1="640" x2="214" y2="830" stroke="#0d2a78" stroke-width="40" stroke-linecap="round"/><ellipse cx="224" cy="844" rx="34" ry="15" fill="#04123d"/>
+    <g class="upper">
+      
+  <path d="M164,428 L236,428 L244,478 L156,478 Z" fill="#0d2a78"/>
+  <path d="M148,214 Q200,200 252,214 L264,246 L242,300 L240,432 L160,432 L158,300 L136,246 Z"
+        fill="#dff1ff"/>
+  <path d="M200,212 L200,432" stroke="#a8d0f5" stroke-width="3"/>
+  <path d="M178,206 L200,240 L222,206" stroke="#a8d0f5" stroke-width="4" fill="none"
+        stroke-linejoin="round" opacity="0.9"/>
+  <rect x="212" y="262" width="26" height="28" rx="3" fill="#a8d0f5"/>
+  <path d="M220,268 L230,268 L230,278 L225,284 L220,278 Z" fill="#effcff" opacity="0.7"/>
+  <rect x="158" y="424" width="84" height="12" fill="#04123d"/>
+  <rect x="194" y="424" width="12" height="12" fill="#7ff0ff" opacity="0.6"/>
+  <path d="M158,216 L166,300" stroke="#1b4aa6" stroke-width="8" stroke-linecap="round"/>
+  <path d="M242,216 L234,300" stroke="#1b4aa6" stroke-width="8" stroke-linecap="round"/>
+      <g class="head">
+  <g transform="rotate(5 200 196)">
+    <rect x="186" y="170" width="28" height="40" rx="8" fill="#2b63c4"/>
+    <ellipse cx="200" cy="140" rx="42" ry="52" fill="#2b63c4"/>
+    <ellipse cx="157" cy="148" rx="7" ry="12" fill="#2b63c4"/>
+    <ellipse cx="243" cy="148" rx="7" ry="12" fill="#2b63c4"/>
+    <!-- massa rambut tebal: lebar & bervolume, menutupi sisi kepala sampai atas telinga -->
+    <path d="M148,140 C136,104 146,72 172,62 C196,52 226,54 246,66 C266,80 268,112 254,142
+             C250,126 244,114 236,108 C236,118 234,124 230,128 C224,116 216,108 206,104
+             C194,110 180,110 168,104 C160,112 152,124 148,140 Z" fill="#071a4d"/>
+    <!-- jumputan di sisi dan atas (kesan rambut tebal, tidak meninggi) -->
+    <path d="M146,118 L134,112 L146,104 L136,94 L152,92 Z" fill="#071a4d"/>
+    <path d="M256,118 L268,110 L256,102 L264,90 L250,90 Z" fill="#071a4d"/>
+    <path d="M168,66 L164,52 L180,60 L186,46 L198,58 L208,46 L214,58 L228,50 L228,64 Z" fill="#071a4d"/>
+    <!-- poni menyamping ke kanan, ujungnya di atas alis -->
+    <path d="M164,106 C178,86 216,80 242,106 C228,100 214,104 206,120 C200,108 190,104 178,114
+             C176,110 170,108 164,106 Z" fill="#071a4d"/>
+    <path d="M222,72 C232,76 240,84 244,94" stroke="#2b63c4" stroke-width="3" fill="none"
+          opacity="0.5" stroke-linecap="round"/>
+    <!-- mata -->
+    <g class="eyes" style="transform-origin:200px 150px">
+      <ellipse cx="184" cy="150" rx="4.5" ry="6" fill="#effcff"/>
+      <ellipse cx="216" cy="150" rx="4.5" ry="6" fill="#effcff"/>
+    </g>
+    <!-- kacamata: lensa kotak membulat, jembatan, gagang ke telinga -->
+    <g fill="#effcff" fill-opacity="0.12" stroke="#effcff" stroke-width="3.5">
+      <rect x="166" y="136" width="34" height="26" rx="9"/>
+      <rect x="204" y="136" width="34" height="26" rx="9"/>
+    </g>
+    <path d="M200,146 Q202,142 204,146 M166,143 L156,141 M238,143 L248,141"
+          stroke="#effcff" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+    <path d="M172,143 L180,140 M210,143 L218,140" stroke="#ffffff"
+          stroke-width="2.5" stroke-linecap="round" opacity="0.7"/>
+    <!-- senyum -->
+    <path d="M190,176 Q200,182 210,176" stroke="#effcff" stroke-width="2.5"
+          fill="none" stroke-linecap="round" opacity="0.85"/>
+  </g></g>
+      <line x1="150" y1="228" x2="118" y2="326" stroke="#2b63c4" stroke-width="26" stroke-linecap="round"/><line x1="118" y1="326" x2="170" y2="414" stroke="#2b63c4" stroke-width="23" stroke-linecap="round"/><line x1="150" y1="228" x2="132" y2="282" stroke="#dff1ff" stroke-width="40" stroke-linecap="round"/><circle cx="170" cy="414" r="15" fill="#2b63c4"/>
+      <g class="move"><line x1="250" y1="228" x2="306" y2="270" stroke="#2b63c4" stroke-width="26" stroke-linecap="round"/><line x1="306" y1="270" x2="338" y2="222" stroke="#2b63c4" stroke-width="23" stroke-linecap="round"/><line x1="250" y1="228" x2="281" y2="251" stroke="#dff1ff" stroke-width="40" stroke-linecap="round"/><circle cx="338" cy="222" r="15" fill="#2b63c4"/>
+  <g transform="rotate(14 350 186)">
+    <path d="M320,156 L340,156 C338,140 362,140 360,156 L380,156 L380,176 C396,174 396,198 380,196
+             L380,216 L320,216 Z" fill="#0f3d94" stroke="#7ff0ff" stroke-width="4"
+          stroke-linejoin="round"/>
+  </g></g>
+    </g>
+  </g>
+</svg>
