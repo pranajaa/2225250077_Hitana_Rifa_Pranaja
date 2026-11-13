@@ -55,7 +55,7 @@ export function render(container, { edit = false } = {}) {
     },
   },
   h('div', { class: 'field' },
-    h('label', { for: 'nickname', class: 'field__label' }, 'Nama panggilan'),
+    h('label', { for: 'nickname', class: 'field__label' }, 'Nama'),
     input,
     error,
     h('p', { id: 'name-hint', class: 'field__hint' },
@@ -72,7 +72,7 @@ export function render(container, { edit = false } = {}) {
       edit
         ? null
         : h('p', { class: 'auth__subtitle' },
-          'Belajar relasi dan fungsi dengan cara yang seru. Tulis nama panggilanmu untuk mulai.'),
+          'Belajar relasi dan fungsi dengan cara yang seru. Tulis namamu untuk mulai.'),
       form),
   );
 }
