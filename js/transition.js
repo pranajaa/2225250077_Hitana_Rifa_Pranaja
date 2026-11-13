@@ -103,7 +103,12 @@ function onClick(event) {
     x = r.left + r.width / 2;
     y = r.top + r.height / 2;
   }
-  play(href, x, y);
+  // Sorotan merah pada menu yang dipilih, terlihat sebentar sebelum air naik
+  link.classList.add('is-picked');
+  busy = true;
+  sleep(180)
+    .then(() => { busy = false; return play(href, x, y); })
+    .finally(() => link.classList.remove('is-picked'));
 }
 
 const SVG_NS = 'http://www.w3.org/2000/svg';

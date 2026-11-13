@@ -24,6 +24,7 @@
   --c-muted: #cfe6ff;
   --c-track: rgb(255 255 255 / 0.18);
   --c-highlight: #ffffff;     /* sorotan item terpilih */
+  --c-pick: #ff2d55;          /* sorotan merah: menu diklik & judul halaman */
 
   /* Tipografi */
   --font-body: system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans", sans-serif;

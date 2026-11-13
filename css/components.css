@@ -615,3 +615,89 @@ body[data-section="progres"] .backdrop__mascot { background-image: url("../asset
 @media (prefers-reduced-motion: reduce) {
   .slide-scene { display: none; }
 }
+
+/* ---------- Judul halaman & tombol kembali: kotak navy miring + sorotan merah ---------- */
+.page-header { align-items: center; gap: var(--space-3); }
+.page-header h1 {
+  position: relative;
+  isolation: isolate;
+  display: inline-block;
+  padding: 6px 18px 8px;
+  color: var(--c-highlight);
+  text-shadow: none;
+  /* stabilo merah di bagian bawah huruf */
+  background: linear-gradient(transparent 62%, var(--c-pick) 62%, var(--c-pick) 86%, transparent 86%)
+    no-repeat 18px 0 / calc(100% - 36px) 100%;
+}
+.page-header h1::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--c-surface-solid);
+  border-left: 4px solid var(--c-primary);
+  box-shadow: 5px 5px 0 var(--c-pick);
+  transform: skewX(var(--skew));
+}
+.page-header__sub {
+  display: inline-block;
+  margin-top: var(--space-2);
+  padding: 2px 12px;
+  background: rgb(6 30 104 / 0.75);
+  color: var(--c-text);
+}
+
+.back-link {
+  position: relative;
+  isolation: isolate;
+  flex: none;
+  color: var(--c-primary);
+}
+.back-link::before {
+  content: "";
+  position: absolute;
+  inset: 2px;
+  z-index: -1;
+  background: var(--c-surface-solid);
+  border: 2px solid var(--c-primary);
+  transform: skewX(var(--skew));
+}
+.back-link:hover::before,
+.back-link:active::before { background: var(--c-pick); border-color: var(--c-pick); }
+.back-link:hover,
+.back-link:active { color: var(--c-highlight); }
+
+/* ---------- Menu yang diklik: huruf disorot merah ---------- */
+.menu-item.is-picked,
+.menu-item:active { color: var(--c-primary-ink); transform: translateX(10px); }
+.menu-item.is-picked::before,
+.menu-item:active::before {
+  background: var(--c-highlight);
+  border-left-color: var(--c-pick);
+  box-shadow: 6px 6px 0 var(--c-pick);
+}
+.menu-item.is-picked .menu-item__title,
+.menu-item:active .menu-item__title {
+  color: var(--c-pick);
+  background: linear-gradient(transparent 60%, rgb(255 45 85 / 0.25) 60%);
+}
+.menu-item.is-picked::after,
+.menu-item:active::after { color: var(--c-pick); }
+
+.nav__item.is-picked,
+.nav__item:active { color: var(--c-highlight); }
+.nav__item.is-picked::before,
+.nav__item:active::before {
+  content: "";
+  position: absolute;
+  inset: 6px 4px;
+  z-index: -1;
+  background: var(--c-pick);
+  transform: skewX(var(--skew));
+}
+@media (min-width: 900px) {
+  .nav__item.is-picked::before,
+  .nav__item:active::before { inset: 0; }
+}
+.menu-item.is-picked .menu-item__desc,
+.menu-item:active .menu-item__desc { color: var(--c-primary-ink); }
