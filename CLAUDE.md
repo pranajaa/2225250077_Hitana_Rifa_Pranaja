@@ -27,7 +27,11 @@ Baca sebelum mengerjakan fitur:
 - Versi online: https://pranajaa.github.io/2225250077_Hitana_Rifa_Pranaja/
   (repo publik `pranajaa/2225250077_Hitana_Rifa_Pranaja`, isinya HANYA hasil `dist/`).
   Rilis ulang: `tools/siapkan_rilis.py` → salin isi `dist/` ke klon repo itu (pertahankan `.nojekyll`
-  dan `README.md`) → commit → push. GitHub CLI: `C:\Program Files\GitHub CLI\gh.exe` (sudah login).
+  dan `README.md`) → commit → push. GitHub CLI tidak terpasang (per 17 Nov 2026); git login lewat Git Credential Manager.
+- **Repo kode sumber:** https://github.com/pranajaa/RelaFun (branch `main`, isi folder ini di akar repo).
+  Repo git lokal ada di folder induk `alpro` (remote `relafun`; remote `origin` = repo `alpro` yang tidak ada).
+  Commit seperti biasa di `alpro`, lalu kirim ke GitHub dari folder `alpro`:
+  `git subtree push --prefix="RelaFun - p3r try" relafun main`. Jangan push kode sumber ke repo Pages.
   Versi GitHub Pages **tanpa backend**: Tutor AI & Pembahas Soal otomatis tampil "hanya tersedia di server lokal".
 - **Penyimpanan di Drive D:** project, `server/node_modules`, npm cache (`D:\npm-cache`), dan npm global prefix
   (`D:\npm-global`) ada di D:. Jangan membuat salinan project di C:. Jika suatu langkah harus memakai C:,
