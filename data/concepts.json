@@ -1,0 +1,23 @@
+{
+  "concepts": [
+    { "id": "himpunan-pasangan", "label": "Himpunan & pasangan berurutan", "unit": "U0" },
+    { "id": "pengertian-relasi", "label": "Pengertian relasi", "unit": "U1" },
+    { "id": "penyajian-relasi", "label": "Penyajian relasi", "unit": "U2" },
+    { "id": "syarat-fungsi", "label": "Syarat fungsi", "unit": "U3" },
+    { "id": "domain-kodomain-range", "label": "Domain, kodomain, daerah hasil", "unit": "U3" },
+    { "id": "fungsi-atau-bukan", "label": "Fungsi atau bukan", "unit": "U4" },
+    { "id": "nilai-fungsi", "label": "Notasi & nilai fungsi", "unit": "U5" },
+    { "id": "banyak-pemetaan", "label": "Banyak pemetaan", "unit": "U6" },
+    { "id": "korespondensi-satu-satu", "label": "Korespondensi satu-satu", "unit": "U7" }
+  ],
+  "units": [
+    { "id": "U0", "title": "Pemanasan: Himpunan & Pasangan Berurutan" },
+    { "id": "U1", "title": "Apa itu Relasi?" },
+    { "id": "U2", "title": "Tiga Cara Menyajikan Relasi" },
+    { "id": "U3", "title": "Fungsi: Relasi yang Istimewa" },
+    { "id": "U4", "title": "Fungsi atau Bukan?" },
+    { "id": "U5", "title": "Notasi dan Nilai Fungsi" },
+    { "id": "U6", "title": "Banyak Pemetaan" },
+    { "id": "U7", "title": "Korespondensi Satu-satu" }
+  ]
+}

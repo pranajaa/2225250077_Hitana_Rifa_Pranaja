@@ -1,0 +1,20 @@
+{
+  "name": "relafun-server",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Server lokal RELAFUN: menyajikan aplikasi + API Tutor AI & Pembahas Soal (Google Gemini)",
+  "type": "module",
+  "main": "server.js",
+  "engines": {
+    "node": ">=20.12"
+  },
+  "scripts": {
+    "start": "node server.js",
+    "models": "node list-models.js",
+    "test": "node --test"
+  },
+  "dependencies": {
+    "@google/genai": "^3.4.0",
+    "express": "^5.3.0"
+  }
+}

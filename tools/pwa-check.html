@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>RELAFUN — Cek PWA</title>
+  <style>
+    body { font-family: system-ui, sans-serif; margin: 16px; line-height: 1.5; background: #fff; color: #1b1f24; }
+    li.ok { color: #1a7f47; } li.fail { color: #c23b3b; font-weight: 600; } li.info { color: #59636e; }
+    ul { list-style: none; padding: 0; }
+  </style>
+</head>
+<body>
+  <h1>Cek PWA: <span id="summary">memeriksa…</span></h1>
+  <p>Gunakan halaman ini di laptop dan di HP (setelah dibuka dari hosting HTTPS).</p>
+  <ul id="results"></ul>
+  <script type="module">
+    const base = new URL('../', location.href);
+    const results = [];
+    const list = document.getElementById('results');
+    const add = (ok, text, info = false) => {
+      results.push({ ok, text, info });
+      const li = document.createElement('li');
+      li.className = info ? 'info' : (ok ? 'ok' : 'fail');
+      li.textContent = `${info ? 'ℹ' : (ok ? '✔' : '✘')} ${text}`;
+      list.append(li);
+    };
+
+    try {
+      add(window.isSecureContext, `Konteks aman (HTTPS atau localhost): ${window.isSecureContext ? 'ya' : 'TIDAK — service worker tidak akan jalan'}`);
+
+      const res = await fetch(new URL('manifest.webmanifest', base));
+      add(res.ok, `manifest.webmanifest dapat diunduh (${res.status})`);
+      const m = await res.json();
+      for (const key of ['name', 'short_name', 'start_url', 'display', 'icons']) {
+        add(Boolean(m[key]), `manifest.${key} ada`);
+      }
+      add(['standalone', 'fullscreen', 'minimal-ui'].includes(m.display), `display = ${m.display}`);
+      const sizes = (m.icons ?? []).map((i) => i.sizes);
+      add(sizes.includes('192x192') && sizes.includes('512x512'), `ikon 192 & 512: ${sizes.join(', ')}`);
+      add((m.icons ?? []).some((i) => i.purpose?.includes('maskable')), 'ikon maskable (Android) ada');
+
+      for (const icon of [...(m.icons ?? []).map((i) => i.src), 'assets/icons/apple-touch-icon.png']) {
+        const ok = await new Promise((resolve) => {
+          const img = new Image();
+          img.onload = () => resolve(img.naturalWidth > 0);
+          img.onerror = () => resolve(false);
+          img.src = new URL(icon, base);
+        });
+        add(ok, `gambar ${icon} termuat`);
+      }
+
+      if ('serviceWorker' in navigator && window.isSecureContext) {
+        const reg = await navigator.serviceWorker.register(new URL('sw.js', base), { scope: base.pathname });
+        const worker = reg.installing ?? reg.waiting ?? reg.active;
+        if (worker && worker.state !== 'activated') {
+          await new Promise((resolve) => {
+            worker.addEventListener('statechange', () => worker.state === 'activated' && resolve());
+            setTimeout(resolve, 8000);
+          });
+        }
+        add(Boolean(reg.active), `service worker aktif (scope ${reg.scope})`);
+        const keys = (await caches.keys()).filter((k) => k.startsWith('relafun-'));
+        add(keys.length > 0, `cache: ${keys.join(', ') || 'tidak ada'}`);
+        if (keys.length) {
+          const cache = await caches.open(keys.at(-1));
+          const urls = (await cache.keys()).map((r) => new URL(r.url).pathname);
+          add(urls.length > 0, `${urls.length} file tersimpan untuk offline`);
+          const swText = await (await fetch(new URL('sw.js', base))).text();
+          const dev = swText.includes("const VERSION = 'dev'");
+          add(true, dev ? 'Mode pengembangan (sw.js versi dev). Untuk rilis jalankan tools/siapkan_rilis.py.' : 'Mode rilis (sw.js berversi).', true);
+        }
+      } else {
+        add(false, 'Service worker tidak didukung / bukan konteks aman');
+      }
+
+      const standalone = matchMedia('(display-mode: standalone)').matches || navigator.standalone === true;
+      add(true, `Dibuka sebagai aplikasi terpasang: ${standalone ? 'ya' : 'tidak (dibuka di browser)'}`, true);
+    } catch (err) {
+      add(false, `Error: ${err.message}`);
+    }
+
+    const failed = results.filter((r) => !r.ok).length;
+    const summary = document.getElementById('summary');
+    summary.textContent = failed === 0 ? 'semua lulus' : `${failed} masalah`;
+    summary.dataset.status = failed === 0 ? 'pass' : 'fail';
+  </script>
+</body>
+</html>

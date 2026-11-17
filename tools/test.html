@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>RELAFUN — Uji Unit JavaScript</title>
+  <style>
+    body { font-family: system-ui, sans-serif; margin: 16px; line-height: 1.5; background: #fff; color: #1b1f24; }
+    #summary[data-status="pass"] { color: #1a7f47; }
+    #summary[data-status="fail"] { color: #c23b3b; }
+    li.ok { color: #1a7f47; }
+    li.fail { color: #c23b3b; font-weight: 600; }
+    ul { padding-left: 0; list-style: none; }
+  </style>
+  <script type="module" src="./tests.js"></script>
+</head>
+<body>
+  <h1>Uji unit: <span id="summary">menjalankan…</span></h1>
+  <ul id="results"></ul>
+</body>
+</html>

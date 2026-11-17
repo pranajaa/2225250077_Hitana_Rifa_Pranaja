@@ -1,0 +1,28 @@
+# Python
+analysis/.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Data penelitian (berisi hasil siswa) — jangan di-commit
+analysis/data/raw/*
+analysis/data/processed/*
+!analysis/data/raw/.gitkeep
+!analysis/data/processed/.gitkeep
+analysis/output/*
+!analysis/output/.gitkeep
+
+# Editor / OS
+.vscode/
+Thumbs.db
+.DS_Store
+
+# Folder rilis (dibuat ulang oleh tools/siapkan_rilis.py)
+dist/
+
+# Server lokal (Node.js): rahasia & dependensi — API key Gemini TIDAK BOLEH di-commit
+.env
+.env.*
+!.env.example
+node_modules/
+npm-debug.log*

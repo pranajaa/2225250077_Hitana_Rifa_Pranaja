@@ -1,0 +1,64 @@
+{
+  "misconceptions": [
+    {
+      "id": "M01",
+      "title": "Dua anggota domain dikira tidak boleh punya pasangan yang sama",
+      "feedback": "Dua anggota A boleh punya pasangan yang sama di B. Yang dilarang adalah SATU anggota A punya DUA pasangan atau lebih.",
+      "unit": "U4"
+    },
+    {
+      "id": "M02",
+      "title": "Semua anggota kodomain dikira harus punya pasangan",
+      "feedback": "Pada fungsi, anggota B boleh tidak punya pasangan. Syarat fungsi hanya berlaku untuk setiap anggota A.",
+      "unit": "U4"
+    },
+    {
+      "id": "M03",
+      "title": "Setiap relasi dikira fungsi",
+      "feedback": "Fungsi adalah relasi khusus. Relasi baru disebut fungsi jika setiap anggota A punya tepat satu pasangan di B.",
+      "unit": "U3"
+    },
+    {
+      "id": "M04",
+      "title": "Anggota domain tanpa pasangan diabaikan",
+      "feedback": "Cek semua anggota A satu per satu. Jika ada anggota A yang tidak punya pasangan, relasi itu bukan fungsi.",
+      "unit": "U4"
+    },
+    {
+      "id": "M05",
+      "title": "Kodomain tertukar dengan daerah hasil",
+      "feedback": "Kodomain adalah seluruh himpunan B. Daerah hasil hanya anggota B yang punya pasangan dari A.",
+      "unit": "U3"
+    },
+    {
+      "id": "M06",
+      "title": "Arah relasi tertukar",
+      "feedback": "Pada pasangan berurutan (x, y), x berasal dari himpunan A dan y dari himpunan B. Urutannya tidak boleh dibalik.",
+      "unit": "U2"
+    },
+    {
+      "id": "M07",
+      "title": "Korespondensi satu-satu disamakan dengan fungsi biasa",
+      "feedback": "Korespondensi satu-satu harus fungsi DAN setiap anggota B dipasangkan tepat satu kali. Banyak anggota A dan B harus sama.",
+      "unit": "U7"
+    },
+    {
+      "id": "M08",
+      "title": "Rumus banyak pemetaan terbalik",
+      "feedback": "Banyak pemetaan dari A ke B adalah n(B) pangkat n(A). Setiap anggota A memilih salah satu dari n(B) pasangan.",
+      "unit": "U6"
+    },
+    {
+      "id": "M09",
+      "title": "Satu x dengan dua y di diagram Cartesius tidak dikenali",
+      "feedback": "Pada diagram Cartesius, jika ada dua titik dengan x yang sama tetapi y berbeda, relasi itu bukan fungsi.",
+      "unit": "U4"
+    },
+    {
+      "id": "M10",
+      "title": "Salah substitusi pada f(x)",
+      "feedback": "Ganti x dengan nilainya di dalam tanda kurung, lalu hitung perkalian sebelum penjumlahan atau pengurangan.",
+      "unit": "U5"
+    }
+  ]
+}

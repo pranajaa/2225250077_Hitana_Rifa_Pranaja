@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1000" preserveAspectRatio="xMidYMid slice">
+  <!-- Latar bawah laut RELAFUN. Dibuat oleh tools/buat_maskot.py — jangan diedit manual. -->
+  <g fill="#ffffff" opacity="0.28">
+    <path d="M0,40 C80,20 140,70 230,44 C320,18 360,64 470,40 L470,70 C360,96 310,52 220,78 C130,104 70,60 0,76 Z"/>
+    <path d="M620,30 C720,6 780,58 880,32 C980,6 1060,52 1200,28 L1200,60 C1060,86 990,40 890,66 C790,92 720,40 620,62 Z"/>
+    <path d="M330,110 C400,94 450,128 540,110 L540,128 C450,146 400,114 330,130 Z"/>
+    <path d="M760,120 C820,104 870,134 940,118 L940,134 C870,150 820,122 760,136 Z"/>
+  </g>
+  <g fill="#ffffff" opacity="0.1">
+    <path d="M300,0 L380,0 L180,1000 L60,1000 Z"/>
+    <path d="M760,0 L820,0 L1000,1000 L900,1000 Z"/>
+    <path d="M540,0 L570,0 L520,1000 L470,1000 Z"/>
+  </g>
+  <g fill="none" stroke="#e6fbff" stroke-width="10" opacity="0.22">
+    <rect x="860" y="260" width="300" height="360"/>
+    <path d="M1010,260 V620 M860,440 H1160"/>
+    <rect x="890" y="700" width="240" height="250"/>
+    <path d="M1010,700 V950"/>
+  </g>
+  <g fill="#0a2f86" opacity="0.35">
+    <path d="M0,640 L140,620 L190,700 L160,1000 L0,1000 Z"/>
+  </g>
+  <g fill="none" stroke="#ffffff" stroke-width="2" opacity="0.45"><circle cx="420" cy="210" r="9"/><circle cx="408" cy="262" r="5"/><circle cx="930" cy="330" r="12"/><circle cx="912" cy="380" r="6"/><circle cx="1040" cy="150" r="10"/><circle cx="260" cy="660" r="14"/><circle cx="276" cy="700" r="7"/><circle cx="1010" cy="880" r="12"/><circle cx="150" cy="960" r="6"/><circle cx="600" cy="120" r="5"/></g>
+</svg>

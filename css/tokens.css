@@ -1,0 +1,61 @@
+/* Design tokens RELAFUN — varian gaya "bawah laut terang" (tanpa aset game mana pun).
+   Latar biru langit→biru laut, panel navy transparan, aksen cyan & putih, panel miring.
+   Lihat docs/05-DESAIN-UI-UX.md §2. */
+:root {
+  color-scheme: dark;
+
+  /* Warna bermakna */
+  --c-primary: #6ff3ff;       /* aksen cyan terang */
+  --c-primary-ink: #06205f;   /* teks di atas aksen/putih */
+  --c-domain: #9fd2ff;        /* himpunan A / domain (biru muda) */
+  --c-codomain: #ffb36b;      /* himpunan B / kodomain (oranye) */
+  --c-correct: #6ff5b0;
+  --c-wrong: #ff8fa8;
+  --c-hint: #ffe066;
+  --c-hint-bg: rgb(255 224 102 / 0.16);
+
+  /* Permukaan & teks */
+  --c-bg: #1468d6;
+  --c-bg-deep: #0a3a9a;
+  --c-surface: rgb(6 34 110 / 0.74);
+  --c-surface-solid: #0b2f8a;
+  --c-border: rgb(150 240 255 / 0.4);
+  --c-text: #ffffff;
+  --c-muted: #cfe6ff;
+  --c-track: rgb(255 255 255 / 0.18);
+  --c-highlight: #ffffff;     /* sorotan item terpilih */
+  --c-pick: #ff2d55;          /* sorotan merah: menu diklik & judul halaman */
+
+  /* Tipografi */
+  --font-body: system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans", sans-serif;
+  --font-display: "Bahnschrift SemiBold Condensed", "Bahnschrift", "Roboto Condensed",
+    "Arial Narrow", sans-serif-condensed, system-ui, sans-serif;
+  --font-math: "Cambria Math", "Times New Roman", serif;
+  --fs-base: 1rem;          /* 16px */
+  --fs-sm: 0.875rem;
+  --fs-lg: 1.125rem;
+  --fs-xl: 1.5rem;
+  --fs-2xl: 2.25rem;
+  --font-scale: 1;
+
+  /* Ruang & bentuk */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --radius: 0;
+  --radius-sm: 0;
+  --skew: -12deg;           /* kemiringan panel/tombol */
+  --cut: 18px;              /* potongan sudut kartu */
+  --tap: 44px;              /* target sentuh minimum */
+  --content-max: 720px;
+  --nav-h: 64px;
+  --shadow: 6px 6px 0 rgb(0 0 0 / 0.35);
+  --dur: 150ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root { --dur: 0ms; }
+}

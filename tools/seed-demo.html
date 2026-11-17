@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>RELAFUN — Isi Data Contoh</title>
+  <style>body { font-family: system-ui, sans-serif; margin: 16px; }</style>
+</head>
+<body>
+  <h1>Isi data contoh (untuk demo/pengembangan)</h1>
+  <p id="status">Mengisi…</p>
+  <p><a href="../index.html#/progres">Buka halaman Progres</a> · <a href="../index.html#/">Beranda</a></p>
+  <script type="module">
+    import { resetAll, setUnitStatus, addAttempt, updateProfile } from '../js/storage.js';
+
+    resetAll();
+    updateProfile({ nickname: 'Nadia', studentCode: 'S99' });
+    for (const id of ['U0', 'U1', 'U2']) setUnitStatus(id, { status: 'selesai' });
+    setUnitStatus('U3', { status: 'sedang', lastScreen: 2 });
+
+    const day = (n) => `2026-11-${String(n).padStart(2, '0')}T08:00:00Z`;
+    const sample = [
+      ['pengertian-relasi', [1, 1, 1, 1, 0, 1]],
+      ['penyajian-relasi', [1, 0, 1, 1, 1]],
+      ['syarat-fungsi', [0, 1, 0, 1, 1, 0]],
+      ['domain-kodomain-range', [0, 0, 1, 0]],
+    ];
+    let t = 1;
+    for (const [concept, outcomes] of sample) {
+      for (const ok of outcomes) {
+        addAttempt({
+          ts: day(t++), qid: 'DEMO', feature: 'latihan', concepts: [concept], correct: Boolean(ok),
+          misconception: ok ? undefined : (concept === 'domain-kodomain-range' ? 'M05' : 'M01'),
+        });
+      }
+    }
+    addAttempt({ ts: day(20), qid: 'LM-004', feature: 'misi-literasi', indicator: 'LI', score: 4, maxScore: 6, stageScores: [1, 1, 1, 1, 0, 0] });
+    addAttempt({ ts: day(21), qid: 'LM-001', feature: 'misi-literasi', indicator: 'LR', score: 5, maxScore: 6, stageScores: [1, 2, 1, 1, 0] });
+    addAttempt({ ts: day(22), qid: 'LM-003', feature: 'misi-literasi', indicator: 'LE', score: 6, maxScore: 6, stageScores: [1, 2, 2, 1] });
+
+    document.getElementById('status').textContent = 'Selesai. Data contoh tersimpan di perangkat ini.';
+  </script>
+</body>
+</html>
