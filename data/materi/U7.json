@@ -1,0 +1,29 @@
+{
+  "id": "U7", "title": "Korespondensi Satu-satu", "sumber": "docs02", "bukuDicek": false,
+  "catatanVerifikasi": "Istilah fungsi satu-satu (injektif) TIDAK dipakai; hanya korespondensi satu-satu sesuai docs/02 §5.",
+  "tujuan": "Kamu bisa mengenali korespondensi satu-satu dan menghitung banyaknya.",
+  "makna": "Banyak data penting berpasangan tepat satu-satu, misalnya siswa dan NIS. Kamu perlu memeriksa dua sisi, bukan satu.",
+  "layar": [
+    { "tahap": "konsep-sehari-hari", "teks": ["Setiap siswa punya tepat satu NIS.", "Setiap NIS hanya milik satu siswa."], "respons": { "prompt": "Apa bedanya dengan golongan darah?", "jenis": "isian-bebas", "dinilai": false } },
+    { "tahap": "representasi", "teks": ["Perhatikan kedua sisi panahnya."],
+      "visual": { "kind": "arrow", "labelA": "Siswa", "labelB": "NIS", "A": ["Dina", "Eko", "Fani"], "B": ["101", "102", "103"], "pairs": [["Dina", "101"], ["Eko", "102"], ["Fani", "103"]] } },
+    { "tahap": "konsep-ilmiah", "definisi": "Korespondensi satu-satu antara A dan B adalah fungsi yang memasangkan setiap anggota A dengan tepat satu anggota B dan setiap anggota B dengan tepat satu anggota A. Syarat perlu: n(A) = n(B). Banyak korespondensi satu-satu dengan n(A) = n(B) = n adalah n!.", "sumberDefinisi": "docs/02 §5",
+      "ingat": "Periksa A, lalu periksa B. n(A) = n(B) saja belum cukup." },
+    { "tahap": "manipulasi", "contoh": [
+        { "benar": true, "teks": "Dina 101, Eko 102, Fani 103: korespondensi satu-satu." },
+        { "benar": false, "teks": "Dina 101, Eko 101, Fani 103: n sama, tetapi 101 dipakai dua kali dan 102 kosong. Fungsi, bukan korespondensi satu-satu.", "visual": { "kind": "arrow", "A": ["Dina", "Eko", "Fani"], "B": ["101", "102", "103"], "pairs": [["Dina", "101"], ["Eko", "101"], ["Fani", "103"]] }, "sorot": "101", "m": "M07" } ] },
+    { "tahap": "validasi", "soal": ["MT-701", "MT-702", "MT-703"] },
+    { "tahap": "transendensi", "teks": ["Negara–ibu kota dan kursi ujian bernomor juga contoh korespondensi satu-satu."], "refleksi": "Apa yang kamu periksa setelah yakin relasinya fungsi?" }
+  ],
+  "cekPemahaman": [
+    { "id": "MT-701", "level": "mudah", "type": "tf", "stem": "Setiap korespondensi satu-satu juga merupakan fungsi.", "answer": true, "salahM": "M07", "cek": { "kind": "manual", "dasar": "docs/02 §5: korespondensi satu-satu adalah fungsi yang …" },
+      "hints": ["Baca awal definisinya.", "Korespondensi satu-satu adalah fungsi dengan syarat tambahan."], "explanation": "Benar. Korespondensi satu-satu adalah fungsi yang juga memasangkan setiap anggota B tepat sekali." },
+    { "id": "MT-702", "level": "mudah", "type": "numeric", "stem": "n(A) = n(B) = 2. Berapa banyak korespondensi satu-satu antara A dan B?", "answer": 2, "salahUmum": { "4": "M08" }, "cek": { "kind": "banyakKss", "n": 2 },
+      "hints": ["Gunakan n!.", "2! = 2 × 1."], "explanation": "Banyak korespondensi satu-satu = 2! = 2." },
+    { "id": "MT-703", "level": "sedang", "type": "mcq", "stem": "Manakah korespondensi satu-satu dari {x, y, z} ke {1, 2, 3}?",
+      "options": [ { "text": "{(x, 3), (y, 1), (z, 2)}" }, { "text": "{(x, 1), (y, 1), (z, 2)}", "m": "M07" }, { "text": "{(x, 1), (y, 2), (y, 3)}", "m": "M03" } ], "answer": 0,
+      "cek": { "kind": "pilihKss", "A": ["x", "y", "z"], "B": ["1", "2", "3"], "opsiPairs": [ [["x", "3"], ["y", "1"], ["z", "2"]], [["x", "1"], ["y", "1"], ["z", "2"]], [["x", "1"], ["y", "2"], ["y", "3"]] ] },
+      "hints": ["Periksa setiap huruf, lalu setiap angka.", "Setiap angka harus muncul tepat sekali."], "explanation": "Pada pilihan pertama, setiap huruf dan setiap angka muncul tepat sekali. Pilihan kedua: 1 dipakai dua kali. Pilihan ketiga: y punya dua pasangan." }
+  ],
+  "miskonsepsi": ["M03", "M07", "M08"]
+}

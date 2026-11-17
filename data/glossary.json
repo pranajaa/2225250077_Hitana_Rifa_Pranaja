@@ -1,0 +1,30 @@
+{
+  "status": "DRAF — buku siswa/LKS belum dicek (bukuDicek=false)",
+  "bukuDicek": false,
+  "terverifikasiDocs02": [
+    { "istilah": "relasi", "arti": "Aturan yang memasangkan anggota-anggota himpunan A dengan anggota-anggota himpunan B." },
+    { "istilah": "fungsi (pemetaan)", "arti": "Relasi khusus yang memasangkan setiap anggota A dengan tepat satu anggota B." },
+    { "istilah": "domain (daerah asal)", "arti": "Himpunan A pada fungsi dari A ke B." },
+    { "istilah": "kodomain (daerah kawan)", "arti": "Himpunan B pada fungsi dari A ke B." },
+    { "istilah": "daerah hasil (range)", "arti": "Himpunan semua peta. Daerah hasil adalah himpunan bagian dari kodomain." },
+    { "istilah": "korespondensi satu-satu", "arti": "Fungsi yang memasangkan setiap anggota A dengan tepat satu anggota B dan setiap anggota B dengan tepat satu anggota A." },
+    { "istilah": "banyak pemetaan", "arti": "Banyak pemetaan dari A ke B = n(B)^n(A)." },
+    { "istilah": "banyak korespondensi satu-satu", "arti": "Jika n(A) = n(B) = n, banyaknya n!." },
+    { "istilah": "uji garis vertikal", "arti": "Relasi adalah fungsi jika setiap garis vertikal di x anggota A memotong grafik tepat satu kali." }
+  ],
+  "perluVerifikasi": [
+    { "istilah": "himpunan", "arti": null, "catatan": "Belum ada definisi di docs/02 §5." },
+    { "istilah": "anggota himpunan", "arti": null },
+    { "istilah": "n(A)", "arti": null, "catatan": "Dipakai di docs/02 §5 tanpa definisi; dibaca sebagai banyak anggota A — cocokkan dengan buku." },
+    { "istilah": "pasangan berurutan", "arti": null },
+    { "istilah": "diagram panah", "arti": null },
+    { "istilah": "diagram Cartesius", "arti": null },
+    { "istilah": "peta", "arti": null, "catatan": "Dipakai pada definisi daerah hasil, tetapi tidak didefinisikan sendiri." },
+    { "istilah": "notasi f : x → … dan f(x)", "arti": null },
+    { "istilah": "nilai fungsi", "arti": null }
+  ],
+  "tidakDipakai": [
+    { "istilah": "fungsi satu-satu (injektif), fungsi pada, fungsi bijektif, banyak-ke-satu", "alasan": "Tidak ada di docs/02 §5 (keputusan pemilik, 17 Nov 2026)." },
+    { "istilah": "prapeta", "alasan": "Disebut di docs/03 §1, tetapi tidak ada di docs/02 §5. Ditunda sampai ada sumber." }
+  ]
+}

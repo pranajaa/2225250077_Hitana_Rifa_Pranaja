@@ -6,37 +6,25 @@ import { initSinkTransition } from './transition.js';
 import { load } from './storage.js';
 import { h } from './ui.js';
 
-const placeholder = (options) => () =>
-  import('./views/placeholder.js').then((m) => m.createPlaceholder(options));
-
 const AUTH_PATH = '/masuk';
 
 route(AUTH_PATH, () => import('./views/masuk.js'));
 route('/profil', () => import('./views/masuk.js').then((m) => m.editView));
 route('/', () => import('./views/home.js'));
-const materiPlaceholder = placeholder({
-  title: 'Materi', icon: '📘', phase: 'Fase 3',
-  desc: 'Materi relasi dan fungsi dalam unit-unit kecil (U0–U7) dengan diagram panah, pasangan berurutan, dan diagram Cartesius.',
-});
-route('/materi', materiPlaceholder);
-route('/materi/:unit', materiPlaceholder);
-route('/kenali', placeholder({
-  title: 'Kenali Konsep', icon: '🔍', phase: 'Fase 4',
-  desc: 'Tentukan apakah situasi termasuk relasi, fungsi, atau korespondensi satu-satu, lalu pilih alasannya.',
-}));
-route('/bedah', placeholder({
-  title: 'Bedah Soal', icon: '🧩', phase: 'Fase 4',
-  desc: 'Pecah soal cerita: Diketahui → Ciri → Konsep → Jawab → Simpulkan.',
-}));
-route('/latihan', placeholder({
-  title: 'Latihan Bertingkat', icon: '📝', phase: 'Fase 4',
-  desc: 'Latihan Mudah, Sedang, dan Sulit dengan petunjuk bertahap dan pembahasan.',
-}));
-route('/literasi', placeholder({
-  title: 'Misi Literasi', icon: '🎯', phase: 'Fase 4b',
-  desc: 'Soal kontekstual bertahap untuk melatih bernalar, memodelkan, menghitung, dan menafsirkan.',
-}));
+const view = (name) => () => import(`./views/${name}.js`);
+route('/materi', view('materi'));
+route('/materi/:unit', view('materi'));
+route('/kenali', view('kenali'));
+route('/kenali/:level', view('kenali'));
+route('/bedah', view('bedah'));
+route('/bedah/:id', view('bedah'));
+route('/latihan', view('latihan'));
+route('/latihan/:level', view('latihan'));
+route('/literasi', view('literasi'));
+route('/literasi/:id', view('literasi'));
 route('/progres', () => import('./views/progres.js'));
+route('/asisten', () => import('./views/asisten.js'));
+route('/pembahas', () => import('./views/pembahas.js'));
 
 function applySettings() {
   const { settings } = load();

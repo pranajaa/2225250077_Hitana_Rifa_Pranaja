@@ -1,0 +1,36 @@
+{
+  "id": "U2", "title": "Tiga Cara Menyajikan Relasi", "sumber": "perlu-verifikasi", "bukuDicek": false,
+  "catatanVerifikasi": "docs/02 §5 tidak mendefinisikan diagram panah, himpunan pasangan berurutan, dan diagram Cartesius. Isi berikut hanya cara membaca; istilah resmi menunggu kutipan buku.",
+  "tujuan": "Kamu bisa menyajikan satu relasi dalam diagram panah, pasangan berurutan, dan diagram Cartesius.",
+  "makna": "Soal bisa memakai bentuk apa pun. Jika kamu bisa berpindah bentuk, kamu tetap bisa menentukan konsepnya.",
+  "layar": [
+    { "tahap": "konsep-sehari-hari", "teks": ["Jadwal ekskul: Ani Pramuka, Beni PMR, Cika Pramuka."], "respons": { "prompt": "Dengan cara apa kamu biasanya mencatat data seperti ini?", "jenis": "isian-bebas", "dinilai": false } },
+    { "tahap": "representasi", "teks": ["Data yang sama dalam tiga bentuk."],
+      "visuals": [
+        { "kind": "arrow", "labelA": "Siswa", "labelB": "Ekskul", "A": ["Ani", "Beni", "Cika"], "B": ["Pramuka", "PMR"], "pairs": [["Ani", "Pramuka"], ["Beni", "PMR"], ["Cika", "Pramuka"]] },
+        { "kind": "pairs", "pairs": [["Ani", "Pramuka"], ["Beni", "PMR"], ["Cika", "Pramuka"]] },
+        { "kind": "cartesian", "labelA": "Siswa", "labelB": "Ekskul", "A": ["Ani", "Beni", "Cika"], "B": ["Pramuka", "PMR"], "pairs": [["Ani", "Pramuka"], ["Beni", "PMR"], ["Cika", "Pramuka"]] }
+      ] },
+    { "tahap": "konsep-ilmiah", "definisi": null, "perluVerifikasi": ["istilah resmi tiga cara penyajian"],
+      "teks": ["Panah dari x ke y sama dengan pasangan (x, y).", "Pada diagram Cartesius, x di sumbu mendatar dan y di sumbu tegak."], "ingat": "Satu panah = satu pasangan = satu titik." },
+    { "tahap": "manipulasi", "contoh": [
+        { "benar": true, "teks": "Panah Ani → Pramuka ditulis (Ani, Pramuka)." },
+        { "benar": false, "teks": "(Pramuka, Ani) membalik arah panah.", "m": "M06" } ] },
+    { "tahap": "validasi", "soal": ["MT-201", "MT-202", "MT-203"] },
+    { "tahap": "transendensi", "teks": ["Tabel juga bisa dipakai: setiap baris adalah satu pasangan."], "refleksi": "Bentuk mana yang paling mudah untukmu? Mengapa?" }
+  ],
+  "cekPemahaman": [
+    { "id": "MT-201", "level": "mudah", "type": "mcq", "stem": "Diagram panah: p → 1, q → 2, r → 1. Himpunan pasangan berurutannya adalah …",
+      "options": [ { "text": "{(p, 1), (q, 2), (r, 1)}" }, { "text": "{(1, p), (2, q), (1, r)}", "m": "M06" }, { "text": "{(p, 1), (q, 2)}", "m": "M04", "feedback": "Panah dari r juga harus ditulis." } ],
+      "answer": 0, "cek": { "kind": "pasangan", "pairs": [["p", "1"], ["q", "2"], ["r", "1"]] },
+      "hints": ["Pangkal panah ditulis di depan.", "Ada tiga panah, jadi ada tiga pasangan."], "explanation": "Setiap panah menjadi satu pasangan: (p, 1), (q, 2), dan (r, 1)." },
+    { "id": "MT-202", "level": "mudah", "type": "mcq", "stem": "Sebuah titik pada diagram Cartesius berada di x = 3 dan y = 5. Pasangan berurutannya adalah …",
+      "options": [ { "text": "(3, 5)" }, { "text": "(5, 3)", "m": "M06" } ], "answer": 0, "cek": { "kind": "manual", "dasar": "Titik ditulis (x, y)." },
+      "hints": ["Titik ditulis (x, y).", "x dibaca di sumbu mendatar."], "explanation": "Titik ditulis (x, y), jadi pasangannya (3, 5)." },
+    { "id": "MT-203", "level": "sedang", "type": "mcq", "stem": "Tabel: Dodi – 8, Eva – 9, Feri – 8. Diagram panah yang sesuai adalah …",
+      "options": [ { "text": "Dodi → 8, Eva → 9, Feri → 8" }, { "text": "8 → Dodi, 9 → Eva, 8 → Feri", "m": "M06" }, { "text": "Dodi → 8, Eva → 9, Feri → 9", "m": "M06", "feedback": "Baca baris Feri dengan teliti: Feri dipasangkan dengan 8." } ],
+      "answer": 0, "cek": { "kind": "pasangan", "pairs": [["Dodi", "8"], ["Eva", "9"], ["Feri", "8"]] },
+      "hints": ["Kolom kiri adalah pangkal panah.", "Periksa setiap baris tabel."], "explanation": "Setiap baris menjadi satu panah dari nama ke angka: Dodi → 8, Eva → 9, dan Feri → 8." }
+  ],
+  "miskonsepsi": ["M04", "M06"]
+}

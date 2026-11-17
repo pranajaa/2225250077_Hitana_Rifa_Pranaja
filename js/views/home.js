@@ -12,6 +12,8 @@ const FEATURES = [
   { href: '#/latihan', icon: '📝', title: 'Latihan', desc: 'Mudah · Sedang · Sulit' },
   { href: '#/literasi', icon: '🎯', title: 'Misi Literasi', desc: 'Soal kehidupan nyata' },
   { href: '#/progres', icon: '📊', title: 'Progres', desc: 'Lihat kemajuanmu' },
+  { href: '#/asisten', icon: '💬', title: 'Tutor AI', desc: 'Tanya jawab dengan AI' },
+  { href: '#/pembahas', icon: '🧠', title: 'Pembahas Soal', desc: 'AI bantu tentukan konsep' },
 ];
 
 let unsubscribe = null;

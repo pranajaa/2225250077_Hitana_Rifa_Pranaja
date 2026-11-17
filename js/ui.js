@@ -53,6 +53,27 @@ export function progressBar(value, label) {
   }, h('div', { class: 'progress__bar', style: { width: `${pct}%` } }));
 }
 
+// Pangkat dalam teks: 3^2, n(B)^n(A), 2^(n+1). Basis tidak ikut diubah, hanya bagian setelah ^.
+const POWER = /\^(\([^()]{1,20}\)|[A-Za-z0-9]{1,6}(?:\([^()]{1,10}\))?)/g;
+
+/**
+ * Teks matematika dari AI → node DOM aman (tanpa innerHTML): pangkat jadi <sup>, "->" jadi "→".
+ * Contoh: 'n(B)^n(A) = 3^2' → n(B)<sup>n(A)</sup> = 3<sup>2</sup>
+ */
+export function mathText(text) {
+  const source = String(text ?? '').replace(/\s?->\s?/g, ' → ').replace(/<=/g, '≤').replace(/>=/g, '≥');
+  const fragment = document.createDocumentFragment();
+  let last = 0;
+  for (const match of source.matchAll(POWER)) {
+    fragment.append(source.slice(last, match.index));
+    const power = match[1].startsWith('(') ? match[1].slice(1, -1) : match[1];
+    fragment.append(h('sup', {}, power));
+    last = match.index + match[0].length;
+  }
+  fragment.append(source.slice(last));
+  return fragment;
+}
+
 /** Format persen bulat, atau "—" bila null. */
 export function formatPercent(ratio) {
   return ratio == null ? '—' : `${Math.round(ratio * 100)}%`;

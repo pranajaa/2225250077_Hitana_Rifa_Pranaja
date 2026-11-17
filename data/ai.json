@@ -1,0 +1,72 @@
+{
+  "endpoint": "./api",
+  "privacyNote": "Jangan menulis nama lengkap, alamat, atau nomor HP. Pertanyaanmu dikirim ke layanan AI Google.",
+  "checking": "Memeriksa asisten…",
+  "tutor": {
+    "title": "Tutor AI",
+    "intro": "Tanya apa saja tentang relasi dan fungsi. Tutor AI bisa keliru, jadi cocokkan lagi dengan Materi.",
+    "placeholder": "Tulis pertanyaanmu di sini…",
+    "thinking": "Tutor AI sedang berpikir…",
+    "send": "Kirim ▶",
+    "reset": "Mulai ulang",
+    "suggestions": [
+      "Apa beda relasi dan fungsi?",
+      "Kenapa dua anggota domain boleh punya pasangan yang sama?",
+      "Apa itu domain, kodomain, dan daerah hasil?",
+      "Bagaimana cara menghitung banyak pemetaan?"
+    ]
+  },
+  "pembahas": {
+    "title": "Pembahas Soal",
+    "intro": "Tempel atau ketik soal relasi dan fungsi. AI membantu menentukan konsep yang tepat sebelum menyelesaikannya.",
+    "label": "Soal",
+    "placeholder": "Contoh: A = {1, 2, 3} dan B = {a, b}. Relasinya {(1, a), (2, a), (3, b)}. Apakah relasi ini fungsi?",
+    "modeLabel": "Pilih cara belajar",
+    "modes": [
+      { "id": "petunjuk", "label": "Mode Petunjuk", "desc": "Dapat pertanyaan penuntun. Kamu menemukan konsep dan jawabannya sendiri." },
+      { "id": "pembahasan", "label": "Mode Pembahasan", "desc": "Dapat analisis dan penyelesaian lengkap sampai kesimpulan." }
+    ],
+    "submit": "Bahas soal ▶",
+    "thinking": "AI sedang membaca soalmu…",
+    "examplesLabel": "Contoh soal",
+    "examples": [
+      "A = {1, 2, 3} dan B = {2, 4, 6}. Relasi dari A ke B adalah {(1, 2), (2, 2), (3, 6)}. Apakah relasi ini fungsi?",
+      "Diagram panah dari P = {a, b, c} ke Q = {1, 2}: a → 1, a → 2, dan b → 2. Apakah relasi ini fungsi?",
+      "Ani, Budi, Cici, dan Dodi masing-masing memilih tepat satu warna kaos: merah, biru, atau hijau. Apakah relasi siswa ke warna kaos itu fungsi? Ada berapa banyak cara memilih?"
+    ],
+    "steps": {
+      "identifikasi": "1. Identifikasi soal",
+      "diketahui": "Diketahui",
+      "ditanya": "Ditanya",
+      "konsep": "2. Konsep yang tepat",
+      "alasan": "3. Alasan memilih konsep",
+      "langkah": "4. Langkah penyelesaian",
+      "kesimpulan": "5. Kesimpulan",
+      "penuntun": "2. Temukan konsepnya",
+      "arah": "3. Arah langkah",
+      "infoKurang": "Informasi yang belum ada di soal"
+    },
+    "warning": "Jawaban AI bisa keliru. Periksa lagi dengan Materi atau tanyakan gurumu.",
+    "hintNote": "Coba jawab pertanyaan penuntun di atas sendiri dulu. Kesimpulan kamu tentukan sendiri.",
+    "showFull": "Lihat pembahasan lengkap",
+    "outOfTopic": "Soal ini sepertinya bukan tentang relasi dan fungsi. Coba soal tentang himpunan, relasi, atau fungsi."
+  },
+  "messages": {
+    "unavailable": "Fitur AI hanya tersedia saat RELAFUN dijalankan dari server lokal. Kamu tetap bisa belajar lewat menu lain.",
+    "nokey": "Asisten AI belum disiapkan. Minta guru mengisi API key di server.",
+    "badkey": "Asisten AI belum bisa dipakai. Minta guru memeriksa API key di server.",
+    "offline": "Asisten butuh internet. Sambungkan internet, lalu coba lagi.",
+    "tooShort": "Pertanyaannya terlalu pendek. Tulis minimal 3 huruf.",
+    "tooLong": "Pertanyaannya terlalu panjang. Singkatkan menjadi paling banyak 500 huruf.",
+    "soalShort": "Soalnya terlalu pendek. Tulis soal lengkap, minimal 10 huruf.",
+    "soalLong": "Soalnya terlalu panjang. Singkatkan menjadi paling banyak 1.500 huruf.",
+    "limit": "Kamu sudah banyak bertanya. Istirahat sebentar, lalu coba lagi dalam 10 menit.",
+    "quota": "Kuota AI gratis sedang habis. Coba lagi nanti atau besok, ya.",
+    "busy": "Asisten sedang sibuk. Tunggu sebentar, lalu kirim lagi.",
+    "upstream": "Server tidak tersambung ke internet. Periksa internet laptop, lalu coba lagi.",
+    "network": "Server RELAFUN tidak menjawab. Pastikan server masih berjalan, lalu coba lagi.",
+    "blocked": "Pertanyaan ini tidak bisa dijawab. Coba tulis dengan kalimat lain.",
+    "server": "Asisten sedang tidak bisa menjawab. Coba lagi nanti, ya.",
+    "invalid": "Pertanyaan tidak bisa dikirim. Coba tulis ulang dengan kalimat lain."
+  }
+}

@@ -4,7 +4,7 @@
 // Rilis (dibuat oleh tools/siapkan_rilis.py): VERSION = hash isi file, PRECACHE = semua file
 // aplikasi, strategi cache-first → cepat dan berfungsi penuh secara offline.
 
-const VERSION = '49c96faa55';
+const VERSION = 'd93f301a27';
 const CACHE = `relafun-${VERSION}`;
 const IS_DEV = VERSION === 'dev';
 
@@ -16,22 +16,48 @@ const PRECACHE = [
   './css/base.css',
   './css/components.css',
   './css/tokens.css',
+  './js/ai.js',
   './js/app.js',
   './js/data.js',
+  './js/diagram.js',
+  './js/literacy-scorer.js',
   './js/math.js',
   './js/profile.js',
   './js/progress.js',
   './js/pwa.js',
+  './js/quiz-engine.js',
+  './js/quiz-ui.js',
   './js/router.js',
   './js/storage.js',
   './js/transition.js',
   './js/ui.js',
+  './js/views/asisten.js',
+  './js/views/bedah.js',
   './js/views/home.js',
+  './js/views/kenali.js',
+  './js/views/latihan.js',
+  './js/views/literasi.js',
   './js/views/masuk.js',
+  './js/views/materi.js',
+  './js/views/pembahas.js',
   './js/views/placeholder.js',
   './js/views/progres.js',
+  './data/ai.json',
+  './data/bedah-soal.json',
   './data/concepts.json',
+  './data/glossary.json',
+  './data/kenali-konsep.json',
+  './data/latihan.json',
+  './data/materi/U0.json',
+  './data/materi/U1.json',
+  './data/materi/U2.json',
+  './data/materi/U3.json',
+  './data/materi/U4.json',
+  './data/materi/U5.json',
+  './data/materi/U6.json',
+  './data/materi/U7.json',
   './data/misconceptions.json',
+  './data/misi-literasi.json',
   './assets/icons/apple-touch-icon.png',
   './assets/icons/favicon-32.png',
   './assets/icons/icon-192.png',
@@ -51,8 +77,8 @@ const PRECACHE = [
   // __PRECACHE_END__
 ];
 
-// Folder pengembang tidak pernah di-cache.
-const EXCLUDED = ['/analysis/', '/tools/', '/docs/'];
+// Folder pengembang & API asisten AI (server lokal) tidak pernah di-cache.
+const EXCLUDED = ['/analysis/', '/tools/', '/docs/', '/api/'];
 
 self.addEventListener('install', (event) => {
   event.waitUntil(
