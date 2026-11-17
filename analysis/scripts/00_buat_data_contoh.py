@@ -10,7 +10,7 @@ import _setup  # noqa: F401
 import numpy as np
 import pandas as pd
 
-from relafun_stats.config import ANSWER_COLUMNS, RAW_DIR, SAMPLE_PREFIX, SUS_COLUMNS
+from relafun_stats.config import EXPORT_COLUMNS, RAW_DIR, SAMPLE_PREFIX, SUS_COLUMNS
 
 RNG = np.random.default_rng(2026)
 N_STUDENTS = 30
@@ -38,18 +38,24 @@ def answer_rows(code: str, session: str, theta: float, day: int) -> list[dict]:
         misc = ""
         if not ok and RNG.random() < 0.7:
             misc = MISCONCEPTIONS[CONCEPT_ITEMS.index(item) % len(MISCONCEPTIONS)]
+        # Pre/post-test: hint tidak disediakan, jadi hint_count = 0 dan hint = 0.
         rows.append({"kode_siswa": code, "sesi": session, "qid": item, "fitur": "kuis",
                      "indikator": "", "tahap": 1, "skor": int(ok), "skor_maks": 1,
                      "benar": int(ok), "miskonsepsi": misc, "hint": 0,
-                     "waktu_ms": int(RNG.integers(15_000, 90_000)), "timestamp": ts})
+                     "waktu_ms": int(RNG.integers(15_000, 90_000)), "timestamp": ts,
+                     "hint_count": 0, "jawaban_teks": ""})
     for item, (indicator, stage_max) in LITERACY_ITEMS.items():
         for stage, mx in enumerate(stage_max, start=1):
             b = -1.0 + 0.35 * stage
             score = int(RNG.binomial(mx, p_correct(theta, b)))
+            last = stage == len(stage_max)
+            # Tahap terakhir misi = alasan tertulis (dinilai guru); contoh teks sintetis berisi koma.
+            text = "Fungsi, karena setiap anggota domain punya tepat satu pasangan." if last and score else ""
             rows.append({"kode_siswa": code, "sesi": session, "qid": item, "fitur": "misi-literasi",
                          "indikator": indicator, "tahap": stage, "skor": score, "skor_maks": mx,
                          "benar": int(score == mx), "miskonsepsi": "", "hint": 0,
-                         "waktu_ms": int(RNG.integers(20_000, 120_000)), "timestamp": ts})
+                         "waktu_ms": int(RNG.integers(20_000, 120_000)), "timestamp": ts,
+                         "hint_count": 0, "jawaban_teks": text})
     return rows
 
 
@@ -61,7 +67,7 @@ def main() -> None:
         theta_pre = RNG.normal(-0.3, 1.0)
         theta_post = theta_pre + RNG.normal(0.9, 0.35)
         rows = answer_rows(code, "pretest", theta_pre, 1) + answer_rows(code, "posttest", theta_post, 15)
-        pd.DataFrame(rows, columns=ANSWER_COLUMNS).to_csv(
+        pd.DataFrame(rows, columns=EXPORT_COLUMNS).to_csv(
             RAW_DIR / f"{SAMPLE_PREFIX}relafun_hasil_{code}.csv", index=False)
 
         odd = np.clip(np.round(RNG.normal(4.2, 0.7, 5)), 1, 5)

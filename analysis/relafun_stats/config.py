@@ -14,6 +14,11 @@ ANSWER_COLUMNS = [
     "kode_siswa", "sesi", "qid", "fitur", "indikator", "tahap", "skor", "skor_maks",
     "benar", "miskonsepsi", "hint", "waktu_ms", "timestamp",
 ]
+# Kolom tambahan (17 Nov 2026) di AKHIR CSV. Opsional saat dibaca agar CSV lama tetap bisa dipakai.
+#   hint_count   = jumlah hint yang benar-benar dibuka (asesmen dinamis RMT). hint = 1 jika hint_count > 0, selain itu 0.
+#   jawaban_teks = alasan tertulis siswa (teks bebas, dinilai guru). Tidak boleh berisi data wajib identitas siswa.
+OPTIONAL_COLUMNS = ["hint_count", "jawaban_teks"]
+EXPORT_COLUMNS = ANSWER_COLUMNS + OPTIONAL_COLUMNS
 SESSIONS = ("pretest", "posttest", "latihan")
 LITERACY_INDICATORS = {
     "LR": "Mathematical Reasoning",

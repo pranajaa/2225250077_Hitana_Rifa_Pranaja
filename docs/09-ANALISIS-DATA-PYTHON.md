@@ -40,12 +40,34 @@ Satu baris = satu jawaban per tahap, agar mudah diolah pandas.
 
 `relafun_hasil_<kodeSiswa>_<tanggal>.csv`
 ```
-kode_siswa,sesi,qid,fitur,indikator,tahap,skor,skor_maks,benar,miskonsepsi,hint,waktu_ms,timestamp
-S01,pretest,LM-004,misi-literasi,LI,5,0,1,0,M01,0,21000,2026-12-01T08:10:00
+kode_siswa,sesi,qid,fitur,indikator,tahap,skor,skor_maks,benar,miskonsepsi,hint,waktu_ms,timestamp,hint_count,jawaban_teks
+S01,latihan,LM-004,misi-literasi,LI,5,0,1,0,M01,1,21000,2026-12-01T08:10:00,2,
+S01,latihan,LM-004,misi-literasi,LI,6,1,1,1,,0,48000,2026-12-01T08:11:00,0,"Fungsi, karena setiap siswa punya tepat satu kode rak."
 ```
 - `kode_siswa` diisi kode anonim (S01, S02 …) — **bukan nama**.
 - `sesi` ∈ {pretest, posttest, latihan}.
 - Peneliti menggabungkan file semua siswa di `analysis/data/raw/`.
+
+| Kolom | Arti |
+|---|---|
+| `hint` | `1` jika siswa membuka minimal satu hint pada tahap itu, `0` jika tidak |
+| `hint_count` | Jumlah hint yang benar-benar dibuka (data asesmen dinamis RMT). Wajib konsisten: `hint_count = 0` ⇔ `hint = 0`; `hint_count > 0` ⇔ `hint = 1` |
+| `jawaban_teks` | Alasan tertulis siswa (teks bebas) untuk tahap yang dinilai guru; kosong untuk tahap lain |
+
+**Perubahan kontrak — 17 Nov 2026** (keputusan pemilik):
+- `hint_count` dan `jawaban_teks` **ditambahkan di akhir**; 13 kolom lama tidak diubah urutan maupun namanya.
+- Arti `hint` ditetapkan (sebelumnya belum didefinisikan; data contoh selalu 0).
+- **CSV lama (13 kolom) tetap bisa dibaca**: `hint_count` diisi kosong (tidak tercatat — bukan 0), `jawaban_teks` diisi
+  teks kosong, nilai `hint` lama tidak diubah. Aturan konsistensi hanya diperiksa bila kolom `hint_count` ada.
+- Tahap alasan tertulis dinilai guru; `skor` di CSV adalah skor dari guru. `load.py` tetap menolak skor kosong.
+  Cara mencatat tahap yang **belum** dinilai guru belum ditetapkan (menunggu keputusan pemilik).
+- Penulisan teks mengikuti RFC 4180: sel berisi koma, tanda kutip, atau baris baru diapit `"…"`, dan tanda kutip di
+  dalam teks ditulis `""`. Hanya sel kosong yang dianggap kosong (teks "NA" tetap teks).
+- **Privasi:** `jawaban_teks` tidak boleh menjadi tempat data identitas wajib. Aplikasi menampilkan pengingat agar
+  siswa tidak menulis nama; peneliti memeriksa dan menyamarkan nama yang tertulis sebelum analisis/publikasi.
+- Kontrak ditegakkan oleh `analysis/relafun_stats/config.py` (`ANSWER_COLUMNS` wajib, `OPTIONAL_COLUMNS`,
+  `EXPORT_COLUMNS`) dan `load.py`, diuji di `analysis/tests/test_stats.py`. `js/export.js` (belum dibuat, Fase 5b)
+  wajib menulis `EXPORT_COLUMNS` dengan urutan di atas.
 
 ## 3. Struktur Folder Python
 

@@ -24,23 +24,29 @@ Estimasi untuk 1 pengembang paruh waktu. Sesuaikan dengan jadwal kuliah.
 
 ## Fase 3 — Konten & Materi (Minggu 3–4)
 - [x] `misconceptions.json` (M01–M10)
-- [ ] `glossary.json`
-- [ ] `units.json` U0–U7
-- [ ] View Materi + cek pemahaman
-- [ ] `tools/validate.html` (validasi bank soal di browser)
+- [x] `glossary.json` — 17 Nov 2026 (terverifikasi docs/02 · perlu verifikasi · tidak dipakai)
+- [x] Materi U0–U7 → `data/materi/U0–U7.json` (6 layar RMT + 24 soal cek; dipecah per unit, bukan `units.json`) — 17 Nov 2026
+- [x] View Materi + cek pemahaman (`js/views/materi.js`, 6 layar RMT, status unit tersimpan) — 17 Nov 2026
+- [x] `tools/validate.html` + `validate.js` (validasi seluruh konten dengan math.js; 0 galat) — 17 Nov 2026
+- [ ] Cocokkan konten dengan buku siswa/LKS; ubah label `perlu-verifikasi` (U0, U2, U5, 11 soal Latihan)
 
 ## Fase 4 — Fitur Inti (Minggu 4–5)
-- [ ] `quiz-engine.js` (penilaian, alasan, deteksi miskonsepsi, hint)
-- [ ] Kenali Konsep + 30 soal
-- [ ] Bedah Soal (HighlightText, StepProgress, fading) + 10 soal
-- [ ] Latihan Bertingkat + worked example + 45 soal
+- [x] `quiz-engine.js` (penilaian, alasan, deteksi miskonsepsi) + `quiz-ui.js` (ChoiceList, HintButton mencatat
+      `hintsUsed`, FeedbackSheet, input himpunan/pasangan/alasan) — 17 Nov 2026
+- [x] `diagram.js`: diagram panah, Cartesius + garis vertikal yang bisa digeser, pasangan, tabel, tab representasi — 17 Nov 2026
+- [x] Kenali Konsep + 30 soal (konsep & alasan dinilai terpisah, tombol Ciri-ciri) — 17 Nov 2026
+- [x] Bedah Soal (HighlightText, StepProgress, fading per level, alasan teks bebas) + 10 soal — 17 Nov 2026
+- [x] Latihan Bertingkat + 45 soal — 17 Nov 2026 *(worked example terpisah belum ada; pembahasan tampil setelah menjawab)*
+- [ ] Penilaian guru untuk alasan tertulis (tampilan guru + cara mencatat di CSV) — menunggu keputusan pemilik
 
 ## Fase 4b — Literasi Matematika (Minggu 5–6) — JavaScript
-- [ ] `literacy-scorer.js` (skor per tahap, skor parsial, skor per indikator)
-- [ ] Komponen tahap: `pairs`, `set-pair`, `reason`, tabel data
-- [ ] View Misi Literasi + rubrik akhir
-- [ ] `misi-literasi.json`: LM-001–LM-004 dari Tabel Kisi-kisi + 8 misi baru (total 12)
-- [ ] Langkah "Kesimpulan" ditambahkan ke Bedah Soal
+- [x] `literacy-scorer.js` (skor per tahap, skor parsial, tahap dinilai guru → "menunggu guru") — 17 Nov 2026
+- [x] Komponen tahap: `pairs`, `set-pair`, `set-triple`, `tf-multi`, `reason` (teks bebas), `diagram-choice`, tabel data — 17 Nov 2026
+- [x] View Misi Literasi + rubrik akhir + contoh jawaban ideal — 17 Nov 2026
+- [ ] Tiga tingkat bantuan (Dipandu penuh → Petunjuk saja → Mandiri) di Misi Literasi — belum (saat ini: petunjuk bertahap)
+- [x] `misi-literasi.json`: LM-001–LM-004 dari Tabel Kisi-kisi (teks asli) + 8 misi baru (total 12) — 17 Nov 2026
+- [x] Langkah "Kesimpulan" ada di setiap soal `data/bedah-soal.json` (tampilan menyusul) — 17 Nov 2026
+- [x] Kontrak CSV: `hint` (0/1), `hint_count`, `jawaban_teks` di akhir; CSV lama tetap terbaca (docs/09 §2) — 17 Nov 2026
 
 ## Fase 4c — Asisten AI Google Gemini lewat server lokal (F14) — lihat [11-ASISTEN-AI](11-ASISTEN-AI.md)
 Riwayat (rancangan DeepSeek + Cloudflare — **dibatalkan 17 Nov 2026**, keputusan pemilik):

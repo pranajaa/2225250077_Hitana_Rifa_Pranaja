@@ -3,8 +3,9 @@
 ## Ringkasan Proyek
 RELAFUN adalah aplikasi web (PWA) pembelajaran **Relasi dan Fungsi** untuk siswa SMP kelas VIII.
 Masalah inti dari wawancara: siswa sulit **menentukan konsep yang tepat** (relasi / fungsi /
-korespondensi satu-satu) terutama pada soal cerita yang tersirat. Desain berlandaskan
-**Cognitive Load Theory** (IL/EL/GL) dan bertujuan menumbuhkembangkan **literasi matematika**
+korespondensi satu-satu) terutama pada soal cerita yang tersirat. Model pembelajaran:
+**Rigorous Mathematical Thinking (RMT)**; prinsip desain media: **Cognitive Load Theory** (IL/EL/GL)
+(keputusan pemilik 17 Nov 2026, docs/02 §1). Tujuan: menumbuhkembangkan **literasi matematika**
 dengan 4 indikator: Reasoning (LR), Formulating (LF), Employing (LE), Interpreting (LI).
 
 Baca sebelum mengerjakan fitur:
@@ -20,6 +21,7 @@ Baca sebelum mengerjakan fitur:
 - Browser, pemasangan di HP, rilis: [docs/10-INSTALASI-DAN-RILIS.md](docs/10-INSTALASI-DAN-RILIS.md)
 - Asisten AI (Google Gemini lewat server lokal Express): [docs/11-ASISTEN-AI.md](docs/11-ASISTEN-AI.md)
 - Panduan menjalankan di laptop (pengguna/guru): [docs/12-MENJALANKAN-LOKAL.md](docs/12-MENJALANKAN-LOKAL.md)
+- Rancangan konten dengan model RMT: [docs/13-RANCANGAN-KONTEN-RMT.md](docs/13-RANCANGAN-KONTEN-RMT.md)
 
 ## Folder Utama & Rilis
 - **Folder ini (`RelaFun - p3r try`) adalah folder UTAMA proyek** (diputuskan pemilik, 17 Nov 2026).
@@ -79,7 +81,8 @@ Node.js LTS dipakai **hanya** untuk server lokal di `server/`. Alat uji aplikasi
 - Cek PWA (manifest, ikon, service worker, cache): http://localhost:8000/tools/pwa-check.html
   (Edge headless `--dump-dom` membekukan service worker; untuk uji otomatis pakai DevTools Protocol.)
 - Ikon: `analysis\.venv\Scripts\python tools/buat_ikon.py` · Rilis: `analysis\.venv\Scripts\python tools/siapkan_rilis.py` → `dist/`
-- Validasi bank soal (Fase 3): halaman browser `tools/validate.html` memakai `js/math.js`.
+- Validasi konten: http://localhost:8000/tools/validate.html (harus "0 galat"); memakai `js/math.js`.
+  Jalankan setiap kali `data/` berubah. Logika di `tools/validate.js` (juga diuji di `tools/tests.js`).
 - Tidak ada langkah build. Deploy = unggah folder ke GitHub Pages (tanpa `analysis/` dan `tools/`).
 - Python (dari folder `analysis/`, venv sudah dibuat): `.venv\Scripts\python -m pytest`
   dan `.venv\Scripts\python scripts/06_laporan.py`. Detail di `analysis/README.md`.
@@ -125,8 +128,15 @@ Node.js LTS dipakai **hanya** untuk server lokal di `server/`. Alat uji aplikasi
 12. **Keamanan DOM:** jangan memasukkan string data ke `innerHTML` tanpa escape; pakai `textContent`/helper `h()`.
 13. **Literasi matematika:** setiap misi (`LM-xxx`) memiliki `indicator` (LR/LF/LE/LI), tahap dengan skor,
     jumlah skor tahap = `maxScore` (6), dan skor parsial. Ikuti kisi-kisi di docs/08; jangan mengubah
-    soal LM-001–LM-004 (milik penyusun) tanpa izin.
-14. **Statistik di Python:** rumus ditulis sebagai fungsi murni di `analysis/relafun_stats/` dengan docstring
+    soal LM-001–LM-004 (milik penyusun) tanpa izin — termasuk tidak meringkas teks soalnya (ringkasan hanya di
+    `stemSimple`). Misi hanya **menilai** relasi, fungsi, domain, kodomain, range. Alasan tertulis = teks bebas
+    dinilai guru (`penilaian: "guru"` + `rubrikGuru`); daftar alasan hanya bantuan.
+14. **Status verifikasi konten:** setiap unit/soal berlabel `sumber` = `docs02` | `kisi-kisi` | `perlu-verifikasi`;
+    `bukuDicek: false` sampai dicocokkan dengan buku siswa/LKS. Istilah di luar docs/02 §5 tidak boleh diberi
+    definisi karangan (`definisi: null`). Setiap aktivitas mengikuti alur RMT (docs/02 §4, docs/13).
+15. **Kontrak CSV ekspor** (docs/09 §2): 13 kolom lama + `hint_count`, `jawaban_teks` di akhir; `hint` = 0/1 dan
+    konsisten dengan `hint_count`; CSV lama tanpa kolom baru harus tetap terbaca.
+16. **Statistik di Python:** rumus ditulis sebagai fungsi murni di `analysis/relafun_stats/` dengan docstring
     rumus, diuji di `analysis/tests/` dengan data yang hasilnya diketahui. Data mentah (`analysis/data/raw`,
     `processed`) masuk `.gitignore` dan hanya memakai kode siswa anonim (S01, S02, …).
 

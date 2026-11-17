@@ -74,6 +74,30 @@ Empat soal yang sudah disusun penyusun dijadikan misi pertama (`LM-001` s.d. `LM
 Kuota MVP: **12 misi** (3 per indikator), lalu ditambah bertahap. 4 misi tambahan dapat
 dijadikan butir pre-test/post-test literasi (total skor maksimum 24, seperti kisi-kisi).
 
+**Terpasang 17 Nov 2026** di `data/misi-literasi.json` (12 misi). LM-001–LM-004 memakai **teks asli kisi-kisi**
+(`sumber: "kisi-kisi"`); versi ringkas hanya di `stemSimple`. Misi baru:
+
+| ID | Indikator | Judul | Kemampuan yang berbeda dari soal kisi-kisi |
+|---|---|---|---|
+| LM-005 | LF | Bus Jemputan Sekolah | Memilah data pengecoh (jam tiba); kodomain dari konteks (Bus 3 tanpa pasangan) |
+| LM-006 | LF | Grafik Pengunjung Perpustakaan | Membaca diagram Cartesius → pasangan → uji garis vertikal |
+| LM-007 | LR | Tiga Aturan Pembagian Loker | Membandingkan tiga alternatif; dua jenis pelanggaran syarat fungsi |
+| LM-008 | LR | Perubahan Jadwal Piket | Penalaran hipotetis atas tiga perubahan |
+| LM-009 | LE | Kupon Antrean Kantin | Menerapkan aturan y = x + 2 lalu mengecek hasil terhadap kodomain (4 tanpa pasangan → bukan fungsi) |
+| LM-010 | LE | Suhu Pagi di Halaman Sekolah | Dari data tabel → domain, kodomain, range; range ≠ kodomain |
+| LM-011 | LI | Pesanan Makan Siang | Mengevaluasi klaim keliru M02 (menu tidak dipesan) |
+| LM-012 | LI | Memeriksa Pekerjaan Teman | Mengevaluasi pekerjaan yang menyamakan daerah hasil dengan kodomain (M05) |
+
+**Keputusan pemilik (17 Nov 2026):**
+- **Cakupan penilaian** Misi Literasi hanya indikator kisi-kisi: relasi, fungsi, domain, kodomain, range.
+  Banyak pemetaan, korespondensi satu-satu, dan nilai fungsi hanya materi penunjang (tidak dinilai di misi).
+- **Alasan tertulis** = teks bebas yang **dinilai guru** dengan `rubrikGuru`; daftar alasan (`bantuan`) hanya bantuan,
+  tidak menggantikan jawaban bebas. Teks diekspor di kolom `jawaban_teks` (docs/09 §2).
+- **LM-002 tahap 4:** pengganti menggambar diagram = memilih 1 dari 3 diagram panah (pengecoh: arah terbalik M06,
+  panah Dika hilang M01) **ditambah alasan pemilihan**; skor hanya jika diagram dan alasan sama-sama benar.
+  Pola yang sama dipakai LM-005.
+- Jumlah hint yang dibuka dicatat sebagai `hint_count` (asesmen dinamis RMT).
+
 ## 5. Contoh Data Misi (LM-004)
 
 ```json
@@ -112,6 +136,10 @@ dijadikan butir pre-test/post-test literasi (total skor maksimum 24, seperti kis
 
 Aturan: jumlah `score` semua tahap = `maxScore`; `indicator` ∈ {LR, LF, LE, LI};
 `context` ∈ {pribadi, sekolah, sosial, ilmiah}.
+
+> Contoh di atas adalah rancangan awal. Versi terpasang (`data/misi-literasi.json`) mengubah tahap 6 menjadi
+> `"type": "reason", "freeText": true, "penilaian": "guru"` dengan `rubrikGuru` dan `bantuan`, serta memakai
+> teks soal asli kisi-kisi.
 
 ## 6. Tujuan Pembelajaran Literasi (tambahan)
 

@@ -342,12 +342,11 @@
       "explanation": "Setiap pelari punya tepat satu urutan, jadi relasinya fungsi. Setiap urutan juga dipakai tepat satu pelari. Jadi relasi ini korespondensi satu-satu."
     },
     {
-      "id": "KK-019", "level": "sedang", "unit": "U4", "representation": "story", "sumber": "docs02",
-      "rmt": { "fase": "elaborasi", "operasi": "mengidentifikasi" },
-      "stem": "Di laboratorium, Sinta meminjam mikroskop dan lup. Tari meminjam lup. Umar tidak meminjam apa pun. Relasi \"meminjam\" dari {Sinta, Tari, Umar} ke {mikroskop, lup, pipet} termasuk apa?",
-      "stemSimple": "Sinta pinjam mikroskop dan lup. Tari pinjam lup. Umar tidak pinjam. Relasi ini termasuk apa?",
-      "highlights": ["Sinta meminjam mikroskop dan lup", "Umar tidak meminjam apa pun"],
-      "model": { "A": ["Sinta", "Tari", "Umar"], "B": ["mikroskop", "lup", "pipet"], "pairs": [["Sinta", "mikroskop"], ["Sinta", "lup"], ["Tari", "lup"]] },
+      "id": "KK-019", "level": "sedang", "unit": "U4", "representation": "arrow", "sumber": "docs02",
+      "rmt": { "fase": "elaborasi", "operasi": "mengklasifikasi" },
+      "catatanRevisi": "17 Nov 2026: diubah dari soal cerita ke diagram panah agar sebaran 9 cerita / 9 panah sesuai docs/03. Satu-satunya diagram panah dengan dua pelanggaran sekaligus. Kunci, level, alasan tetap.",
+      "stem": "Diagram panah menunjukkan alat laboratorium yang dipinjam siswa. Relasi \"meminjam\" ini termasuk apa?",
+      "visual": { "kind": "arrow", "labelA": "Siswa", "labelB": "Alat", "A": ["Sinta", "Tari", "Umar"], "B": ["mikroskop", "lup", "pipet"], "pairs": [["Sinta", "mikroskop"], ["Sinta", "lup"], ["Tari", "lup"]] },
       "answer": "relasi",
       "pengecoh": {
         "fungsi": { "m": "M04", "feedback": "Umar tidak punya pasangan, dan Sinta punya dua pasangan." },
@@ -358,7 +357,7 @@
         { "text": "Pipet tidak dipinjam siapa pun.", "correct": false, "m": "M02" },
         { "text": "Sinta dan Tari sama-sama meminjam lup.", "correct": false, "m": "M01" }
       ],
-      "hints": ["Tulis pasangan untuk setiap siswa.", "Siapa yang punya dua pasangan? Siapa yang tidak punya?"],
+      "hints": ["Hitung panah yang keluar dari setiap siswa.", "Siapa yang punya dua panah? Siapa yang tidak punya panah?"],
       "explanation": "Sinta punya dua pasangan dan Umar tidak punya pasangan. Keduanya melanggar syarat fungsi. Jadi relasi ini bukan fungsi."
     },
     {

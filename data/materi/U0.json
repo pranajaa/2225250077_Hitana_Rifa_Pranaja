@@ -1,0 +1,34 @@
+{
+  "id": "U0", "title": "Pemanasan: Himpunan & Pasangan Berurutan", "sumber": "perlu-verifikasi", "bukuDicek": false,
+  "catatanVerifikasi": "Istilah himpunan, anggota, n(A), dan pasangan berurutan tidak didefinisikan di docs/02 §5. Definisi formal dikosongkan sampai ada kutipan buku siswa/LKS. Isi di bawah hanya contoh pemakaian notasi.",
+  "tujuan": "Kamu bisa menulis anggota himpunan, menghitung n(A), dan menulis pasangan berurutan dengan urutan yang benar.",
+  "makna": "Relasi dan fungsi selalu memasangkan anggota dua himpunan. Jadi kita perlu menulis himpunan dan pasangan dengan rapi.",
+  "layar": [
+    { "tahap": "konsep-sehari-hari", "teks": ["Ani, Budi, dan Cici piket hari Senin.", "Nama mereka bisa ditulis sebagai satu kelompok."],
+      "respons": { "prompt": "Siapa saja anggota kelompok piket Senin?", "jenis": "isian-bebas", "dinilai": false } },
+    { "tahap": "representasi", "teks": ["Kelompok itu ditulis A = {Ani, Budi, Cici}.", "n(A) = 3, artinya A punya tiga anggota."],
+      "visual": { "kind": "set", "label": "A", "anggota": ["Ani", "Budi", "Cici"] } },
+    { "tahap": "konsep-ilmiah", "definisi": null, "perluVerifikasi": ["definisi himpunan", "definisi pasangan berurutan", "pembacaan n(A)"],
+      "teks": ["Pasangan berurutan ditulis (x, y).", "Urutannya penting: (Ani, Senin) berbeda dengan (Senin, Ani)."],
+      "ingat": "Pada (x, y), x ditulis lebih dulu." },
+    { "tahap": "manipulasi",
+      "contoh": [
+        { "benar": true, "teks": "(Ani, Senin): nama dulu, lalu hari.", "sorot": "Ani" },
+        { "benar": false, "teks": "(Senin, Ani) jika yang dimaksud \"Ani piket hari …\".", "sorot": "Senin", "m": "M06" }
+      ] },
+    { "tahap": "validasi", "soal": ["MT-001", "MT-002", "MT-003"] },
+    { "tahap": "transendensi", "teks": ["Nomor absen, NIS, dan tanggal lahir juga bisa ditulis sebagai pasangan berurutan."],
+      "refleksi": "Bagaimana kamu memastikan urutan pasangan tidak terbalik?" }
+  ],
+  "cekPemahaman": [
+    { "id": "MT-001", "level": "mudah", "type": "numeric", "stem": "A = {2, 4, 6, 8}. Berapakah n(A)?", "answer": 4, "cek": { "kind": "banyakAnggota", "set": ["2", "4", "6", "8"] },
+      "hints": ["Hitung anggota di dalam kurung kurawal.", "Ada berapa bilangan?"], "explanation": "A punya empat anggota, jadi n(A) = 4." },
+    { "id": "MT-002", "level": "mudah", "type": "tf", "stem": "Pasangan berurutan (3, 5) sama dengan (5, 3).", "answer": false, "salahM": "M06", "cek": { "kind": "manual", "dasar": "Urutan pada pasangan berurutan penting." },
+      "hints": ["Perhatikan kata \"berurutan\".", "Apakah 3 dan 5 bertukar tempat?"], "explanation": "Salah. Urutannya berbeda, jadi (3, 5) dan (5, 3) adalah pasangan yang berbeda." },
+    { "id": "MT-003", "level": "sedang", "type": "mcq", "stem": "Guru menulis pasangan (nama, nomor absen). Dewi bernomor absen 7. Pasangan yang benar adalah …",
+      "options": [ { "text": "(Dewi, 7)" }, { "text": "(7, Dewi)", "m": "M06" }, { "text": "{Dewi, 7}", "m": "M06", "feedback": "Kurung kurawal dipakai untuk himpunan, bukan pasangan berurutan." } ],
+      "answer": 0, "cek": { "kind": "manual", "dasar": "Format (nama, nomor absen) diberikan di soal." },
+      "hints": ["Ikuti format yang ditulis guru.", "Nama ditulis lebih dulu."], "explanation": "Formatnya (nama, nomor absen), jadi pasangannya (Dewi, 7)." }
+  ],
+  "miskonsepsi": ["M06"]
+}

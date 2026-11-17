@@ -7,6 +7,10 @@ import { matchRoute, route } from '../js/router.js';
 import * as AI from '../js/ai.js';
 import * as SRV from '../server/rules.js';
 import { mathText } from '../js/ui.js';
+import { sentenceLengths, validateContent } from './validate.js';
+import * as Q from '../js/quiz-engine.js';
+import { resolvePairs, scoreStage, summarizeMission } from '../js/literacy-scorer.js';
+import { describePairs } from '../js/diagram.js';
 
 const results = [];
 
@@ -372,6 +376,139 @@ test('server: batas pemakaian per perangkat', () => {
   for (let i = 0; i < SRV.LIMITS.perWindow; i += 1) eq(SRV.memoryLimit('uji-ip', t0 + i), true);
   eq(SRV.memoryLimit('uji-ip', t0 + 100), false, 'lewat batas');
   eq(SRV.memoryLimit('uji-ip', t0 + SRV.LIMITS.windowMs + 200), true, 'jendela baru');
+});
+
+// ---------- Validator konten (tools/validate.js) ----------
+const KK_UJI = {
+  id: 'KK-900', level: 'mudah', representation: 'arrow', sumber: 'docs02',
+  visual: { kind: 'arrow', A: ['1', '2'], B: ['a', 'b'], pairs: [['1', 'a'], ['2', 'a']] },
+  answer: 'fungsi',
+  pengecoh: { relasi: { m: 'M01', feedback: 'Boleh.' }, kss: { m: 'M07', feedback: 'Belum.' } },
+  reasons: [{ text: 'Tepat satu.', correct: true }, { text: 'Sama.', correct: false, m: 'M01' }],
+  hints: ['Satu.', 'Dua.'], explanation: 'Fungsi.',
+};
+const dataUji = (kk) => ({
+  kenali: { opsiKonsep: [{ id: 'relasi' }, { id: 'fungsi' }, { id: 'kss' }], items: [kk] },
+  bedah: { items: [] }, latihan: { items: [] }, misi: { items: [] }, units: [], unitIds: [], glossary: { terverifikasiDocs02: [] },
+});
+
+test('validate: kunci benar tidak menghasilkan galat soal', () => {
+  const r = validateContent(dataUji(KK_UJI));
+  eq(r.errors.filter((e) => e.startsWith('KK-900')), []);
+});
+
+test('validate: kunci salah tertangkap (math.js)', () => {
+  const r = validateContent(dataUji({ ...KK_UJI, answer: 'relasi', pengecoh: { fungsi: { m: 'M01' }, kss: { m: 'M07' } } }));
+  eq(r.errors.some((e) => e.includes('KK-900: KUNCI TIDAK COCOK')), true);
+});
+
+test('validate: pengecoh tanpa tag & hint kurang tertangkap', () => {
+  const r = validateContent(dataUji({ ...KK_UJI, hints: ['Satu.'], reasons: [{ text: 'x', correct: true }, { text: 'y', correct: false }] }));
+  eq(r.errors.some((e) => e.includes('hint harus 2–3')), true);
+  eq(r.errors.some((e) => e.includes('alasan keliru tanpa tag')), true);
+});
+
+test('validate: panjang kalimat dihitung per kalimat', () => {
+  eq(sentenceLengths('Satu dua tiga. Empat lima.').map((k) => k.words), [3, 2]);
+  eq(sentenceLengths('A = {1, 2}. B = {3}.').length, 2);
+});
+
+// ---------- Mesin penilaian (js/quiz-engine.js, js/literacy-scorer.js) ----------
+test('quiz: pilihan ganda & tag miskonsepsi pengecoh', () => {
+  const item = { answer: 0, options: [{ text: 'a' }, { text: 'b', m: 'M06' }] };
+  eq(Q.gradeChoice(item, 0).correct, true);
+  eq(Q.gradeChoice(item, 1), { correct: false, misconception: 'M06', feedback: null });
+});
+
+test('quiz: isian angka menerima koma & menandai salah umum', () => {
+  const item = { answer: 8, salahUmum: { 9: 'M08' } };
+  eq(Q.gradeNumeric(item, ' 8 ').correct, true);
+  eq(Q.gradeNumeric(item, '9').misconception, 'M08');
+  eq(Q.gradeNumeric(item, '').empty, true);
+  eq(Q.gradeNumeric({ answer: 2.5 }, '2,5').correct, true);
+});
+
+test('quiz: Kenali Konsep — konsep benar alasan keliru', () => {
+  const item = { answer: 'fungsi', pengecoh: { relasi: { m: 'M01' } }, reasons: [{ correct: true }, { correct: false, m: 'M02' }] };
+  eq(Q.gradeKenali(item, 'fungsi', 0).case, 'benar');
+  eq(Q.gradeKenali(item, 'fungsi', 1).case, 'alasan');
+  eq(Q.gradeKenali(item, 'fungsi', 1).misconception, 'M02');
+  eq(Q.gradeKenali(item, 'relasi', 0).misconception, 'M01');
+});
+
+test('quiz: tandai informasi — data pengecoh membuat belum tepat', () => {
+  const step = { type: 'highlight', answer: ['a', 'b'], pengecoh: ['c'] };
+  eq(Q.gradeStep(step, ['a', 'b']).correct, true);
+  eq(Q.gradeStep(step, ['a', 'b', 'c']).correct, false);
+  eq(Q.gradeStep(step, ['a']).missing, ['b']);
+});
+
+test('literasi: skor parsial & diagram + alasan', () => {
+  const m = { model: { pairs: [['1', '2'], ['2', '4'], ['3', '6'], ['4', '8']] } };
+  const pairs2 = { type: 'pairs', score: 2, answer: 'model.pairs' };
+  eq(scoreStage(m, pairs2, m.model.pairs).score, 2);
+  eq(scoreStage(m, pairs2, m.model.pairs.slice(0, 2)).score, 1, 'separuh benar');
+  eq(scoreStage(m, pairs2, [['1', '3']]).score, 0, 'ada pasangan keliru');
+  const triple = { type: 'set-triple', score: 2, answer: { domain: ['1'], kodomain: ['2', '3'], daerahHasil: ['2'] } };
+  eq(scoreStage(m, triple, { domain: ['1'], kodomain: ['2', '3'], daerahHasil: ['2', '3'] }).score, 1);
+  eq(scoreStage(m, triple, { domain: ['1'], kodomain: ['2', '3'], daerahHasil: ['2', '3'] }).misconception, 'M05');
+  const dc = { type: 'diagram-choice', score: 1, answer: 0, diagrams: [{}, { m: 'M06' }], reasons: [{ correct: true }, { correct: false, m: 'M01' }] };
+  eq(scoreStage(m, dc, { diagram: 0, reason: 0 }).score, 1);
+  eq(scoreStage(m, dc, { diagram: 0, reason: 1 }).score, 0, 'diagram benar, alasan keliru');
+  eq(scoreStage(m, { type: 'reason', score: 1 }, {}).pending, true);
+  eq(summarizeMission([{ score: 2, max: 2 }, { score: null, max: 1 }]), { autoScore: 2, autoMax: 2, pendingMax: 1, maxScore: 3, pendingStages: [2] });
+});
+
+test('diagram: deskripsi pembaca layar menyebut anggota tanpa pasangan', () => {
+  eq(describePairs(['1', '2'], [['1', 'a']]), '1 dipasangkan ke a, 2 tidak punya pasangan.');
+});
+
+// Setiap soal di data/ dinilai dengan kuncinya sendiri → harus penuh (data & mesin penilaian konsisten).
+async function asyncTest(name, fn) {
+  try { await fn(); results.push({ name, ok: true }); } catch (err) { results.push({ name, ok: false, message: err.message }); }
+}
+const getJson = async (p) => (await fetch(`../data/${p}.json`)).json();
+const keyOf = (it) => (it.type === 'set' ? it.answer : it.answer);
+
+await asyncTest('data: semua soal Latihan & cek Materi benar dengan kuncinya', async () => {
+  const lt = await getJson('latihan');
+  const units = await Promise.all(['U0', 'U1', 'U2', 'U3', 'U4', 'U5', 'U6', 'U7'].map((u) => getJson(`materi/${u}`)));
+  const items = [...lt.items, ...units.flatMap((u) => u.cekPemahaman)];
+  for (const it of items) if (!Q.gradeItem(it, keyOf(it)).correct) throw new Error(`${it.id} tidak benar dengan kuncinya`);
+  eq(items.length, 69);
+});
+
+await asyncTest('data: semua soal Kenali Konsep benar dengan kuncinya', async () => {
+  const kk = await getJson('kenali-konsep');
+  for (const it of kk.items) {
+    const r = Q.gradeKenali(it, it.answer, it.reasons.findIndex((x) => x.correct));
+    if (r.case !== 'benar') throw new Error(`${it.id}`);
+  }
+});
+
+await asyncTest('data: semua langkah Bedah Soal benar dengan kuncinya', async () => {
+  const bs = await getJson('bedah-soal');
+  for (const it of bs.items) for (const st of it.steps) {
+    const r = Q.gradeStep(st, st.answer);
+    if (st.type === 'reason') { if (!r.pending) throw new Error(`${it.id} alasan`); } else if (!r.correct) throw new Error(`${it.id} langkah ${st.step}`);
+  }
+});
+
+await asyncTest('data: semua Misi Literasi mendapat skor penuh dengan kuncinya', async () => {
+  const lm = await getJson('misi-literasi');
+  for (const m of lm.items) {
+    const res = m.stages.map((s) => {
+      const key = {
+        'set-pair': () => s.answer,
+        pairs: () => resolvePairs(m, s.answer),
+        'pairs-multi': () => Object.fromEntries(Object.entries(s.answer).map(([k, v]) => [k, resolvePairs(m, v)])),
+        'diagram-choice': () => ({ diagram: s.answer, reason: s.reasons.findIndex((r) => r.correct) }),
+      }[s.type]?.() ?? s.answer;
+      return scoreStage(m, s, key);
+    });
+    const sum = summarizeMission(res);
+    if (sum.autoScore !== sum.autoMax || sum.maxScore !== 6) throw new Error(`${m.id}: ${sum.autoScore}/${sum.autoMax}, maks ${sum.maxScore}`);
+  }
 });
 
 // ---------- Tampilkan hasil ----------

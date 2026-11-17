@@ -1,0 +1,28 @@
+{
+  "id": "U6", "title": "Banyak Pemetaan", "sumber": "docs02", "bukuDicek": false,
+  "catatanVerifikasi": "Rumus dari docs/02 §5. Cara penurunan lewat pola (kasus kecil) adalah pilihan penyajian, perlu dicocokkan dengan buku.",
+  "tujuan": "Kamu bisa menghitung banyak pemetaan yang mungkin dari A ke B.",
+  "makna": "Saat setiap anggota A memilih satu anggota B, rumus ini menghitung semua kemungkinannya tanpa mendaftar satu per satu.",
+  "layar": [
+    { "tahap": "konsep-sehari-hari", "teks": ["Dua siswa masing-masing memilih tepat satu warna seragam lomba: merah atau biru."], "respons": { "prompt": "Coba tebak: ada berapa susunan pilihan?", "jenis": "isian-bebas", "dinilai": false } },
+    { "tahap": "representasi", "teks": ["Daftar semua susunan untuk Ani dan Budi:"],
+      "visual": { "kind": "table", "columns": ["Ani", "Budi"], "rows": [["merah", "merah"], ["merah", "biru"], ["biru", "merah"], ["biru", "biru"]] } },
+    { "tahap": "konsep-ilmiah", "definisi": "Banyak pemetaan dari A ke B = n(B)^n(A).", "sumberDefinisi": "docs/02 §5",
+      "teks": ["Setiap anggota A memilih salah satu dari n(B) anggota B.", "Pada contoh: n(A) = 2, n(B) = 2, jadi 2^2 = 4."], "ingat": "Pangkatnya n(A), yaitu banyak yang memilih." },
+    { "tahap": "manipulasi", "contoh": [
+        { "benar": true, "teks": "n(A) = 3, n(B) = 2: 2^3 = 8." },
+        { "benar": false, "teks": "n(A) = 3, n(B) = 2: 3^2 = 9 membalik rumus.", "m": "M08" } ] },
+    { "tahap": "validasi", "soal": ["MT-601", "MT-602", "MT-603"] },
+    { "tahap": "transendensi", "teks": ["Memilih rasa es krim, warna kaos, atau lomba memakai rumus yang sama."], "refleksi": "Bagaimana kamu menentukan himpunan mana yang menjadi A?" }
+  ],
+  "cekPemahaman": [
+    { "id": "MT-601", "level": "mudah", "type": "numeric", "stem": "n(A) = 1 dan n(B) = 3. Berapa banyak pemetaan dari A ke B?", "answer": 3, "salahUmum": { "1": "M08" }, "cek": { "kind": "banyakPemetaan", "nA": 1, "nB": 3 },
+      "hints": ["Satu anggota A memilih satu dari tiga anggota B.", "3^1 = 3."], "explanation": "Banyak pemetaan = 3^1 = 3." },
+    { "id": "MT-602", "level": "mudah", "type": "mcq", "stem": "n(A) = 2 dan n(B) = 3. Banyak pemetaan dari A ke B adalah …",
+      "options": [ { "text": "9" }, { "text": "8", "m": "M08" }, { "text": "6", "m": "M08" } ], "answer": 0, "cek": { "kind": "banyakPemetaan", "nA": 2, "nB": 3, "opsiJawaban": 9 },
+      "hints": ["Gunakan n(B)^n(A).", "Hitung 3^2."], "explanation": "Banyak pemetaan = n(B)^n(A) = 3^2 = 9." },
+    { "id": "MT-603", "level": "sedang", "type": "numeric", "stem": "Tiga siswa masing-masing memilih tepat satu dari tiga warna kaos. Berapa banyak kemungkinan susunan pilihan?", "answer": 27, "salahUmum": { "9": "M08", "6": "M08" }, "cek": { "kind": "banyakPemetaan", "nA": 3, "nB": 3 },
+      "hints": ["Domain = siswa, kodomain = warna.", "Hitung 3^3."], "explanation": "Setiap siswa memilih satu warna, jadi ini pemetaan dari siswa ke warna. Banyaknya 3^3 = 27." }
+  ],
+  "miskonsepsi": ["M08"]
+}

@@ -1,7 +1,8 @@
 # Konten Draf RELAFUN (model RMT)
 
-**Status: DRAF, menunggu persetujuan pemilik (17 Nov 2026).** Folder ini **tidak dibaca aplikasi** dan tidak ikut
-rilis (`tools/siapkan_rilis.py` hanya menyalin `css/ js/ data/ assets/`). Setelah disetujui, isinya dipindah ke `data/`.
+**Status: SUDAH DIPASANG ke `data/` (17 Nov 2026)** dan lolos `tools/validate.html` (0 galat). Folder ini kini hanya
+salinan sumber; **sumber yang berlaku adalah `data/`**. Folder ini tidak dibaca aplikasi dan tidak ikut rilis.
+Menunggu persetujuan pemilik untuk dihapus. Perubahan setelah checkpoint `2926519`: KK-019 (cerita → diagram panah).
 Rancangan: [docs/13-RANCANGAN-KONTEN-RMT.md](../docs/13-RANCANGAN-KONTEN-RMT.md).
 
 ## Isi

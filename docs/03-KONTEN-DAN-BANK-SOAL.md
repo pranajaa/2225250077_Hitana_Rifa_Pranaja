@@ -7,7 +7,7 @@
 | U0 | Pemanasan: Himpunan & Pasangan Berurutan | Anggota himpunan, n(A), notasi {…}, pasangan berurutan (x, y) dan urutannya penting | — | — |
 | U1 | Apa itu Relasi? | Pengertian relasi; contoh: "hobi", "faktor dari", "ibu kota dari" | TP1 | U0 |
 | U2 | Tiga Cara Menyajikan Relasi | Diagram panah, himpunan pasangan berurutan, diagram Cartesius — satu relasi yang sama dalam 3 bentuk | TP1 | U1 |
-| U3 | Fungsi: Relasi yang Istimewa | Syarat fungsi; domain, kodomain, range; peta & prapeta | TP2, TP4 | U2 |
+| U3 | Fungsi: Relasi yang Istimewa | Syarat fungsi; domain, kodomain, range; peta (*prapeta ditunda — belum ada di docs/02 §5*) | TP2, TP4 | U2 |
 | U4 | Fungsi atau Bukan? | Contoh & non-contoh di 3 bentuk penyajian; uji garis vertikal; miskonsepsi M01–M04 | TP3 | U3 |
 | U5 | Notasi dan Nilai Fungsi | f : x → 2x + 1, f(x) = 2x + 1, menghitung f(a), tabel fungsi, mencari x bila f(x) diketahui | TP4, TP5 | U3 |
 | U6 | Banyak Pemetaan | Pola dari kasus kecil (n(A)=1,2 …) → n(B)^n(A) | TP6 | U3 |
@@ -150,7 +150,38 @@ Gunakan konteks dekat dengan kehidupan siswa SMP dan pastikan jawabannya tidak a
 > Hindari konteks yang jawabannya bergantung pada asumsi dunia nyata yang tidak disebut di soal.
 > Jika ada asumsi, **tuliskan** di soal (EL05).
 
-## 7. Panduan Gaya Penulisan Soal
+## 7. Konten Terpasang (17 Nov 2026) dan Field Tambahan
+
+Konten disusun dengan model RMT ([13-RANCANGAN-KONTEN-RMT](13-RANCANGAN-KONTEN-RMT.md)) dan sudah dipasang di `data/`.
+Halaman Materi, Kenali Konsep, Bedah Soal, Latihan, dan Misi Literasi **belum** menampilkannya (Fase 2–4).
+
+| File | Isi | Jumlah |
+|---|---|---|
+| `data/materi/U0.json` … `U7.json` | 6 layar RMT per unit + cek pemahaman `MT-xxx` (satu file per unit agar mudah direvisi) | 8 unit, 24 soal (16 mudah, 8 sedang) |
+| `data/kenali-konsep.json` | `KK-001`–`KK-030` | 10/10/10; panah 9, pasangan 6, Cartesius 3, tabel 3, cerita 9 |
+| `data/bedah-soal.json` | `BS-001`–`BS-010` | 3/4/3 |
+| `data/latihan.json` | `LT-001`–`LT-045` | 15/15/15 |
+| `data/misi-literasi.json` | `LM-001`–`LM-012` | 3 per LR/LF/LE/LI |
+| `data/glossary.json` | Istilah terverifikasi docs/02, perlu verifikasi, dan tidak dipakai | — |
+
+Field tambahan (melengkapi skema §3–§4):
+- `sumber` ∈ `docs02` (semua istilah ada di docs/02 §5) · `kisi-kisi` (soal penyusun) · `perlu-verifikasi`
+  (istilah/notasi di luar §5; belum final). Semua file: `bukuDicek: false` sampai dicocokkan dengan buku siswa/LKS.
+- `rmt: { fase, operasi }` — fase Input/Elaborasi/Output dan operasi mental (dasar variasi soal).
+- `refleksi` — pertanyaan metakognisi, tidak dinilai.
+- `cek` — cara validator memeriksa kunci dengan `js/math.js`; `kind: "manual"` wajib menyertakan `dasar`.
+- `catatanRevisi` — alasan perubahan soal setelah disusun.
+- Kenali Konsep memakai `opsiKonsep` bersama di tingkat file dan `pengecoh` per soal (tag + umpan balik), bukan
+  `options` per soal seperti contoh §3.
+- Bedah Soal & Misi Literasi: langkah alasan berupa **teks bebas dinilai guru** (`freeText`, `penilaian: "guru"`,
+  `rubrikGuru`); pilihan alasan hanya bantuan. Soal cerita menyertakan `model` (himpunan & pasangan) agar setiap
+  langkah dapat diperiksa otomatis.
+
+**Validasi:** buka `tools/validate.html` (server `python -m http.server 8000`) — harus "0 galat". Validator memeriksa
+kunci dengan `js/math.js`, tag miskonsepsi setiap pengecoh, hint 2–3, pembahasan, kalimat ≤ 25 kata (soal kisi-kisi
+dikecualikan), skor misi = 6, cakupan Misi Literasi, serta kuota & sebaran pada tabel di atas.
+
+## 8. Panduan Gaya Penulisan Soal
 
 - Satu kalimat ≤ 25 kata; satu gagasan per kalimat.
 - Sebut himpunan dengan huruf kapital (A, B, P, Q) dan anggota dengan huruf kecil/angka.

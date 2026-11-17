@@ -5,8 +5,15 @@
 - **Kurikulum:** Kurikulum Merdeka, Fase D (SMP), elemen Aljabar — relasi dan fungsi
   (kelas VIII). Rumusan Capaian Pembelajaran resmi perlu dikutip dari dokumen BSKAP terbaru
   saat menyusun laporan; di sini dipakai tujuan pembelajaran turunan.
-- **Teori utama:** Cognitive Load Theory (Sweller, 1988; Sweller, van Merriënboer & Paas, 2019)
-  dan prinsip multimedia (Mayer, 2009/2021).
+- **Model pembelajaran:** *Rigorous Mathematical Thinking* (RMT; Kinard & Kozulin) — integrasi alat psikologis
+  sosiokultural (Vygotsky) dan Pengalaman Belajar Ter-mediasi/MLE (Feuerstein). RMT menentukan **alur aktivitas siswa**:
+  konsep sehari-hari → alat psikologis (representasi) → konsep ilmiah → manipulasi → validasi → transendensi & refleksi;
+  fungsi kognitif Input → Elaborasi → Output; petunjuk bertahap sebagai asesmen dinamis. Rincian penerapan:
+  [13-RANCANGAN-KONTEN-RMT](13-RANCANGAN-KONTEN-RMT.md) §1.
+- **Prinsip desain media:** Cognitive Load Theory (Sweller, 1988; Sweller, van Merriënboer & Paas, 2019)
+  dan prinsip multimedia (Mayer, 2009/2021) — menentukan **cara penyajian** (segmentasi, sinyal, kontiguitas,
+  fading, tanpa dekorasi). Keputusan pemilik 17 Nov 2026: RMT = model pembelajaran, CLT = prinsip desain media;
+  keduanya harus tampak nyata pada aktivitas dan penyajian.
 - **Model pengembangan (saran):** ADDIE atau 4D (Thiagarajan). Dokumen ini adalah keluaran
   tahap *Analysis/Define* dan *Design*.
 
@@ -41,13 +48,21 @@
 | **Umpan balik elaboratif** | GL02, EL04 | Penjelasan kesalahan sesuai miskonsepsi + rujukan ke unit materi |
 | **Variabilitas konteks** | IL05 | Konteks soal bervariasi (hobi, NIS siswa, kota-provinsi, harga barang, nomor kursi) |
 
-## 4. Struktur Setiap Unit Materi
+## 4. Struktur Setiap Unit Materi (RMT × CLT)
 
-1. **Pemantik (1 layar):** situasi sehari-hari singkat yang memunculkan konsep.
-2. **Konsep inti (1–2 layar):** definisi + kotak "Ingat!" + visual berlabel.
-3. **Contoh vs non-contoh (1 layar):** berdampingan, perbedaannya disorot.
-4. **Cek pemahaman (1 layar):** 2–3 soal singkat dengan umpan balik langsung.
-5. **Ringkasan (opsional):** 3 poin utama.
+Enam layar, satu tugas per layar (segmentasi CLT). Data: `data/materi/U0–U7.json`.
+
+| Layar | Tahap RMT | Penerapan CLT |
+|---|---|---|
+| 1 | **Konsep sehari-hari** + tujuan & makna (MLE: intensionalitas, makna); pertanyaan respons tanpa skor (resiprositas) | Pemantik singkat, tanpa gambar dekoratif |
+| 2 | **Representasi** — alat psikologis: tabel, diagram panah, pasangan berurutan, Cartesius | Label langsung di diagram; warna domain/kodomain |
+| 3 | **Konsep ilmiah** — definisi resmi §5 + kotak "Ingat!" | Satu definisi per layar |
+| 4 | **Manipulasi** — contoh vs non-contoh | Berdampingan, perbedaan disorot (sinyal) |
+| 5 | **Validasi** — cek pemahaman (3 soal) | Umpan balik langsung + hint bertahap |
+| 6 | **Transendensi & refleksi** — "di mana lagi berlaku?" + satu pertanyaan metakognisi (tidak dinilai) | Singkat |
+
+Unit yang memakai istilah di luar §5 (U0, U2, U5) berlabel `perlu-verifikasi` dan tidak memuat definisi karangan
+sampai ada kutipan buku siswa/LKS.
 
 ## 5. Aturan Inti Konsep (Wajib Konsisten di Seluruh Aplikasi)
 

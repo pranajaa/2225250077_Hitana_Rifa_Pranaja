@@ -848,3 +848,152 @@ body[data-section="pembahas"] .backdrop__mascot { background-image: url("../asse
 .solve__list--num { list-style: decimal; }
 .solve__concept { font-size: var(--fs-lg); font-weight: 800; }
 .solve__warning { font-weight: 600; }
+
+/* ---------- Kuis & konten belajar (js/quiz-ui.js, js/views/materi|kenali|bedah|latihan|literasi) ---------- */
+.q-card { display: flex; flex-direction: column; gap: var(--space-3); }
+.q-card > * { margin: 0; }
+.q-stem { font-size: var(--fs-lg); line-height: 1.55; margin: 0; overflow-wrap: anywhere; }
+.q-stem-wrap { display: flex; flex-direction: column; gap: var(--space-2); align-items: flex-start; }
+.q-simplify { font-size: var(--fs-sm); }
+.q-sub { font-size: var(--fs-base); font-weight: 700; margin: 0; }
+.q-row { display: flex; flex-direction: column; gap: var(--space-2); margin-bottom: var(--space-3); }
+.q-actions { display: flex; flex-wrap: wrap; gap: var(--space-3); justify-content: flex-end; align-items: center; }
+.q-head { display: flex; align-items: center; justify-content: space-between; gap: var(--space-3); margin-bottom: var(--space-3); flex-wrap: wrap; }
+.q-head .progress { flex: 1 1 140px; }
+.q-head__count, .q-head__score { font-weight: 700; font-size: var(--fs-sm); }
+.q-group { font-size: var(--fs-lg); margin: var(--space-4) 0 0; }
+.q-text { width: 100%; min-height: 72px; padding: var(--space-2) var(--space-3); resize: vertical; line-height: 1.5; }
+.q-num { max-width: 200px; font-size: var(--fs-lg); }
+.q-reason { display: flex; flex-direction: column; gap: var(--space-1); }
+.q-reason__note { font-size: var(--fs-sm); margin: 0; }
+.q-summary { display: flex; flex-direction: column; gap: var(--space-2); }
+.q-summary > * { margin: 0; }
+.verif-note { font-size: var(--fs-sm); margin: 0 0 var(--space-3); }
+
+/* Pilihan jawaban besar (ChoiceList) */
+.opts { border: 0; margin: 0; padding: 0; display: grid; gap: var(--space-2); }
+.opt__label {
+  display: flex; align-items: center; gap: var(--space-2);
+  min-height: var(--tap); padding: var(--space-2) var(--space-3);
+  border: 2px solid var(--c-border); background: rgb(6 30 104 / 0.6);
+  cursor: pointer; line-height: 1.4; overflow-wrap: anywhere;
+}
+.opt__label::before { content: "○"; font-weight: 800; color: var(--c-primary); }
+.opt input[type="checkbox"] + .opt__label::before { content: "☐"; }
+.opt input:checked + .opt__label { background: var(--c-highlight); border-color: var(--c-highlight); color: var(--c-primary-ink); }
+.opt input:checked + .opt__label::before { content: "●"; color: var(--c-primary-ink); }
+.opt input[type="checkbox"]:checked + .opt__label::before { content: "☑"; }
+.opt input:focus-visible + .opt__label { outline: 3px solid var(--c-highlight); outline-offset: 2px; }
+.opt input:disabled + .opt__label { cursor: default; }
+.opt.is-correct .opt__label { border-color: var(--c-correct); box-shadow: inset 4px 0 0 var(--c-correct); }
+.btn[hidden] { display: none; } /* .btn memakai inline-flex sehingga atribut hidden perlu ditegaskan */
+.opt.is-correct .opt__label::after { content: "✔ kunci"; margin-left: auto; flex: none; white-space: nowrap; font-size: var(--fs-sm); font-weight: 700; color: var(--c-correct); }
+.opt.is-correct input:checked + .opt__label::after { color: var(--c-primary-ink); }
+.opt.is-wrong .opt__label { border-color: var(--c-wrong); box-shadow: inset 4px 0 0 var(--c-wrong); }
+.opt.is-wrong .opt__label::after { content: "✘ pilihanmu"; margin-left: auto; flex: none; white-space: nowrap; font-size: var(--fs-sm); font-weight: 700; }
+
+/* Petunjuk bertahap */
+.hint { display: flex; flex-direction: column; gap: var(--space-2); }
+.hint__list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--space-2); }
+.hint__item { margin: 0; }
+.hint__btn { align-self: flex-start; font-size: var(--fs-base); }
+.hint__btn[hidden] { display: none; }
+.checklist { margin: 0; padding-left: var(--space-6); }
+.checklist[hidden] { display: none; }
+.checklist li + li { margin-top: var(--space-1); }
+
+/* Panel umpan balik (FeedbackSheet) */
+.feedback { padding: var(--space-3) var(--space-4); background: var(--c-surface-solid); border-left: 5px solid var(--c-primary); display: flex; flex-direction: column; gap: var(--space-2); }
+.feedback > p { margin: 0; }
+.feedback--ok { border-left-color: var(--c-correct); }
+.feedback--no { border-left-color: var(--c-wrong); }
+.feedback--pending { border-left-color: var(--c-hint); }
+.feedback__title { font-weight: 800; font-size: var(--fs-lg); }
+.feedback--ok .feedback__title { color: var(--c-correct); }
+.feedback--no .feedback__title { color: var(--c-wrong); }
+.feedback__m { padding: var(--space-2) var(--space-3); background: var(--c-hint-bg); }
+.feedback__link { color: var(--c-primary); font-weight: 700; }
+.feedback__actions { display: flex; justify-content: flex-end; gap: var(--space-3); flex-wrap: wrap; }
+
+/* Pilih anggota himpunan & susun pasangan */
+.set-picker { display: flex; flex-direction: column; gap: var(--space-2); margin-bottom: var(--space-2); }
+.set-picker__label { margin: 0; font-weight: 700; }
+.set-chip[aria-pressed="true"] { background: var(--c-highlight); border-color: var(--c-highlight); color: var(--c-primary-ink); }
+.set-chip[aria-pressed="true"]::before { content: "✔ "; }
+.pairs-builder { display: flex; flex-direction: column; gap: var(--space-3); }
+.pairs-builder__row { display: flex; flex-direction: column; gap: var(--space-1); padding-left: var(--space-2); border-left: 3px solid var(--c-domain); }
+.pairs-builder__a { font-weight: 700; }
+
+/* Teks yang bisa ditandai (HighlightText) */
+.hl-text { font-size: var(--fs-lg); line-height: 2.1; margin: 0; }
+.hl {
+  min-height: var(--tap); padding: 2px 6px; margin: 0 1px;
+  border: 0; border-bottom: 3px dashed var(--c-primary); background: rgb(6 30 104 / 0.6);
+  color: var(--c-text); font: inherit; cursor: pointer;
+}
+.hl[aria-pressed="true"] { background: var(--c-hint); color: var(--c-primary-ink); border-bottom-style: solid; }
+
+/* Langkah Bedah Soal (StepProgress) */
+.steps { list-style: none; margin: 0 0 var(--space-3); padding: 0; display: grid; grid-template-columns: repeat(5, 1fr); gap: var(--space-1); }
+.steps__item { display: flex; flex-direction: column; align-items: center; gap: 2px; font-size: 0.75rem; color: var(--c-muted); text-align: center; }
+.steps__num { display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; border: 2px solid var(--c-border); font-weight: 800; }
+.steps__item.is-done .steps__num { background: var(--c-correct); border-color: var(--c-correct); color: var(--c-primary-ink); }
+.steps__item.is-current { color: var(--c-text); font-weight: 700; }
+.steps__item.is-current .steps__num { background: var(--c-highlight); border-color: var(--c-highlight); color: var(--c-primary-ink); }
+
+/* Diagram (js/diagram.js) — domain biru, kodomain oranye (aturan 9) */
+.diagram { display: block; width: 100%; max-width: 440px; height: auto; margin: 0 auto; overflow: visible; }
+.diagram text { fill: var(--c-text); font-family: var(--font-body); }
+.diagram .diagram__item--a, .diagram .diagram__set--a { fill: var(--c-domain); font-weight: 700; }
+.diagram .diagram__item--b, .diagram .diagram__set--b { fill: var(--c-codomain); font-weight: 700; }
+.diagram__set { font-size: 14px; }
+.diagram__oval { fill: rgb(2 18 70 / 0.45); stroke-width: 2; }
+.diagram__oval--a { stroke: var(--c-domain); }
+.diagram__oval--b { stroke: var(--c-codomain); }
+.diagram__arrow { stroke: var(--c-text); stroke-width: 1.8; opacity: 0.85; }
+.diagram__head { fill: var(--c-text); }
+.diagram__arrow.is-sorot { stroke: var(--c-hint); stroke-width: 3.2; opacity: 1; }
+.diagram__head.is-sorot { fill: var(--c-hint); }
+.diagram .diagram__item.is-sorot { fill: var(--c-hint); text-decoration: underline; }
+.diagram__grid { stroke: var(--c-track); stroke-width: 1; }
+.diagram__axis { stroke: var(--c-muted); stroke-width: 1.5; }
+.diagram__point { fill: var(--c-primary); stroke: var(--c-primary-ink); stroke-width: 1.5; }
+.diagram__point.is-sorot { fill: var(--c-hint); }
+.diagram__guide { stroke: var(--c-hint); stroke-width: 2.5; stroke-dasharray: 6 4; }
+.diagram-figure { margin: 0; display: flex; flex-direction: column; gap: var(--space-2); }
+.diagram-figure figcaption { font-weight: 700; text-align: center; }
+.diagram__slider { display: flex; align-items: center; gap: var(--space-2); font-size: var(--fs-sm); }
+.diagram__range { flex: 1; min-height: var(--tap); accent-color: var(--c-hint); }
+.diagram__readout { margin: 0; font-weight: 700; color: var(--c-hint); }
+.diagram-choices { display: grid; gap: var(--space-3); }
+@media (min-width: 720px) { .diagram-choices { grid-template-columns: repeat(3, 1fr); } }
+.pairs-view { font-family: var(--font-math); font-size: var(--fs-lg); margin: 0; overflow-wrap: anywhere; }
+.pv-a { color: var(--c-domain); font-weight: 700; }
+.pv-b { color: var(--c-codomain); font-weight: 700; }
+.table-wrap { overflow-x: auto; }
+.data-table { border-collapse: collapse; min-width: 60%; }
+.data-table th, .data-table td { padding: var(--space-2) var(--space-3); border: 1px solid var(--c-border); text-align: left; }
+.data-table thead { background: rgb(2 18 70 / 0.65); }
+.rep { display: flex; flex-direction: column; gap: var(--space-2); }
+.rep-tabs { display: flex; gap: var(--space-1); flex-wrap: wrap; }
+.rep-tab { min-height: var(--tap); padding: 0 var(--space-3); border: 2px solid var(--c-border); background: transparent; color: var(--c-text); font: inherit; font-weight: 700; cursor: pointer; }
+.rep-tab[aria-selected="true"] { background: var(--c-highlight); border-color: var(--c-highlight); color: var(--c-primary-ink); }
+
+/* Materi */
+.unit-screen { display: flex; flex-direction: column; gap: var(--space-3); }
+.unit-screen > * { margin: 0; }
+.def-box { padding: var(--space-3) var(--space-4); border: 2px solid var(--c-primary); background: rgb(2 18 70 / 0.55); }
+.def-box p { margin: 0; font-size: var(--fs-lg); line-height: 1.55; }
+.def-box .def-box__src { font-size: var(--fs-sm); margin-top: var(--space-1); }
+.contoh-list { display: grid; gap: var(--space-3); }
+.contoh { padding: var(--space-3); border-left: 5px solid var(--c-correct); background: rgb(2 18 70 / 0.45); display: flex; flex-direction: column; gap: var(--space-2); }
+.contoh > p { margin: 0; }
+.contoh--no { border-left-color: var(--c-wrong); }
+.contoh__badge { font-weight: 800; }
+.contoh--ok .contoh__badge { color: var(--c-correct); }
+.contoh--no .contoh__badge { color: var(--c-wrong); }
+.unit-nav { margin-bottom: var(--space-4); }
+.lm-context summary { cursor: pointer; font-weight: 700; min-height: var(--tap); display: flex; align-items: center; }
+.lm-context[open] summary { margin-bottom: var(--space-2); }
+.lm-context > * + * { margin-top: var(--space-2); }
+.rubric td:nth-child(2) { font-weight: 700; }

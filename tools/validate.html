@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>RELAFUN — Validasi Konten</title>
+  <style>
+    body { font-family: system-ui, sans-serif; margin: 16px; line-height: 1.5; background: #fff; color: #1b1f24; }
+    #summary[data-status="pass"] { color: #1a7f47; }
+    #summary[data-status="fail"] { color: #c23b3b; }
+    .fail { color: #c23b3b; font-weight: 600; margin: 2px 0; }
+    .warn { color: #8a5a00; margin: 2px 0; }
+    pre { background: #f4f5f7; padding: 8px; overflow-x: auto; }
+  </style>
+  <script type="module" src="./validate.js"></script>
+</head>
+<body>
+  <h1>Validasi konten: <span id="summary">memeriksa…</span></h1>
+  <p>Memeriksa kunci jawaban dengan <code>js/math.js</code>, tag miskonsepsi, hint, pembahasan, skor misi, kuota, dan panjang kalimat.</p>
+  <div id="validate-root"></div>
+</body>
+</html>

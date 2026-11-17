@@ -2,9 +2,9 @@
 
 **Status: rancangan DISETUJUI pemilik (17 Nov 2026) dengan keputusan: RMT = model pembelajaran, CLT = prinsip desain
 media; Misi Literasi hanya menilai relasi/fungsi/domain/kodomain/range; LM-002 memakai 3 pilihan diagram + alasan;
-alasan tertulis (teks bebas) dinilai guru; `hint_count` ditambahkan ke CSV.** Konten lengkap disusun di
-[`konten-draf/`](../konten-draf/README.md) dan menunggu persetujuan sebelum dipindah ke `data/`. Belum ada kode,
-data JSON aplikasi, atau tampilan yang diubah. Setelah disetujui, konten dimasukkan ke `data/` sesuai skema [03](03-KONTEN-DAN-BANK-SOAL.md)
+alasan tertulis (teks bebas) dinilai guru; `hint_count` ditambahkan ke CSV.** Konten lengkap **dipasang di `data/`**
+(17 Nov 2026; ringkasan di [03 §7](03-KONTEN-DAN-BANK-SOAL.md)) dan lolos `tools/validate.html` (0 galat).
+Tampilan halaman Materi/Kenali/Bedah/Latihan/Misi belum dibangun (roadmap Fase 2–4). Setelah disetujui, konten dimasukkan ke `data/` sesuai skema [03](03-KONTEN-DAN-BANK-SOAL.md)
 dan [08](08-LITERASI-MATEMATIKA.md), lalu divalidasi dengan `js/math.js`.
 
 ## 0. Sumber Acuan

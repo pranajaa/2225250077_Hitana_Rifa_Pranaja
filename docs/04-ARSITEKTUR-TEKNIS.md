@@ -45,36 +45,37 @@ RelaFun/
 │   ├── router.js              # Router berbasis hash (#/materi/U3)
 │   ├── storage.js             # Baca/tulis progres (satu-satunya akses localStorage)
 │   ├── progress.js            # Hitung penguasaan per konsep, rekomendasi
-│   ├── quiz-engine.js         # Penilaian jawaban, hint, deteksi miskonsepsi
+│   ├── quiz-engine.js         # Penilaian jawaban (fungsi murni, diuji di tools/tests.js)
+│   ├── quiz-ui.js             # Komponen kuis: ChoiceList, HintButton, FeedbackSheet, input himpunan/pasangan/alasan
 │   ├── diagram.js             # Render SVG: panah, Cartesius, pasangan berurutan
 │   ├── math.js                # Fungsi murni: isFunction, isBijection, range, countMappings
 │   ├── ui.js                  # Helper DOM kecil (h(), toast, modal)
 │   ├── ai.js                  # Klien asisten AI → server lokal ./api (tanpa API key)
 │   └── views/
 │       ├── home.js
-│       ├── materi.js
-│       ├── kenali-konsep.js
-│       ├── bedah-soal.js
-│       ├── latihan.js
-│       ├── misi-literasi.js
+│       ├── materi.js          # #/materi, #/materi/U3 (6 layar RMT)
+│       ├── kenali.js          # #/kenali/:level
+│       ├── bedah.js           # #/bedah/:id
+│       ├── latihan.js         # #/latihan/:level
+│       ├── literasi.js        # #/literasi/:id (Misi Literasi)
 │       ├── asisten.js         # Tutor AI (F14)
 │       ├── pembahas.js        # AI Pembahas Soal (F14)
 │       └── progres.js
 │   ├── literacy-scorer.js     # Skor per tahap & per indikator (LR/LF/LE/LI)
 │   └── export.js              # Ekspor hasil ke CSV/JSON untuk analisis Python
 ├── data/
-│   ├── units.json             # Isi materi U0–U7
-│   ├── kenali-konsep.json
-│   ├── bedah-soal.json
-│   ├── latihan.json
-│   ├── misi-literasi.json     # LM-001 … (Misi Literasi)
+│   ├── materi/U0.json … U7.json  # Isi materi per unit (6 layar RMT + cek pemahaman MT-xxx)
+│   ├── kenali-konsep.json     # KK-001 … KK-030
+│   ├── bedah-soal.json        # BS-001 … BS-010
+│   ├── latihan.json           # LT-001 … LT-045
+│   ├── misi-literasi.json     # LM-001 … LM-012 (Misi Literasi)
 │   ├── misconceptions.json    # M01–M10: judul + pesan umpan balik
 │   ├── ai.json                # Alamat API (./api) + teks layar Tutor AI & Pembahas Soal
-│   └── glossary.json
+│   └── glossary.json          # Istilah terverifikasi docs/02 / perlu verifikasi / tidak dipakai
 ├── tools/
 │   ├── test.html + tests.js   # Uji unit JavaScript (buka di browser)
 │   ├── seed-demo.html         # Mengisi progres contoh untuk demo
-│   └── validate.html          # Cek skema & kunci soal (Fase 3)
+│   └── validate.html + validate.js  # Validasi seluruh konten data/ dengan math.js (harus "0 galat")
 ├── server/
 │   ├── package.json           # Node.js: express + @google/genai (node_modules/ di sini, tidak di-commit)
 │   ├── server.js              # Express: sajikan aplikasi + /api/status, /api/tutor, /api/analyze

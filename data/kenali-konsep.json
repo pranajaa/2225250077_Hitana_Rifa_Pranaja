@@ -1,0 +1,573 @@
+{
+  "status": "DRAF — belum dipakai aplikasi; buku siswa/LKS belum dicek (bukuDicek=false)",
+  "bukuDicek": false,
+  "opsiKonsep": [
+    { "id": "relasi", "text": "Relasi, tetapi bukan fungsi" },
+    { "id": "fungsi", "text": "Fungsi, tetapi bukan korespondensi satu-satu" },
+    { "id": "kss", "text": "Korespondensi satu-satu" }
+  ],
+  "items": [
+    {
+      "id": "KK-001", "level": "mudah", "unit": "U4", "representation": "arrow", "sumber": "docs02",
+      "rmt": { "fase": "input", "operasi": "mengklasifikasi" },
+      "stem": "Perhatikan diagram panah dari A ke B. Relasi ini termasuk apa?",
+      "visual": { "kind": "arrow", "labelA": "A", "labelB": "B", "A": ["1", "2", "3"], "B": ["a", "b", "c"], "pairs": [["1", "a"], ["2", "b"], ["3", "b"]] },
+      "answer": "fungsi",
+      "pengecoh": {
+        "relasi": { "m": "M01", "feedback": "2 dan 3 sama-sama menuju b. Itu boleh pada fungsi." },
+        "kss": { "m": "M07", "feedback": "Belum korespondensi satu-satu. b dipasangkan dua kali dan c tidak punya pasangan." }
+      },
+      "reasons": [
+        { "text": "Setiap anggota A punya tepat satu pasangan di B.", "correct": true },
+        { "text": "Ada dua anggota A yang menuju anggota B yang sama.", "correct": false, "m": "M01" },
+        { "text": "Anggota c tidak punya pasangan.", "correct": false, "m": "M02" }
+      ],
+      "hints": ["Hitung panah yang keluar dari setiap anggota A.", "Dari 1, 2, dan 3 masing-masing keluar satu panah."],
+      "explanation": "Setiap anggota A punya tepat satu pasangan, jadi relasi ini fungsi. Karena b dipasangkan dua kali, fungsi ini bukan korespondensi satu-satu."
+    },
+    {
+      "id": "KK-002", "level": "mudah", "unit": "U4", "representation": "arrow", "sumber": "docs02",
+      "rmt": { "fase": "input", "operasi": "mengklasifikasi" },
+      "stem": "Diagram panah menunjukkan warna favorit dari P ke Q. Relasi ini termasuk apa?",
+      "visual": { "kind": "arrow", "labelA": "P", "labelB": "Q", "A": ["Ani", "Budi", "Cici"], "B": ["merah", "biru"], "pairs": [["Ani", "merah"], ["Ani", "biru"], ["Budi", "biru"], ["Cici", "merah"]] },
+      "answer": "relasi",
+      "pengecoh": {
+        "fungsi": { "m": "M03", "feedback": "Ani punya dua pasangan. Relasi seperti ini belum memenuhi syarat fungsi." },
+        "kss": { "m": "M03", "feedback": "Ani punya dua pasangan, jadi relasi ini bukan fungsi. Korespondensi satu-satu harus fungsi lebih dulu." }
+      },
+      "reasons": [
+        { "text": "Ani punya lebih dari satu pasangan di Q.", "correct": true },
+        { "text": "Budi dan Cici punya warna yang berbeda.", "correct": false, "m": "M01" },
+        { "text": "Setiap anggota P punya pasangan, jadi pasti fungsi.", "correct": false, "m": "M03" }
+      ],
+      "hints": ["Periksa anggota P satu per satu.", "Berapa panah yang keluar dari Ani?"],
+      "explanation": "Ani dipasangkan dengan merah dan biru. Satu anggota P punya dua pasangan, jadi relasi ini bukan fungsi."
+    },
+    {
+      "id": "KK-003", "level": "mudah", "unit": "U7", "representation": "arrow", "sumber": "docs02",
+      "rmt": { "fase": "input", "operasi": "mengklasifikasi" },
+      "stem": "Relasi \"dua kali dari\" digambar dari A ke B. Relasi ini termasuk apa?",
+      "visual": { "kind": "arrow", "labelA": "A", "labelB": "B", "A": ["2", "4", "6"], "B": ["1", "2", "3"], "pairs": [["2", "1"], ["4", "2"], ["6", "3"]] },
+      "answer": "kss",
+      "pengecoh": {
+        "relasi": { "m": "M03", "feedback": "Setiap anggota A sudah punya tepat satu pasangan. Jadi relasi ini sudah fungsi." },
+        "fungsi": { "m": "M07", "feedback": "Periksa juga B. Setiap anggota B dipasangkan tepat satu kali." }
+      },
+      "reasons": [
+        { "text": "Setiap anggota A tepat satu pasangan dan setiap anggota B dipasangkan tepat satu kali.", "correct": true },
+        { "text": "Banyak anggota A sama dengan banyak anggota B.", "correct": false, "m": "M07" },
+        { "text": "Setiap anggota A punya pasangan.", "correct": false, "m": "M07" }
+      ],
+      "hints": ["Periksa A dulu, lalu periksa B.", "Apakah 1, 2, dan 3 masing-masing menerima tepat satu panah?"],
+      "explanation": "Setiap anggota A punya tepat satu pasangan, jadi relasi ini fungsi. Setiap anggota B juga dipasangkan tepat satu kali, jadi ini korespondensi satu-satu."
+    },
+    {
+      "id": "KK-004", "level": "mudah", "unit": "U7", "representation": "pairs", "sumber": "docs02",
+      "rmt": { "fase": "input", "operasi": "mengklasifikasi" },
+      "stem": "Relasi dari A = {1, 2, 3} ke B = {4, 5, 6} adalah {(1, 4), (2, 5), (3, 6)}. Relasi ini termasuk apa?",
+      "visual": { "kind": "pairs", "labelA": "A", "labelB": "B", "A": ["1", "2", "3"], "B": ["4", "5", "6"], "pairs": [["1", "4"], ["2", "5"], ["3", "6"]] },
+      "answer": "kss",
+      "pengecoh": {
+        "relasi": { "m": "M03", "feedback": "Setiap anggota A muncul tepat sekali di depan pasangan. Jadi relasi ini fungsi." },
+        "fungsi": { "m": "M07", "feedback": "Periksa anggota B. 4, 5, dan 6 masing-masing muncul tepat sekali." }
+      },
+      "reasons": [
+        { "text": "Setiap anggota A dan setiap anggota B muncul tepat satu kali.", "correct": true },
+        { "text": "Pasangannya selalu bertambah satu.", "correct": false, "m": "M07" },
+        { "text": "Ada tiga pasangan berurutan.", "correct": false, "m": "M07" }
+      ],
+      "hints": ["Anggota A ditulis di depan setiap pasangan.", "Hitung berapa kali 4, 5, dan 6 muncul di belakang pasangan."],
+      "explanation": "1, 2, dan 3 masing-masing punya tepat satu pasangan. 4, 5, dan 6 juga masing-masing dipasangkan tepat sekali. Jadi relasi ini korespondensi satu-satu."
+    },
+    {
+      "id": "KK-005", "level": "mudah", "unit": "U4", "representation": "pairs", "sumber": "docs02",
+      "rmt": { "fase": "input", "operasi": "mengklasifikasi" },
+      "stem": "Relasi dari A = {p, q, r} ke B = {1, 2} adalah {(p, 1), (q, 1), (r, 2)}. Relasi ini termasuk apa?",
+      "visual": { "kind": "pairs", "labelA": "A", "labelB": "B", "A": ["p", "q", "r"], "B": ["1", "2"], "pairs": [["p", "1"], ["q", "1"], ["r", "2"]] },
+      "answer": "fungsi",
+      "pengecoh": {
+        "relasi": { "m": "M01", "feedback": "p dan q sama-sama berpasangan dengan 1. Itu boleh pada fungsi." },
+        "kss": { "m": "M07", "feedback": "1 dipasangkan dua kali, dan n(A) ≠ n(B). Jadi bukan korespondensi satu-satu." }
+      },
+      "reasons": [
+        { "text": "p, q, dan r masing-masing punya tepat satu pasangan.", "correct": true },
+        { "text": "1 dipasangkan dengan dua anggota A.", "correct": false, "m": "M01" },
+        { "text": "Banyak anggota A lebih dari banyak anggota B.", "correct": false, "m": "M07" }
+      ],
+      "hints": ["Lihat huruf di depan setiap pasangan.", "Apakah ada huruf yang muncul dua kali di depan?"],
+      "explanation": "p, q, dan r masing-masing muncul tepat sekali di depan, jadi relasi ini fungsi. Angka 1 dipakai dua kali, jadi bukan korespondensi satu-satu."
+    },
+    {
+      "id": "KK-006", "level": "mudah", "unit": "U7", "representation": "story", "sumber": "docs02",
+      "rmt": { "fase": "input", "operasi": "mengidentifikasi" },
+      "stem": "Setiap siswa kelas 8C punya tepat satu NIS. Tidak ada dua siswa yang punya NIS sama. Dina punya NIS 101, Eko 102, dan Fani 103. Relasi \"punya NIS\" dari himpunan siswa ke himpunan NIS {101, 102, 103} termasuk apa?",
+      "stemSimple": "Dina 101, Eko 102, Fani 103. Tidak ada NIS yang sama. Relasi siswa ke NIS termasuk apa?",
+      "highlights": ["tepat satu NIS", "Tidak ada dua siswa yang punya NIS sama"],
+      "model": { "A": ["Dina", "Eko", "Fani"], "B": ["101", "102", "103"], "pairs": [["Dina", "101"], ["Eko", "102"], ["Fani", "103"]] },
+      "answer": "kss",
+      "pengecoh": {
+        "relasi": { "m": "M03", "feedback": "Setiap siswa punya tepat satu NIS. Jadi relasi ini sudah fungsi." },
+        "fungsi": { "m": "M07", "feedback": "Setiap NIS juga dimiliki tepat satu siswa. Itu ciri korespondensi satu-satu." }
+      },
+      "reasons": [
+        { "text": "Setiap siswa tepat satu NIS dan setiap NIS milik tepat satu siswa.", "correct": true },
+        { "text": "Ada tiga siswa dan tiga NIS.", "correct": false, "m": "M07" },
+        { "text": "Setiap siswa punya NIS.", "correct": false, "m": "M07" }
+      ],
+      "hints": ["Tandai kata \"tepat satu\" dan \"tidak ada dua\".", "Periksa dari sisi siswa, lalu dari sisi NIS."],
+      "explanation": "Setiap siswa punya tepat satu NIS, jadi relasinya fungsi. Setiap NIS juga dimiliki tepat satu siswa. Jadi relasi ini korespondensi satu-satu."
+    },
+    {
+      "id": "KK-007", "level": "mudah", "unit": "U4", "representation": "story", "sumber": "docs02",
+      "rmt": { "fase": "input", "operasi": "mengidentifikasi" },
+      "stem": "Petugas UKS mencatat golongan darah: Gita A, Hadi O, dan Indah A. Golongan darah yang mungkin adalah A, B, AB, dan O. Relasi dari siswa ke golongan darah termasuk apa?",
+      "stemSimple": "Gita A, Hadi O, Indah A. Pilihan golongan darah: A, B, AB, O. Relasi siswa ke golongan darah termasuk apa?",
+      "highlights": ["Gita A", "Hadi O", "Indah A", "A, B, AB, dan O"],
+      "model": { "A": ["Gita", "Hadi", "Indah"], "B": ["A", "B", "AB", "O"], "pairs": [["Gita", "A"], ["Hadi", "O"], ["Indah", "A"]] },
+      "answer": "fungsi",
+      "pengecoh": {
+        "relasi": { "m": "M02", "feedback": "B dan AB tidak punya pasangan. Itu tetap boleh pada fungsi." },
+        "kss": { "m": "M07", "feedback": "Golongan A dipakai dua siswa, dan B serta AB tidak dipakai. Jadi bukan korespondensi satu-satu." }
+      },
+      "reasons": [
+        { "text": "Setiap siswa punya tepat satu golongan darah.", "correct": true },
+        { "text": "Golongan B dan AB tidak punya pasangan.", "correct": false, "m": "M02" },
+        { "text": "Gita dan Indah sama-sama bergolongan A.", "correct": false, "m": "M01" }
+      ],
+      "hints": ["Domainnya adalah himpunan siswa.", "Apakah setiap siswa tercatat dengan tepat satu golongan darah?"],
+      "explanation": "Setiap siswa punya tepat satu golongan darah, jadi relasinya fungsi. Golongan A dipakai dua kali dan B tidak dipakai, jadi bukan korespondensi satu-satu."
+    },
+    {
+      "id": "KK-008", "level": "mudah", "unit": "U4", "representation": "table", "sumber": "docs02",
+      "rmt": { "fase": "input", "operasi": "mengklasifikasi" },
+      "stem": "Tabel menunjukkan kota lahir tiga siswa. Relasi \"lahir di\" dari himpunan siswa ke himpunan {Bandung, Bogor, Depok} termasuk apa?",
+      "visual": { "kind": "table", "columns": ["Siswa", "Kota lahir"], "rows": [["Joko", "Bandung"], ["Kiki", "Bogor"], ["Lina", "Bandung"]] },
+      "model": { "A": ["Joko", "Kiki", "Lina"], "B": ["Bandung", "Bogor", "Depok"], "pairs": [["Joko", "Bandung"], ["Kiki", "Bogor"], ["Lina", "Bandung"]] },
+      "answer": "fungsi",
+      "pengecoh": {
+        "relasi": { "m": "M01", "feedback": "Joko dan Lina sama-sama lahir di Bandung. Itu boleh pada fungsi." },
+        "kss": { "m": "M07", "feedback": "Bandung dipakai dua kali dan Depok tidak dipakai. Jadi bukan korespondensi satu-satu." }
+      },
+      "reasons": [
+        { "text": "Setiap siswa lahir di tepat satu kota.", "correct": true },
+        { "text": "Depok tidak punya pasangan.", "correct": false, "m": "M02" },
+        { "text": "Ada dua siswa lahir di kota yang sama.", "correct": false, "m": "M01" }
+      ],
+      "hints": ["Setiap baris tabel adalah satu pasangan.", "Apakah ada siswa yang muncul di dua baris?"],
+      "explanation": "Setiap siswa muncul di tepat satu baris, jadi relasinya fungsi. Bandung dipakai dua kali, jadi bukan korespondensi satu-satu."
+    },
+    {
+      "id": "KK-009", "level": "mudah", "unit": "U4", "representation": "arrow", "sumber": "docs02",
+      "rmt": { "fase": "input", "operasi": "mengidentifikasi" },
+      "stem": "Perhatikan diagram panah dari A ke B. Relasi ini termasuk apa?",
+      "visual": { "kind": "arrow", "labelA": "A", "labelB": "B", "A": ["1", "2", "3"], "B": ["a", "b", "c"], "pairs": [["1", "a"], ["2", "b"]] },
+      "answer": "relasi",
+      "pengecoh": {
+        "fungsi": { "m": "M04", "feedback": "Lihat anggota 3. Tidak ada panah yang keluar dari 3." },
+        "kss": { "m": "M04", "feedback": "Anggota 3 tidak punya pasangan, jadi relasi ini belum fungsi." }
+      },
+      "reasons": [
+        { "text": "Anggota 3 tidak punya pasangan.", "correct": true },
+        { "text": "Anggota c tidak punya pasangan.", "correct": false, "m": "M02" },
+        { "text": "Setiap panah menuju anggota yang berbeda.", "correct": false, "m": "M04" }
+      ],
+      "hints": ["Periksa semua anggota A, termasuk yang paling bawah.", "Apakah ada panah yang keluar dari 3?"],
+      "explanation": "Anggota 3 tidak punya pasangan. Pada fungsi, setiap anggota A harus punya pasangan. Jadi relasi ini bukan fungsi."
+    },
+    {
+      "id": "KK-010", "level": "mudah", "unit": "U4", "representation": "story", "sumber": "docs02",
+      "rmt": { "fase": "input", "operasi": "mengidentifikasi" },
+      "stem": "Mira suka membaca dan menggambar. Nino suka menggambar. Ola suka menyanyi. Relasi \"suka\" dari himpunan anak ke himpunan {membaca, menggambar, menyanyi} termasuk apa?",
+      "stemSimple": "Mira suka membaca dan menggambar. Nino suka menggambar. Ola suka menyanyi. Relasi ini termasuk apa?",
+      "highlights": ["Mira suka membaca dan menggambar"],
+      "model": { "A": ["Mira", "Nino", "Ola"], "B": ["membaca", "menggambar", "menyanyi"], "pairs": [["Mira", "membaca"], ["Mira", "menggambar"], ["Nino", "menggambar"], ["Ola", "menyanyi"]] },
+      "answer": "relasi",
+      "pengecoh": {
+        "fungsi": { "m": "M03", "feedback": "Mira punya dua kegiatan yang disukai. Satu anggota domain punya dua pasangan." },
+        "kss": { "m": "M03", "feedback": "Mira punya dua pasangan, jadi relasi ini bukan fungsi." }
+      },
+      "reasons": [
+        { "text": "Mira punya dua pasangan.", "correct": true },
+        { "text": "Mira dan Nino sama-sama suka menggambar.", "correct": false, "m": "M01" },
+        { "text": "Setiap anak suka sesuatu.", "correct": false, "m": "M03" }
+      ],
+      "hints": ["Tulis pasangan untuk setiap anak.", "Berapa pasangan yang dimiliki Mira?"],
+      "explanation": "Mira dipasangkan dengan membaca dan menggambar. Satu anggota domain punya dua pasangan, jadi relasi ini bukan fungsi."
+    },
+    {
+      "id": "KK-011", "level": "sedang", "unit": "U4", "representation": "arrow", "sumber": "docs02",
+      "rmt": { "fase": "elaborasi", "operasi": "mengklasifikasi" },
+      "stem": "Relasi \"setengah dari\" digambar dari A ke B. Relasi ini termasuk apa?",
+      "visual": { "kind": "arrow", "labelA": "A", "labelB": "B", "A": ["1", "2", "3", "4"], "B": ["2", "4", "6", "8", "10"], "pairs": [["1", "2"], ["2", "4"], ["3", "6"], ["4", "8"]] },
+      "answer": "fungsi",
+      "pengecoh": {
+        "relasi": { "m": "M02", "feedback": "10 tidak punya pasangan. Pada fungsi, anggota B boleh tidak punya pasangan." },
+        "kss": { "m": "M07", "feedback": "n(A) = 4 dan n(B) = 5. Karena 10 tidak dipasangkan, ini bukan korespondensi satu-satu." }
+      },
+      "reasons": [
+        { "text": "Setiap anggota A tepat satu pasangan, tetapi 10 tidak dipasangkan.", "correct": true },
+        { "text": "10 tidak punya pasangan, jadi bukan fungsi.", "correct": false, "m": "M02" },
+        { "text": "Setiap anggota B yang punya pasangan hanya dipasangkan sekali.", "correct": false, "m": "M07" }
+      ],
+      "hints": ["Periksa A dulu, lalu B.", "Apakah setiap anggota B mendapat panah?"],
+      "explanation": "Setiap anggota A punya tepat satu pasangan, jadi relasinya fungsi. Anggota 10 tidak dipasangkan, jadi bukan korespondensi satu-satu."
+    },
+    {
+      "id": "KK-012", "level": "sedang", "unit": "U4", "representation": "arrow", "sumber": "docs02",
+      "rmt": { "fase": "elaborasi", "operasi": "mengklasifikasi" },
+      "stem": "Semua anggota A menuju anggota yang sama di B. Relasi ini termasuk apa?",
+      "visual": { "kind": "arrow", "labelA": "A", "labelB": "B", "A": ["a", "b", "c"], "B": ["1", "2", "3"], "pairs": [["a", "1"], ["b", "1"], ["c", "1"]] },
+      "answer": "fungsi",
+      "pengecoh": {
+        "relasi": { "m": "M01", "feedback": "Semua menuju 1 itu boleh. Yang dilarang adalah satu anggota A punya dua pasangan." },
+        "kss": { "m": "M07", "feedback": "1 dipasangkan tiga kali, dan 2 serta 3 tidak dipasangkan." }
+      },
+      "reasons": [
+        { "text": "a, b, dan c masing-masing punya tepat satu pasangan.", "correct": true },
+        { "text": "Semua anggota A punya pasangan yang sama.", "correct": false, "m": "M01" },
+        { "text": "2 dan 3 tidak punya pasangan.", "correct": false, "m": "M02" }
+      ],
+      "hints": ["Jangan lihat B dulu. Periksa a, b, dan c.", "Berapa panah yang keluar dari setiap anggota A?"],
+      "explanation": "Dari a, b, dan c masing-masing keluar tepat satu panah, jadi relasinya fungsi. Fungsi seperti ini memang memasangkan semua anggota A ke satu anggota B."
+    },
+    {
+      "id": "KK-013", "level": "sedang", "unit": "U4", "representation": "pairs", "sumber": "docs02",
+      "rmt": { "fase": "elaborasi", "operasi": "mengklasifikasi" },
+      "stem": "Relasi dari A = {1, 2, 3} ke B = {1, 2, 3} adalah {(1, 1), (2, 2), (3, 3), (1, 3)}. Relasi ini termasuk apa?",
+      "visual": { "kind": "pairs", "labelA": "A", "labelB": "B", "A": ["1", "2", "3"], "B": ["1", "2", "3"], "pairs": [["1", "1"], ["2", "2"], ["3", "3"], ["1", "3"]] },
+      "answer": "relasi",
+      "pengecoh": {
+        "fungsi": { "m": "M03", "feedback": "Angka 1 muncul dua kali di depan: (1, 1) dan (1, 3)." },
+        "kss": { "m": "M03", "feedback": "Angka 1 punya dua pasangan, jadi relasi ini bukan fungsi." }
+      },
+      "reasons": [
+        { "text": "Anggota 1 punya dua pasangan, yaitu 1 dan 3.", "correct": true },
+        { "text": "Anggota 3 di B dipasangkan dua kali.", "correct": false, "m": "M01" },
+        { "text": "Ada empat pasangan, padahal A hanya punya tiga anggota.", "correct": false, "m": "M03" }
+      ],
+      "hints": ["Lihat angka di depan setiap pasangan.", "Apakah ada angka depan yang muncul dua kali dengan pasangan berbeda?"],
+      "explanation": "Pasangan (1, 1) dan (1, 3) menunjukkan 1 punya dua pasangan. Jadi relasi ini bukan fungsi."
+    },
+    {
+      "id": "KK-014", "level": "sedang", "unit": "U7", "representation": "pairs", "sumber": "docs02",
+      "rmt": { "fase": "elaborasi", "operasi": "mengklasifikasi" },
+      "stem": "Jadwal piket ditulis sebagai {(Senin, Budi), (Selasa, Dedi), (Rabu, Ani), (Kamis, Cici)}. Relasi dari himpunan hari ke {Ani, Budi, Cici, Dedi} termasuk apa?",
+      "visual": { "kind": "pairs", "labelA": "Hari", "labelB": "Siswa", "A": ["Senin", "Selasa", "Rabu", "Kamis"], "B": ["Ani", "Budi", "Cici", "Dedi"], "pairs": [["Senin", "Budi"], ["Selasa", "Dedi"], ["Rabu", "Ani"], ["Kamis", "Cici"]] },
+      "answer": "kss",
+      "pengecoh": {
+        "relasi": { "m": "M03", "feedback": "Setiap hari punya tepat satu petugas piket. Jadi relasi ini sudah fungsi." },
+        "fungsi": { "m": "M07", "feedback": "Setiap siswa juga piket tepat satu kali. Itu ciri korespondensi satu-satu." }
+      },
+      "reasons": [
+        { "text": "Setiap hari tepat satu siswa dan setiap siswa tepat satu hari.", "correct": true },
+        { "text": "Ada empat hari dan empat siswa.", "correct": false, "m": "M07" },
+        { "text": "Urutan nama siswa tidak sesuai abjad.", "correct": false, "m": "M07" }
+      ],
+      "hints": ["Domainnya himpunan hari.", "Apakah setiap siswa muncul tepat sekali?"],
+      "explanation": "Setiap hari punya tepat satu petugas, jadi relasinya fungsi. Setiap siswa juga muncul tepat sekali. Jadi relasi ini korespondensi satu-satu."
+    },
+    {
+      "id": "KK-015", "level": "sedang", "unit": "U7", "representation": "cartesian", "sumber": "docs02",
+      "rmt": { "fase": "elaborasi", "operasi": "mengklasifikasi" },
+      "stem": "Diagram Cartesius menunjukkan relasi dari A = {1, 2, 3, 4} ke B = {1, 2, 3, 4}. Titiknya (1, 3), (2, 1), (3, 4), dan (4, 2). Relasi ini termasuk apa?",
+      "visual": { "kind": "cartesian", "labelA": "A", "labelB": "B", "A": ["1", "2", "3", "4"], "B": ["1", "2", "3", "4"], "pairs": [["1", "3"], ["2", "1"], ["3", "4"], ["4", "2"]] },
+      "answer": "kss",
+      "pengecoh": {
+        "relasi": { "m": "M09", "feedback": "Setiap garis tegak di x = 1, 2, 3, 4 melewati tepat satu titik. Jadi ini fungsi." },
+        "fungsi": { "m": "M07", "feedback": "Setiap nilai y dari 1 sampai 4 juga dipakai tepat sekali." }
+      },
+      "reasons": [
+        { "text": "Setiap x tepat satu titik dan setiap y dipakai tepat sekali.", "correct": true },
+        { "text": "Titik-titiknya tidak membentuk garis lurus.", "correct": false, "m": "M09" },
+        { "text": "Ada empat titik.", "correct": false, "m": "M07" }
+      ],
+      "hints": ["Tarik garis tegak di setiap x.", "Sekarang tarik garis mendatar di setiap y. Berapa titik yang dilewati?"],
+      "explanation": "Setiap garis tegak di x melewati tepat satu titik, jadi relasinya fungsi. Setiap y juga dipakai tepat sekali. Jadi relasi ini korespondensi satu-satu."
+    },
+    {
+      "id": "KK-016", "level": "sedang", "unit": "U4", "representation": "cartesian", "sumber": "docs02",
+      "rmt": { "fase": "elaborasi", "operasi": "mengklasifikasi" },
+      "stem": "Diagram Cartesius menunjukkan relasi dari A = {1, 2, 3} ke B = {1, 2, 3, 4}. Titiknya (1, 2), (2, 2), dan (3, 4). Relasi ini termasuk apa?",
+      "visual": { "kind": "cartesian", "labelA": "A", "labelB": "B", "A": ["1", "2", "3"], "B": ["1", "2", "3", "4"], "pairs": [["1", "2"], ["2", "2"], ["3", "4"]] },
+      "answer": "fungsi",
+      "pengecoh": {
+        "relasi": { "m": "M01", "feedback": "Titik (1, 2) dan (2, 2) punya y sama. Itu boleh, karena x-nya berbeda." },
+        "kss": { "m": "M07", "feedback": "y = 2 dipakai dua kali, dan y = 1 serta 3 tidak dipakai." }
+      },
+      "reasons": [
+        { "text": "Garis tegak di x = 1, 2, dan 3 masing-masing melewati tepat satu titik.", "correct": true },
+        { "text": "Dua titik berada pada ketinggian yang sama.", "correct": false, "m": "M01" },
+        { "text": "y = 1 dan y = 3 tidak punya titik.", "correct": false, "m": "M02" }
+      ],
+      "hints": ["Gunakan uji garis vertikal.", "Berapa titik yang dilewati garis tegak di x = 2?"],
+      "explanation": "Setiap garis tegak di x anggota A melewati tepat satu titik, jadi relasinya fungsi. y = 2 dipakai dua kali, jadi bukan korespondensi satu-satu."
+    },
+    {
+      "id": "KK-017", "level": "sedang", "unit": "U4", "representation": "table", "sumber": "docs02",
+      "rmt": { "fase": "elaborasi", "operasi": "mengklasifikasi" },
+      "stem": "Tabel menunjukkan provinsi tempat tiga kota berada. Relasi dari himpunan kota ke {Jawa Barat, Jawa Tengah, Jawa Timur} termasuk apa?",
+      "visual": { "kind": "table", "columns": ["Kota", "Provinsi"], "rows": [["Surabaya", "Jawa Timur"], ["Malang", "Jawa Timur"], ["Solo", "Jawa Tengah"]] },
+      "model": { "A": ["Surabaya", "Malang", "Solo"], "B": ["Jawa Barat", "Jawa Tengah", "Jawa Timur"], "pairs": [["Surabaya", "Jawa Timur"], ["Malang", "Jawa Timur"], ["Solo", "Jawa Tengah"]] },
+      "answer": "fungsi",
+      "pengecoh": {
+        "relasi": { "m": "M02", "feedback": "Jawa Barat tidak punya pasangan. Itu tetap boleh pada fungsi." },
+        "kss": { "m": "M07", "feedback": "Jawa Timur dipakai dua kali dan Jawa Barat tidak dipakai." }
+      },
+      "reasons": [
+        { "text": "Setiap kota berada di tepat satu provinsi.", "correct": true },
+        { "text": "Surabaya dan Malang berada di provinsi yang sama.", "correct": false, "m": "M01" },
+        { "text": "Jawa Barat tidak punya pasangan.", "correct": false, "m": "M02" }
+      ],
+      "hints": ["Domainnya himpunan kota.", "Apakah ada kota yang tercatat di dua provinsi?"],
+      "explanation": "Setiap kota berada di tepat satu provinsi, jadi relasinya fungsi. Jawa Timur dipakai dua kali, jadi bukan korespondensi satu-satu."
+    },
+    {
+      "id": "KK-018", "level": "sedang", "unit": "U7", "representation": "story", "sumber": "docs02",
+      "rmt": { "fase": "elaborasi", "operasi": "mengklasifikasi" },
+      "stem": "Tim estafet kelas 8B punya empat pelari. Pelatih memberi setiap pelari tepat satu urutan lari: Ayu ke-3, Beni ke-1, Cika ke-4, dan Dodi ke-2. Tidak ada urutan yang dipakai dua kali. Relasi dari pelari ke urutan lari termasuk apa?",
+      "stemSimple": "Ayu 3, Beni 1, Cika 4, Dodi 2. Tidak ada urutan yang sama. Relasi pelari ke urutan termasuk apa?",
+      "highlights": ["tepat satu urutan lari", "Tidak ada urutan yang dipakai dua kali"],
+      "model": { "A": ["Ayu", "Beni", "Cika", "Dodi"], "B": ["1", "2", "3", "4"], "pairs": [["Ayu", "3"], ["Beni", "1"], ["Cika", "4"], ["Dodi", "2"]] },
+      "answer": "kss",
+      "pengecoh": {
+        "relasi": { "m": "M03", "feedback": "Setiap pelari punya tepat satu urutan. Jadi relasi ini sudah fungsi." },
+        "fungsi": { "m": "M07", "feedback": "Setiap urutan juga dipakai tepat satu pelari. Periksa juga sisi urutan." }
+      },
+      "reasons": [
+        { "text": "Setiap pelari tepat satu urutan, dan setiap urutan tepat satu pelari.", "correct": true },
+        { "text": "Banyak pelari sama dengan banyak urutan.", "correct": false, "m": "M07" },
+        { "text": "Setiap pelari punya urutan.", "correct": false, "m": "M07" }
+      ],
+      "hints": ["Periksa pelari satu per satu.", "Sekarang periksa urutan 1 sampai 4. Berapa pelari di tiap urutan?"],
+      "explanation": "Setiap pelari punya tepat satu urutan, jadi relasinya fungsi. Setiap urutan juga dipakai tepat satu pelari. Jadi relasi ini korespondensi satu-satu."
+    },
+    {
+      "id": "KK-019", "level": "sedang", "unit": "U4", "representation": "arrow", "sumber": "docs02",
+      "rmt": { "fase": "elaborasi", "operasi": "mengklasifikasi" },
+      "catatanRevisi": "17 Nov 2026: diubah dari soal cerita ke diagram panah agar sebaran 9 cerita / 9 panah sesuai docs/03. Satu-satunya diagram panah dengan dua pelanggaran sekaligus. Kunci, level, alasan tetap.",
+      "stem": "Diagram panah menunjukkan alat laboratorium yang dipinjam siswa. Relasi \"meminjam\" ini termasuk apa?",
+      "visual": { "kind": "arrow", "labelA": "Siswa", "labelB": "Alat", "A": ["Sinta", "Tari", "Umar"], "B": ["mikroskop", "lup", "pipet"], "pairs": [["Sinta", "mikroskop"], ["Sinta", "lup"], ["Tari", "lup"]] },
+      "answer": "relasi",
+      "pengecoh": {
+        "fungsi": { "m": "M04", "feedback": "Umar tidak punya pasangan, dan Sinta punya dua pasangan." },
+        "kss": { "m": "M04", "feedback": "Umar tidak punya pasangan, jadi relasi ini belum fungsi." }
+      },
+      "reasons": [
+        { "text": "Sinta punya dua pasangan dan Umar tidak punya pasangan.", "correct": true },
+        { "text": "Pipet tidak dipinjam siapa pun.", "correct": false, "m": "M02" },
+        { "text": "Sinta dan Tari sama-sama meminjam lup.", "correct": false, "m": "M01" }
+      ],
+      "hints": ["Hitung panah yang keluar dari setiap siswa.", "Siapa yang punya dua panah? Siapa yang tidak punya panah?"],
+      "explanation": "Sinta punya dua pasangan dan Umar tidak punya pasangan. Keduanya melanggar syarat fungsi. Jadi relasi ini bukan fungsi."
+    },
+    {
+      "id": "KK-020", "level": "sedang", "unit": "U4", "representation": "story", "sumber": "docs02",
+      "rmt": { "fase": "elaborasi", "operasi": "membandingkan" },
+      "stem": "Ruang ujian punya kursi K1, K2, K3, dan K4. Vina duduk di K1, Wawan di K3, dan Yuni di K2. Kursi K4 kosong. Relasi dari siswa ke kursi termasuk apa?",
+      "stemSimple": "Vina K1, Wawan K3, Yuni K2. K4 kosong. Relasi siswa ke kursi termasuk apa?",
+      "highlights": ["Vina duduk di K1", "Wawan di K3", "Yuni di K2", "K4 kosong"],
+      "model": { "A": ["Vina", "Wawan", "Yuni"], "B": ["K1", "K2", "K3", "K4"], "pairs": [["Vina", "K1"], ["Wawan", "K3"], ["Yuni", "K2"]] },
+      "answer": "fungsi",
+      "pengecoh": {
+        "relasi": { "m": "M02", "feedback": "K4 kosong itu boleh. Syarat fungsi hanya untuk setiap siswa." },
+        "kss": { "m": "M07", "feedback": "K4 tidak punya pasangan, dan n(siswa) ≠ n(kursi). Jadi bukan korespondensi satu-satu." }
+      },
+      "reasons": [
+        { "text": "Setiap siswa duduk di tepat satu kursi, tetapi K4 kosong.", "correct": true },
+        { "text": "K4 kosong, jadi bukan fungsi.", "correct": false, "m": "M02" },
+        { "text": "Tidak ada dua siswa di kursi yang sama, jadi pasti korespondensi satu-satu.", "correct": false, "m": "M07" }
+      ],
+      "hints": ["Periksa setiap siswa.", "Apakah setiap kursi ditempati tepat satu siswa?"],
+      "explanation": "Setiap siswa duduk di tepat satu kursi, jadi relasinya fungsi. K4 tidak ditempati, jadi fungsi ini bukan korespondensi satu-satu."
+    },
+    {
+      "id": "KK-021", "level": "sulit", "unit": "U7", "representation": "arrow", "sumber": "docs02",
+      "rmt": { "fase": "output", "operasi": "membandingkan" },
+      "stem": "Banyak anggota A sama dengan banyak anggota B. Perhatikan diagramnya. Relasi ini termasuk apa?",
+      "visual": { "kind": "arrow", "labelA": "A", "labelB": "B", "A": ["1", "2", "3"], "B": ["x", "y", "z"], "pairs": [["1", "x"], ["2", "x"], ["3", "y"]] },
+      "answer": "fungsi",
+      "pengecoh": {
+        "relasi": { "m": "M01", "feedback": "1 dan 2 sama-sama menuju x. Itu boleh pada fungsi." },
+        "kss": { "m": "M07", "feedback": "n(A) = n(B) belum cukup. x dipasangkan dua kali dan z tidak dipasangkan." }
+      },
+      "reasons": [
+        { "text": "Setiap anggota A tepat satu pasangan, tetapi x dipasangkan dua kali.", "correct": true },
+        { "text": "n(A) = n(B), jadi pasti korespondensi satu-satu.", "correct": false, "m": "M07" },
+        { "text": "z tidak punya pasangan, jadi bukan fungsi.", "correct": false, "m": "M02" }
+      ],
+      "hints": ["n(A) = n(B) hanya syarat perlu.", "Periksa berapa panah yang masuk ke x, y, dan z."],
+      "explanation": "Setiap anggota A punya tepat satu pasangan, jadi relasinya fungsi. Meskipun n(A) = n(B), x dipasangkan dua kali. Jadi bukan korespondensi satu-satu."
+    },
+    {
+      "id": "KK-022", "level": "sulit", "unit": "U4", "representation": "pairs", "sumber": "docs02",
+      "rmt": { "fase": "output", "operasi": "mengklasifikasi" },
+      "stem": "Relasi dari A = {1, 2, 3} ke B = {a, b} ditulis {(1, a), (2, b), (2, b), (3, a)}. Pasangan (2, b) tertulis dua kali. Relasi ini termasuk apa?",
+      "visual": { "kind": "pairs", "labelA": "A", "labelB": "B", "A": ["1", "2", "3"], "B": ["a", "b"], "pairs": [["1", "a"], ["2", "b"], ["2", "b"], ["3", "a"]] },
+      "answer": "fungsi",
+      "pengecoh": {
+        "relasi": { "m": "M03", "feedback": "(2, b) yang ditulis dua kali tetap satu pasangan yang sama. 2 tidak punya dua pasangan berbeda." },
+        "kss": { "m": "M07", "feedback": "a dipasangkan dua kali dan n(A) ≠ n(B). Jadi bukan korespondensi satu-satu." }
+      },
+      "reasons": [
+        { "text": "Pasangan yang sama ditulis dua kali tetap dihitung satu. Setiap anggota A punya tepat satu pasangan.", "correct": true },
+        { "text": "2 muncul dua kali, jadi 2 punya dua pasangan.", "correct": false, "m": "M03" },
+        { "text": "1 dan 3 sama-sama berpasangan dengan a.", "correct": false, "m": "M01" }
+      ],
+      "hints": ["Apakah (2, b) dan (2, b) pasangan yang berbeda?", "Daftar pasangan untuk 1, 2, dan 3 tanpa pengulangan."],
+      "explanation": "(2, b) yang ditulis dua kali adalah pasangan yang sama. Jadi 1, 2, dan 3 masing-masing punya tepat satu pasangan. Relasi ini fungsi, tetapi bukan korespondensi satu-satu."
+    },
+    {
+      "id": "KK-023", "level": "sulit", "unit": "U4", "representation": "cartesian", "sumber": "docs02",
+      "rmt": { "fase": "output", "operasi": "mengklasifikasi" },
+      "stem": "Diagram Cartesius menunjukkan relasi dari A = {1, 2, 3} ke B = {1, 2, 3}. Titiknya (1, 1), (2, 3), (3, 3), dan (3, 1). Relasi ini termasuk apa?",
+      "visual": { "kind": "cartesian", "labelA": "A", "labelB": "B", "A": ["1", "2", "3"], "B": ["1", "2", "3"], "pairs": [["1", "1"], ["2", "3"], ["3", "3"], ["3", "1"]] },
+      "answer": "relasi",
+      "pengecoh": {
+        "fungsi": { "m": "M09", "feedback": "Garis tegak di x = 3 melewati dua titik: (3, 3) dan (3, 1)." },
+        "kss": { "m": "M09", "feedback": "x = 3 punya dua titik, jadi relasi ini belum fungsi." }
+      },
+      "reasons": [
+        { "text": "Garis tegak di x = 3 melewati dua titik.", "correct": true },
+        { "text": "Garis mendatar di y = 3 melewati dua titik.", "correct": false, "m": "M01" },
+        { "text": "y = 2 tidak punya titik.", "correct": false, "m": "M02" }
+      ],
+      "hints": ["Uji garis vertikal: garis tegak, bukan mendatar.", "Periksa garis tegak di x = 3."],
+      "explanation": "Garis tegak di x = 3 melewati dua titik. Artinya 3 punya dua pasangan. Jadi relasi ini bukan fungsi."
+    },
+    {
+      "id": "KK-024", "level": "sulit", "unit": "U4", "representation": "table", "sumber": "docs02",
+      "rmt": { "fase": "output", "operasi": "mengklasifikasi" },
+      "stem": "Tabel mencatat suhu ruang kelas. Relasi dari himpunan jam ke himpunan suhu {24, 27, 30, 33} °C termasuk apa?",
+      "visual": { "kind": "table", "columns": ["Jam", "Suhu (°C)"], "rows": [["06.00", "24"], ["09.00", "27"], ["12.00", "30"], ["15.00", "30"]] },
+      "model": { "A": ["06.00", "09.00", "12.00", "15.00"], "B": ["24", "27", "30", "33"], "pairs": [["06.00", "24"], ["09.00", "27"], ["12.00", "30"], ["15.00", "30"]] },
+      "answer": "fungsi",
+      "pengecoh": {
+        "relasi": { "m": "M01", "feedback": "Suhu 30 °C tercatat pada dua jam. Itu boleh pada fungsi." },
+        "kss": { "m": "M07", "feedback": "n(A) = n(B) = 4, tetapi 30 dipakai dua kali dan 33 tidak dipakai." }
+      },
+      "reasons": [
+        { "text": "Setiap jam punya tepat satu suhu.", "correct": true },
+        { "text": "Jumlah jam sama dengan jumlah pilihan suhu.", "correct": false, "m": "M07" },
+        { "text": "Suhu 33 °C tidak punya pasangan.", "correct": false, "m": "M02" }
+      ],
+      "hints": ["Domainnya himpunan jam.", "Apakah setiap suhu dipakai tepat sekali?"],
+      "explanation": "Setiap jam punya tepat satu suhu, jadi relasinya fungsi. Suhu 30 dipakai dua kali dan 33 tidak dipakai. Jadi bukan korespondensi satu-satu."
+    },
+    {
+      "id": "KK-025", "level": "sulit", "unit": "U7", "representation": "story", "sumber": "docs02",
+      "rmt": { "fase": "output", "operasi": "mengklasifikasi" },
+      "stem": "Himpunan N = {Jepang, Mesir, Vietnam, Prancis}. Himpunan K = {Tokyo, Kairo, Hanoi, Paris}. Setiap negara dipasangkan dengan ibu kotanya. Relasi \"beribu kota\" dari N ke K termasuk apa?",
+      "stemSimple": "Jepang–Tokyo, Mesir–Kairo, Vietnam–Hanoi, Prancis–Paris. Relasi negara ke ibu kota termasuk apa?",
+      "highlights": ["Setiap negara dipasangkan dengan ibu kotanya"],
+      "model": { "A": ["Jepang", "Mesir", "Vietnam", "Prancis"], "B": ["Tokyo", "Kairo", "Hanoi", "Paris"], "pairs": [["Jepang", "Tokyo"], ["Mesir", "Kairo"], ["Vietnam", "Hanoi"], ["Prancis", "Paris"]] },
+      "answer": "kss",
+      "pengecoh": {
+        "relasi": { "m": "M03", "feedback": "Setiap negara punya tepat satu ibu kota. Jadi relasi ini sudah fungsi." },
+        "fungsi": { "m": "M07", "feedback": "Setiap ibu kota juga milik tepat satu negara di N." }
+      },
+      "reasons": [
+        { "text": "Setiap negara tepat satu ibu kota, dan setiap ibu kota milik tepat satu negara.", "correct": true },
+        { "text": "Ada empat negara dan empat kota.", "correct": false, "m": "M07" },
+        { "text": "Semua nama kota berbeda.", "correct": false, "m": "M07" }
+      ],
+      "hints": ["Periksa dari sisi negara.", "Lalu periksa dari sisi kota: adakah kota yang dipakai dua negara?"],
+      "explanation": "Setiap negara punya tepat satu ibu kota, jadi relasinya fungsi. Setiap kota di K juga dipakai tepat sekali. Jadi relasi ini korespondensi satu-satu."
+    },
+    {
+      "id": "KK-026", "level": "sulit", "unit": "U4", "representation": "story", "sumber": "docs02",
+      "rmt": { "fase": "output", "operasi": "mengidentifikasi" },
+      "stem": "Relasi \"ibu kota dari\" dibuat dari himpunan kota K = {Tokyo, Kairo, Hanoi} ke himpunan negara N = {Jepang, Mesir, Vietnam, Prancis}. Relasi ini termasuk apa?",
+      "stemSimple": "Dari kota ke negara: Tokyo–Jepang, Kairo–Mesir, Hanoi–Vietnam. Prancis tidak dipasangkan. Termasuk apa?",
+      "highlights": ["dari himpunan kota", "ke himpunan negara", "Prancis"],
+      "model": { "A": ["Tokyo", "Kairo", "Hanoi"], "B": ["Jepang", "Mesir", "Vietnam", "Prancis"], "pairs": [["Tokyo", "Jepang"], ["Kairo", "Mesir"], ["Hanoi", "Vietnam"]] },
+      "answer": "fungsi",
+      "pengecoh": {
+        "relasi": { "m": "M02", "feedback": "Prancis ada di kodomain dan tidak punya pasangan. Itu boleh pada fungsi." },
+        "kss": { "m": "M06", "feedback": "Perhatikan arahnya: dari kota ke negara. Prancis tidak dipasangkan, jadi bukan korespondensi satu-satu." }
+      },
+      "reasons": [
+        { "text": "Setiap kota di K tepat satu pasangan, tetapi Prancis tidak dipasangkan.", "correct": true },
+        { "text": "Domainnya himpunan negara.", "correct": false, "m": "M06" },
+        { "text": "Prancis tidak punya pasangan, jadi bukan fungsi.", "correct": false, "m": "M02" }
+      ],
+      "hints": ["Tentukan dulu domainnya: relasi dibuat dari himpunan apa?", "Apakah setiap negara menerima pasangan?"],
+      "explanation": "Domainnya himpunan kota. Setiap kota punya tepat satu pasangan, jadi relasinya fungsi. Prancis tidak dipasangkan, jadi bukan korespondensi satu-satu."
+    },
+    {
+      "id": "KK-027", "level": "sulit", "unit": "U4", "representation": "story", "sumber": "docs02",
+      "rmt": { "fase": "output", "operasi": "membandingkan" },
+      "stem": "Pada lomba kebersihan, setiap kelas mendapat tepat satu nilai dari {A, B, C}. Kelas 8A mendapat A, 8B mendapat B, 8C mendapat A, dan 8D mendapat C. Semua nilai terpakai. Relasi dari kelas ke nilai termasuk apa?",
+      "stemSimple": "8A–A, 8B–B, 8C–A, 8D–C. Semua nilai terpakai. Relasi kelas ke nilai termasuk apa?",
+      "highlights": ["tepat satu nilai", "8A mendapat A", "8C mendapat A", "Semua nilai terpakai"],
+      "model": { "A": ["8A", "8B", "8C", "8D"], "B": ["A", "B", "C"], "pairs": [["8A", "A"], ["8B", "B"], ["8C", "A"], ["8D", "C"]] },
+      "answer": "fungsi",
+      "pengecoh": {
+        "relasi": { "m": "M01", "feedback": "8A dan 8C sama-sama mendapat A. Itu boleh pada fungsi." },
+        "kss": { "m": "M07", "feedback": "Semua nilai terpakai belum cukup. Nilai A dipakai dua kelas, dan n(A) ≠ n(B)." }
+      },
+      "reasons": [
+        { "text": "Setiap kelas tepat satu nilai, tetapi nilai A dipakai dua kelas.", "correct": true },
+        { "text": "Semua nilai terpakai, jadi korespondensi satu-satu.", "correct": false, "m": "M07" },
+        { "text": "Dua kelas mendapat nilai sama, jadi bukan fungsi.", "correct": false, "m": "M01" }
+      ],
+      "hints": ["\"Semua nilai terpakai\" belum berarti setiap nilai dipakai tepat sekali.", "Berapa kelas yang mendapat nilai A?"],
+      "explanation": "Setiap kelas punya tepat satu nilai, jadi relasinya fungsi. Nilai A dipakai dua kelas, jadi bukan korespondensi satu-satu."
+    },
+    {
+      "id": "KK-028", "level": "sulit", "unit": "U1", "representation": "arrow", "sumber": "docs02",
+      "rmt": { "fase": "output", "operasi": "mengklasifikasi" },
+      "stem": "Relasi \"faktor dari\" digambar dari A = {2, 3, 4} ke B = {4, 6, 8, 9}. Relasi ini termasuk apa?",
+      "visual": { "kind": "arrow", "labelA": "A", "labelB": "B", "A": ["2", "3", "4"], "B": ["4", "6", "8", "9"], "pairs": [["2", "4"], ["2", "6"], ["2", "8"], ["3", "6"], ["3", "9"], ["4", "4"], ["4", "8"]] },
+      "answer": "relasi",
+      "pengecoh": {
+        "fungsi": { "m": "M03", "feedback": "2 adalah faktor dari 4, 6, dan 8. Jadi 2 punya tiga pasangan." },
+        "kss": { "m": "M03", "feedback": "Ada anggota A dengan lebih dari satu pasangan, jadi relasi ini bukan fungsi." }
+      },
+      "reasons": [
+        { "text": "2 punya tiga pasangan, yaitu 4, 6, dan 8.", "correct": true },
+        { "text": "6 menerima panah dari 2 dan 3.", "correct": false, "m": "M01" },
+        { "text": "Setiap anggota A punya pasangan, jadi pasti fungsi.", "correct": false, "m": "M03" }
+      ],
+      "hints": ["Hitung panah yang keluar dari 2.", "Pada fungsi, setiap anggota A hanya boleh punya satu pasangan."],
+      "explanation": "2 adalah faktor dari 4, 6, dan 8, jadi 2 punya tiga pasangan. Relasi \"faktor dari\" ini adalah relasi, tetapi bukan fungsi."
+    },
+    {
+      "id": "KK-029", "level": "sulit", "unit": "U7", "representation": "pairs", "sumber": "docs02",
+      "rmt": { "fase": "output", "operasi": "mengklasifikasi" },
+      "stem": "Relasi dari A = {1, 2, 3, 4} ke B = {1, 2, 3, 4} adalah {(1, 2), (2, 3), (3, 4), (4, 1)}. Relasi ini termasuk apa?",
+      "visual": { "kind": "pairs", "labelA": "A", "labelB": "B", "A": ["1", "2", "3", "4"], "B": ["1", "2", "3", "4"], "pairs": [["1", "2"], ["2", "3"], ["3", "4"], ["4", "1"]] },
+      "answer": "kss",
+      "pengecoh": {
+        "relasi": { "m": "M06", "feedback": "Angka depan 1, 2, 3, 4 masing-masing muncul tepat sekali. Jangan tertukar dengan angka belakang." },
+        "fungsi": { "m": "M07", "feedback": "Angka belakang 2, 3, 4, 1 juga masing-masing muncul tepat sekali." }
+      },
+      "reasons": [
+        { "text": "Setiap angka depan dan setiap angka belakang muncul tepat sekali.", "correct": true },
+        { "text": "Angka 1 muncul dua kali di daftar pasangan.", "correct": false, "m": "M06" },
+        { "text": "Pasangannya selalu bertambah satu.", "correct": false, "m": "M07" }
+      ],
+      "hints": ["Angka depan dari A, angka belakang dari B.", "Periksa angka depan, lalu angka belakang."],
+      "explanation": "Setiap anggota A punya tepat satu pasangan, jadi relasinya fungsi. Setiap anggota B juga dipasangkan tepat sekali. Jadi relasi ini korespondensi satu-satu."
+    },
+    {
+      "id": "KK-030", "level": "sulit", "unit": "U4", "representation": "story", "sumber": "docs02",
+      "rmt": { "fase": "output", "operasi": "memilah-informasi" },
+      "stem": "Setiap siswa diminta memilih satu ekstrakurikuler. Pita memilih futsal dan Qori memilih tari. Rafi lupa mengisi formulir. Relasi dari {Pita, Qori, Rafi} ke {futsal, tari} termasuk apa?",
+      "stemSimple": "Pita futsal, Qori tari, Rafi belum memilih. Relasi siswa ke ekskul termasuk apa?",
+      "highlights": ["Rafi lupa mengisi formulir"],
+      "model": { "A": ["Pita", "Qori", "Rafi"], "B": ["futsal", "tari"], "pairs": [["Pita", "futsal"], ["Qori", "tari"]] },
+      "answer": "relasi",
+      "pengecoh": {
+        "fungsi": { "m": "M04", "feedback": "Aturan memilih satu ekskul belum cukup. Data menunjukkan Rafi belum punya pasangan." },
+        "kss": { "m": "M04", "feedback": "Rafi tidak punya pasangan, jadi relasi ini belum fungsi." }
+      },
+      "reasons": [
+        { "text": "Rafi tidak punya pasangan.", "correct": true },
+        { "text": "Setiap siswa diminta memilih satu, jadi pasti fungsi.", "correct": false, "m": "M04" },
+        { "text": "Futsal dan tari masing-masing dipilih satu siswa.", "correct": false, "m": "M07" }
+      ],
+      "hints": ["Nilai relasi dari datanya, bukan dari aturannya saja.", "Siapa yang belum punya pasangan?"],
+      "explanation": "Data menunjukkan Rafi belum memilih ekskul. Ada anggota domain tanpa pasangan, jadi relasi ini bukan fungsi."
+    }
+  ]
+}

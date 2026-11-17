@@ -1,0 +1,33 @@
+{
+  "id": "U1", "title": "Apa itu Relasi?", "sumber": "docs02", "bukuDicek": false,
+  "tujuan": "Kamu bisa menjelaskan relasi dan memberi contohnya.",
+  "makna": "Banyak hubungan sehari-hari bisa dilihat sebagai relasi. Ini langkah awal sebelum memeriksa fungsi.",
+  "layar": [
+    { "tahap": "konsep-sehari-hari", "teks": ["Mira suka membaca dan menggambar.", "Nino suka menggambar.", "Ola suka menyanyi."],
+      "respons": { "prompt": "Bolehkah satu anak menyukai dua kegiatan?", "options": ["Boleh", "Tidak boleh"], "dinilai": false } },
+    { "tahap": "representasi", "teks": ["Hubungan \"suka\" bisa digambar dengan panah dari anak ke kegiatan."],
+      "visual": { "kind": "arrow", "labelA": "Anak", "labelB": "Kegiatan", "A": ["Mira", "Nino", "Ola"], "B": ["membaca", "menggambar", "menyanyi"], "pairs": [["Mira", "membaca"], ["Mira", "menggambar"], ["Nino", "menggambar"], ["Ola", "menyanyi"]] } },
+    { "tahap": "konsep-ilmiah", "definisi": "Relasi dari himpunan A ke himpunan B adalah aturan yang memasangkan anggota-anggota himpunan A dengan anggota-anggota himpunan B.", "sumberDefinisi": "docs/02 §5",
+      "ingat": "Pada relasi, satu anggota A boleh punya beberapa pasangan." },
+    { "tahap": "manipulasi",
+      "contoh": [
+        { "benar": true, "teks": "\"Faktor dari\" dari {2, 3} ke {4, 6, 9}: 2 → 4, 2 → 6, 3 → 6, 3 → 9. Ini relasi.", "visual": { "kind": "arrow", "A": ["2", "3"], "B": ["4", "6", "9"], "pairs": [["2", "4"], ["2", "6"], ["3", "6"], ["3", "9"]] } },
+        { "benar": false, "teks": "Pasangan (2, 7) bukan bagian relasi dari {2, 3} ke {4, 6, 9}, karena 7 bukan anggota B.", "sorot": "7" }
+      ] },
+    { "tahap": "validasi", "soal": ["MT-101", "MT-102", "MT-103"] },
+    { "tahap": "transendensi", "teks": ["\"Ibu kota dari\" dan \"lebih dari\" juga contoh relasi."], "refleksi": "Bagian mana dari definisi relasi yang paling penting menurutmu?" }
+  ],
+  "cekPemahaman": [
+    { "id": "MT-101", "level": "mudah", "type": "tf", "stem": "Pada relasi, satu anggota A boleh punya dua pasangan di B.", "answer": true, "salahM": "M03", "cek": { "kind": "manual", "dasar": "Definisi relasi docs/02 §5 tidak membatasi banyak pasangan." },
+      "hints": ["Ingat contoh Mira.", "Batasan tepat satu pasangan hanya ada pada fungsi."], "explanation": "Benar. Relasi tidak membatasi banyak pasangan. Batasan tepat satu pasangan hanya ada pada fungsi." },
+    { "id": "MT-102", "level": "mudah", "type": "mcq", "stem": "Relasi \"kurang dari\" dibuat dari A = {1, 2} ke B = {2, 3}. Himpunan pasangan berurutannya adalah …",
+      "options": [ { "text": "{(1, 2), (1, 3), (2, 3)}" }, { "text": "{(2, 1), (3, 1), (3, 2)}", "m": "M06" }, { "text": "{(1, 2), (2, 3)}", "m": "M03", "feedback": "1 juga kurang dari 3. Relasi boleh punya lebih dari satu pasangan." } ],
+      "answer": 0, "cek": { "kind": "pasanganAturan", "A": [1, 2], "B": [2, 3], "aturan": "kurangDari", "pairs": [[1, 2], [1, 3], [2, 3]] },
+      "hints": ["Untuk setiap anggota A, cari anggota B yang lebih besar.", "1 kurang dari 2 dan 3."], "explanation": "1 kurang dari 2 dan 3, sedangkan 2 kurang dari 3. Jadi pasangannya {(1, 2), (1, 3), (2, 3)}." },
+    { "id": "MT-103", "level": "sedang", "type": "mcq", "stem": "A = {1, 2} dan B = {a, b}. Manakah yang BUKAN relasi dari A ke B?",
+      "options": [ { "text": "{(1, a), (2, c)}" }, { "text": "{(2, b)}", "m": "M03", "feedback": "Relasi tidak harus memasangkan semua anggota A." }, { "text": "{(1, a), (1, b)}", "m": "M03" } ],
+      "answer": 0, "cek": { "kind": "pilihBukanRelasi", "A": ["1", "2"], "B": ["a", "b"], "opsiPairs": [ [["1", "a"], ["2", "c"]], [["2", "b"]], [["1", "a"], ["1", "b"]] ] },
+      "hints": ["Periksa apakah setiap pasangan memakai anggota A dan anggota B.", "Apakah c anggota B?"], "explanation": "Pasangan (2, c) memakai c, padahal c bukan anggota B. Jadi {(1, a), (2, c)} bukan relasi dari A ke B." }
+  ],
+  "miskonsepsi": ["M03", "M06"]
+}

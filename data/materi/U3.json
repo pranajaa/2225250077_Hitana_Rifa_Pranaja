@@ -1,0 +1,38 @@
+{
+  "id": "U3", "title": "Fungsi: Relasi yang Istimewa", "sumber": "docs02", "bukuDicek": false,
+  "tujuan": "Kamu bisa memeriksa apakah suatu relasi merupakan fungsi, lalu menentukan domain, kodomain, dan daerah hasilnya.",
+  "makna": "Banyak data sekolah berbentuk fungsi. Mengenali fungsi membantumu memilih konsep yang tepat pada soal cerita.",
+  "layar": [
+    { "tahap": "konsep-sehari-hari", "teks": ["Bu Dewi, petugas UKS, mencatat golongan darah empat siswa.", "Setiap orang hanya punya satu golongan darah."],
+      "respons": { "prompt": "Bolehkah dua siswa punya golongan darah yang sama?", "options": ["Boleh", "Tidak boleh"], "dinilai": false } },
+    { "tahap": "representasi", "teks": ["Satu data, tiga bentuk."],
+      "visuals": [
+        { "kind": "table", "columns": ["Siswa", "Golongan darah"], "rows": [["Rani", "A"], ["Bayu", "O"], ["Sari", "A"], ["Tono", "B"]] },
+        { "kind": "arrow", "labelA": "P", "labelB": "G", "A": ["Rani", "Bayu", "Sari", "Tono"], "B": ["A", "B", "AB", "O"], "pairs": [["Rani", "A"], ["Bayu", "O"], ["Sari", "A"], ["Tono", "B"]] },
+        { "kind": "pairs", "pairs": [["Rani", "A"], ["Bayu", "O"], ["Sari", "A"], ["Tono", "B"]] }
+      ] },
+    { "tahap": "konsep-ilmiah", "definisi": "Fungsi (pemetaan) dari A ke B adalah relasi khusus yang memasangkan setiap anggota A dengan tepat satu anggota B.", "sumberDefinisi": "docs/02 §5",
+      "teks": ["A = domain (daerah asal), B = kodomain (daerah kawan).", "Himpunan semua peta disebut daerah hasil (range). Daerah hasil adalah himpunan bagian dari kodomain.", "Pada contoh: domain P, kodomain G = {A, B, AB, O}, daerah hasil {A, B, O}."],
+      "ingat": "Setiap anggota domain punya tepat satu pasangan." },
+    { "tahap": "manipulasi", "contoh": [
+        { "benar": true, "teks": "Data lengkap: fungsi. Rani dan Sari sama-sama A itu boleh.", "m": "M01" },
+        { "benar": false, "teks": "Tono belum diperiksa: Tono tanpa pasangan, jadi bukan fungsi.", "visual": { "kind": "arrow", "A": ["Rani", "Bayu", "Sari", "Tono"], "B": ["A", "B", "AB", "O"], "pairs": [["Rani", "A"], ["Bayu", "O"], ["Sari", "A"]] }, "sorot": "Tono", "m": "M04" },
+        { "benar": false, "teks": "Catatan hobi: Rani suka menari dan menyanyi. Rani punya dua pasangan, jadi relasi ini bukan fungsi.", "visual": { "kind": "arrow", "A": ["Rani", "Bayu", "Sari", "Tono"], "B": ["menari", "menyanyi", "melukis"], "pairs": [["Rani", "menari"], ["Rani", "menyanyi"], ["Bayu", "melukis"], ["Sari", "menyanyi"], ["Tono", "melukis"]] }, "sorot": "Rani", "m": "M03" }
+      ] },
+    { "tahap": "validasi", "soal": ["MT-301", "MT-302", "MT-303"] },
+    { "tahap": "transendensi", "teks": ["Siswa → tanggal lahir dan kota → provinsi juga fungsi."], "refleksi": "Saat memeriksa fungsi, anggota himpunan mana yang kamu periksa satu per satu?" }
+  ],
+  "cekPemahaman": [
+    { "id": "MT-301", "level": "mudah", "type": "tf", "stem": "Golongan darah AB tidak punya pasangan, jadi relasi siswa ke golongan darah bukan fungsi.", "answer": false, "salahM": "M02",
+      "cek": { "kind": "tfFungsi", "model": { "A": ["Rani", "Bayu", "Sari", "Tono"], "B": ["A", "B", "AB", "O"], "pairs": [["Rani", "A"], ["Bayu", "O"], ["Sari", "A"], ["Tono", "B"]] }, "pernyataanBenarJika": "bukan fungsi" },
+      "hints": ["Syarat fungsi berlaku untuk anggota himpunan yang mana?", "Anggota kodomain boleh tidak punya pasangan."], "explanation": "Salah. Syarat fungsi hanya untuk setiap anggota domain P. Anggota kodomain seperti AB boleh tidak punya pasangan." },
+    { "id": "MT-302", "level": "mudah", "type": "set", "stem": "Tentukan daerah hasil relasi golongan darah di atas.", "pilihan": ["A", "B", "AB", "O"], "answer": ["A", "B", "O"], "m": { "AB": "M05" },
+      "cek": { "kind": "daerahHasil", "model": { "A": ["Rani", "Bayu", "Sari", "Tono"], "B": ["A", "B", "AB", "O"], "pairs": [["Rani", "A"], ["Bayu", "O"], ["Sari", "A"], ["Tono", "B"]] } },
+      "hints": ["Lihat ujung panahnya.", "Golongan darah mana yang tidak menerima panah?"], "explanation": "Golongan darah yang menerima panah adalah A, B, dan O. Jadi daerah hasilnya {A, B, O}." },
+    { "id": "MT-303", "level": "sedang", "type": "mcq", "stem": "Fungsi dari P = {1, 2, 3} ke Q = {5, 6, 7, 8}: 1 → 5, 2 → 7, 3 → 7. Pernyataan yang benar adalah …",
+      "options": [ { "text": "Kodomain {5, 6, 7, 8}, daerah hasil {5, 7}" }, { "text": "Kodomain {5, 7}, daerah hasil {5, 6, 7, 8}", "m": "M05" }, { "text": "Domain {5, 6, 7, 8}", "m": "M06" } ],
+      "answer": 0, "cek": { "kind": "domainKodomainDaerahHasil", "model": { "A": ["1", "2", "3"], "B": ["5", "6", "7", "8"], "pairs": [["1", "5"], ["2", "7"], ["3", "7"]] }, "daerahHasil": ["5", "7"] },
+      "hints": ["Kodomain adalah seluruh himpunan tujuan.", "Daerah hasil hanya anggota Q yang punya pasangan."], "explanation": "Kodomainnya seluruh Q = {5, 6, 7, 8}. Yang punya pasangan hanya 5 dan 7, jadi daerah hasilnya {5, 7}." }
+  ],
+  "miskonsepsi": ["M01", "M02", "M03", "M04", "M05"]
+}

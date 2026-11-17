@@ -1,0 +1,264 @@
+{
+  "status": "DRAF — belum dipakai aplikasi; buku siswa/LKS belum dicek (bukuDicek=false)",
+  "bukuDicek": false,
+  "alurRMT": "identifikasi (Input, LF) → karakteristik & konsep & alasan (Elaborasi, LR) → penyelesaian (Elaborasi, LE) → kesimpulan & kewajaran (Output, LI) → refleksi (metakognisi, tidak dinilai)",
+  "fading": { "mudah": "semua langkah dipandu", "sedang": "langkah identifikasi & karakteristik dipandu", "sulit": "hanya langkah konsep dipandu" },
+  "catatanAlasan": "Langkah alasan: siswa menulis alasan sendiri (teks bebas, dinilai guru). Pilihan alasan hanya bantuan dan dinilai otomatis terpisah.",
+  "items": [
+    {
+      "id": "BS-001", "level": "mudah", "unit": "U7", "sumber": "docs02",
+      "stem": "Kelas 8A punya empat loker: L1, L2, L3, dan L4. Wali kelas memberi setiap siswa tepat satu loker: Ani L3, Bayu L1, Citra L4, dan Doni L2. Tidak ada loker yang dipakai dua siswa.",
+      "stemSimple": "Ani L3, Bayu L1, Citra L4, Doni L2. Tidak ada loker yang dipakai dua siswa.",
+      "pertanyaan": "Relasi dari siswa ke loker termasuk konsep apa? Tentukan daerah hasilnya.",
+      "model": { "A": ["Ani", "Bayu", "Citra", "Doni"], "B": ["L1", "L2", "L3", "L4"], "pairs": [["Ani", "L3"], ["Bayu", "L1"], ["Citra", "L4"], ["Doni", "L2"]] },
+      "steps": [
+        { "step": "identifikasi", "type": "highlight", "prompt": "Tandai informasi penting pada soal.", "answer": ["tepat satu loker", "Tidak ada loker yang dipakai dua siswa"] },
+        { "step": "identifikasi", "type": "mcq", "prompt": "Apa yang ditanyakan?", "options": ["Konsep relasi dan daerah hasilnya", "Banyak siswa di kelas 8A"], "answer": 0, "m": { "1": "M05" } },
+        { "step": "karakteristik", "type": "tf", "prompt": "Apakah setiap siswa punya tepat satu loker?", "answer": true, "cek": "setiapA-tepatSatu" },
+        { "step": "karakteristik", "type": "tf", "prompt": "Apakah setiap loker dipakai tepat satu siswa?", "answer": true, "cek": "setiapB-tepatSatu" },
+        { "step": "konsep", "type": "konsep", "prompt": "Relasi ini termasuk …", "answer": "kss", "cek": "klasifikasi", "m": { "relasi": "M03", "fungsi": "M07" } },
+        { "step": "alasan", "type": "reason", "prompt": "Tulis alasanmu. Kamu boleh memakai pilihan di bawah sebagai bantuan.", "freeText": true, "penilaian": "guru",
+          "options": [
+            { "text": "Setiap siswa tepat satu loker dan setiap loker tepat satu siswa.", "correct": true },
+            { "text": "Ada empat siswa dan empat loker.", "correct": false, "m": "M07" },
+            { "text": "Setiap siswa punya loker.", "correct": false, "m": "M07" }
+          ],
+          "rubrikGuru": "Skor penuh bila menyebut dua sisi: setiap siswa tepat satu loker DAN setiap loker tepat satu siswa." },
+        { "step": "penyelesaian", "type": "set", "prompt": "Tentukan daerah hasilnya.", "answer": ["L1", "L2", "L3", "L4"], "cek": "daerahHasil" },
+        { "step": "kesimpulan", "type": "mcq", "prompt": "Apa arti daerah hasil sama dengan kodomain di sini?", "options": ["Semua loker terpakai", "Ada loker yang kosong"], "answer": 0, "m": { "1": "M05" } }
+      ],
+      "refleksi": "Ciri apa yang membedakan soal ini dari fungsi biasa?",
+      "hints": ["Periksa dari sisi siswa, lalu dari sisi loker.", "Hitung berapa siswa di setiap loker."],
+      "explanation": "Setiap siswa punya tepat satu loker, jadi relasinya fungsi. Setiap loker juga dipakai tepat satu siswa, jadi ini korespondensi satu-satu. Daerah hasilnya {L1, L2, L3, L4}."
+    },
+    {
+      "id": "BS-002", "level": "mudah", "unit": "U3", "sumber": "docs02",
+      "stem": "Lima siswa memilih warna kaos kelompok dari merah, biru, atau kuning. Ari merah, Bimo biru, Caca merah, Dani biru, dan Eva merah.",
+      "stemSimple": "Ari merah, Bimo biru, Caca merah, Dani biru, Eva merah. Pilihan: merah, biru, kuning.",
+      "pertanyaan": "Apakah relasi dari siswa ke warna kaos merupakan fungsi? Tentukan daerah hasilnya.",
+      "model": { "A": ["Ari", "Bimo", "Caca", "Dani", "Eva"], "B": ["merah", "biru", "kuning"], "pairs": [["Ari", "merah"], ["Bimo", "biru"], ["Caca", "merah"], ["Dani", "biru"], ["Eva", "merah"]] },
+      "steps": [
+        { "step": "identifikasi", "type": "highlight", "prompt": "Tandai pilihan setiap siswa.", "answer": ["Ari merah", "Bimo biru", "Caca merah", "Dani biru", "Eva merah"] },
+        { "step": "identifikasi", "type": "mcq", "prompt": "Himpunan mana yang menjadi domain?", "options": ["Himpunan siswa", "Himpunan warna kaos"], "answer": 0, "m": { "1": "M06" } },
+        { "step": "karakteristik", "type": "tf", "prompt": "Apakah setiap siswa memilih tepat satu warna?", "answer": true, "cek": "setiapA-tepatSatu" },
+        { "step": "karakteristik", "type": "tf", "prompt": "Apakah setiap warna dipilih tepat satu siswa?", "answer": false, "cek": "setiapB-tepatSatu" },
+        { "step": "konsep", "type": "konsep", "prompt": "Relasi ini termasuk …", "answer": "fungsi", "cek": "klasifikasi", "m": { "relasi": "M01", "kss": "M07" } },
+        { "step": "alasan", "type": "reason", "prompt": "Tulis alasanmu. Kamu boleh memakai pilihan di bawah sebagai bantuan.", "freeText": true, "penilaian": "guru",
+          "options": [
+            { "text": "Setiap siswa tepat satu warna, walaupun beberapa siswa memilih warna sama.", "correct": true },
+            { "text": "Kuning tidak dipilih, jadi bukan fungsi.", "correct": false, "m": "M02" },
+            { "text": "Merah dipilih tiga siswa, jadi bukan fungsi.", "correct": false, "m": "M01" }
+          ],
+          "rubrikGuru": "Skor penuh bila menyebut setiap siswa tepat satu warna, dan menjelaskan bahwa warna sama atau kuning kosong tetap boleh." },
+        { "step": "penyelesaian", "type": "set", "prompt": "Tentukan daerah hasilnya.", "answer": ["merah", "biru"], "cek": "daerahHasil", "m": { "kuning": "M05" } },
+        { "step": "kesimpulan", "type": "mcq", "prompt": "Mengapa kuning tidak masuk daerah hasil?", "options": ["Tidak ada siswa yang memilih kuning", "Kuning bukan anggota kodomain"], "answer": 0, "m": { "1": "M05" } }
+      ],
+      "refleksi": "Bagian mana dari soal yang paling membantumu menentukan konsep?",
+      "hints": ["Periksa pilihan setiap siswa.", "Warna mana saja yang benar-benar dipilih?"],
+      "explanation": "Setiap siswa memilih tepat satu warna, jadi relasinya fungsi. Merah dipilih tiga siswa dan kuning tidak dipilih, jadi bukan korespondensi satu-satu. Daerah hasilnya {merah, biru}."
+    },
+    {
+      "id": "BS-003", "level": "mudah", "unit": "U1", "sumber": "docs02",
+      "stem": "Fajar suka sepak bola dan catur. Gina suka catur. Hana suka renang.",
+      "stemSimple": "Fajar: sepak bola dan catur. Gina: catur. Hana: renang.",
+      "pertanyaan": "Apakah relasi \"suka\" dari {Fajar, Gina, Hana} ke {sepak bola, catur, renang} merupakan fungsi? Siapa yang menentukan jawabannya?",
+      "model": { "A": ["Fajar", "Gina", "Hana"], "B": ["sepak bola", "catur", "renang"], "pairs": [["Fajar", "sepak bola"], ["Fajar", "catur"], ["Gina", "catur"], ["Hana", "renang"]] },
+      "steps": [
+        { "step": "identifikasi", "type": "highlight", "prompt": "Tandai kegemaran setiap anak.", "answer": ["Fajar suka sepak bola dan catur", "Gina suka catur", "Hana suka renang"] },
+        { "step": "karakteristik", "type": "tf", "prompt": "Apakah setiap anak punya pasangan?", "answer": true, "cek": "setiapA-punyaPasangan" },
+        { "step": "karakteristik", "type": "tf", "prompt": "Apakah setiap anak punya tepat satu pasangan?", "answer": false, "cek": "setiapA-tepatSatu" },
+        { "step": "konsep", "type": "konsep", "prompt": "Relasi ini termasuk …", "answer": "relasi", "cek": "klasifikasi", "m": { "fungsi": "M03", "kss": "M03" } },
+        { "step": "alasan", "type": "reason", "prompt": "Tulis alasanmu. Kamu boleh memakai pilihan di bawah sebagai bantuan.", "freeText": true, "penilaian": "guru",
+          "options": [
+            { "text": "Fajar punya dua pasangan.", "correct": true },
+            { "text": "Fajar dan Gina sama-sama suka catur.", "correct": false, "m": "M01" },
+            { "text": "Setiap anak suka sesuatu, jadi fungsi.", "correct": false, "m": "M03" }
+          ],
+          "rubrikGuru": "Skor penuh bila menunjuk Fajar yang punya dua pasangan sebagai pelanggaran syarat fungsi." },
+        { "step": "penyelesaian", "type": "set", "prompt": "Pilih anggota domain yang melanggar syarat fungsi.", "answer": ["Fajar"], "cek": "pelanggaran", "m": { "Gina": "M01" } },
+        { "step": "kesimpulan", "type": "mcq", "prompt": "Pilih kesimpulan yang tepat.", "options": ["Relasi, tetapi bukan fungsi", "Fungsi, karena setiap anak punya kegemaran"], "answer": 0, "m": { "1": "M03" } }
+      ],
+      "refleksi": "Apa yang kamu periksa untuk setiap anak?",
+      "hints": ["Tulis pasangan untuk setiap anak.", "Berapa pasangan yang dimiliki Fajar?"],
+      "explanation": "Fajar dipasangkan dengan sepak bola dan catur. Satu anggota domain punya dua pasangan, jadi relasi ini bukan fungsi."
+    },
+    {
+      "id": "BS-004", "level": "sedang", "unit": "U7", "sumber": "docs02",
+      "stem": "Koperasi sekolah menjual lima barang: pensil Rp2.000, penghapus Rp2.000, penggaris Rp3.000, buku tulis Rp5.000, dan pulpen Rp3.000. Harga barang selalu salah satu dari Rp1.000, Rp2.000, Rp3.000, Rp4.000, atau Rp5.000. Koperasi buka pukul 07.00.",
+      "stemSimple": "Pensil 2.000, penghapus 2.000, penggaris 3.000, buku 5.000, pulpen 3.000. Pilihan harga: 1.000 sampai 5.000.",
+      "pertanyaan": "Apakah relasi \"harga dari\" barang ke daftar harga merupakan fungsi? Apakah korespondensi satu-satu? Tentukan daerah hasilnya.",
+      "model": { "A": ["pensil", "penghapus", "penggaris", "buku tulis", "pulpen"], "B": ["1000", "2000", "3000", "4000", "5000"], "pairs": [["pensil", "2000"], ["penghapus", "2000"], ["penggaris", "3000"], ["buku tulis", "5000"], ["pulpen", "3000"]] },
+      "steps": [
+        { "step": "identifikasi", "type": "highlight", "prompt": "Tandai data yang dibutuhkan. Ada satu data yang tidak dipakai.", "answer": ["pensil Rp2.000", "penghapus Rp2.000", "penggaris Rp3.000", "buku tulis Rp5.000", "pulpen Rp3.000", "Rp1.000, Rp2.000, Rp3.000, Rp4.000, atau Rp5.000"], "pengecoh": ["Koperasi buka pukul 07.00"] },
+        { "step": "karakteristik", "type": "tf", "prompt": "Apakah setiap barang punya tepat satu harga?", "answer": true, "cek": "setiapA-tepatSatu" },
+        { "step": "karakteristik", "type": "tf", "prompt": "Apakah setiap harga dipakai tepat satu barang?", "answer": false, "cek": "setiapB-tepatSatu" },
+        { "step": "konsep", "type": "konsep", "prompt": "Relasi ini termasuk …", "answer": "fungsi", "cek": "klasifikasi", "m": { "relasi": "M02", "kss": "M07" } },
+        { "step": "alasan", "type": "reason", "prompt": "Tulis alasanmu. Kamu boleh memakai pilihan di bawah sebagai bantuan.", "freeText": true, "penilaian": "guru",
+          "options": [
+            { "text": "Setiap barang tepat satu harga, tetapi ada harga yang dipakai dua barang.", "correct": true },
+            { "text": "n(A) = n(B) = 5, jadi pasti korespondensi satu-satu.", "correct": false, "m": "M07" },
+            { "text": "Rp1.000 tidak punya pasangan, jadi bukan fungsi.", "correct": false, "m": "M02" }
+          ],
+          "rubrikGuru": "Skor penuh bila menyebut setiap barang tepat satu harga (fungsi) dan ada harga dipakai dua kali atau tidak dipakai (bukan korespondensi satu-satu)." },
+        { "step": "penyelesaian", "type": "set", "prompt": "Tentukan daerah hasilnya.", "answer": ["2000", "3000", "5000"], "cek": "daerahHasil", "m": { "1000": "M05", "4000": "M05" } },
+        { "step": "kesimpulan", "type": "mcq", "prompt": "Apa arti Rp1.000 dan Rp4.000 tidak masuk daerah hasil?", "options": ["Saat ini tidak ada barang dengan harga itu", "Relasinya menjadi bukan fungsi"], "answer": 0, "m": { "1": "M02" } }
+      ],
+      "refleksi": "Data mana yang kamu abaikan, dan mengapa?",
+      "hints": ["Jam buka koperasi tidak dibutuhkan.", "Periksa barang dulu, lalu periksa harga."],
+      "explanation": "Setiap barang punya tepat satu harga, jadi relasinya fungsi. Banyak barang dan harga sama-sama 5, tetapi Rp2.000 dipakai dua kali dan Rp1.000 tidak dipakai. Daerah hasilnya {Rp2.000, Rp3.000, Rp5.000}."
+    },
+    {
+      "id": "BS-005", "level": "sedang", "unit": "U3", "sumber": "docs02",
+      "stem": "Ruang ujian punya enam kursi, K1 sampai K6. Ira duduk di K2, Jaka di K5, Kara di K1, Lutfi di K6, dan Mega di K3. Kursi K4 kosong.",
+      "stemSimple": "Ira K2, Jaka K5, Kara K1, Lutfi K6, Mega K3. K4 kosong.",
+      "pertanyaan": "Termasuk konsep apa relasi dari siswa ke kursi? Berapa banyak anggota daerah hasilnya?",
+      "model": { "A": ["Ira", "Jaka", "Kara", "Lutfi", "Mega"], "B": ["K1", "K2", "K3", "K4", "K5", "K6"], "pairs": [["Ira", "K2"], ["Jaka", "K5"], ["Kara", "K1"], ["Lutfi", "K6"], ["Mega", "K3"]] },
+      "steps": [
+        { "step": "identifikasi", "type": "highlight", "prompt": "Tandai informasi penting.", "answer": ["enam kursi", "Kursi K4 kosong"] },
+        { "step": "karakteristik", "type": "tf", "prompt": "Apakah setiap siswa duduk di tepat satu kursi?", "answer": true, "cek": "setiapA-tepatSatu" },
+        { "step": "karakteristik", "type": "tf", "prompt": "Apakah setiap kursi ditempati tepat satu siswa?", "answer": false, "cek": "setiapB-tepatSatu" },
+        { "step": "konsep", "type": "konsep", "prompt": "Relasi ini termasuk …", "answer": "fungsi", "cek": "klasifikasi", "m": { "relasi": "M02", "kss": "M07" } },
+        { "step": "alasan", "type": "reason", "prompt": "Tulis alasanmu. Kamu boleh memakai pilihan di bawah sebagai bantuan.", "freeText": true, "penilaian": "guru",
+          "options": [
+            { "text": "Setiap siswa tepat satu kursi, tetapi K4 tidak ditempati.", "correct": true },
+            { "text": "K4 kosong, jadi bukan fungsi.", "correct": false, "m": "M02" },
+            { "text": "Tidak ada dua siswa di kursi yang sama, jadi korespondensi satu-satu.", "correct": false, "m": "M07" }
+          ],
+          "rubrikGuru": "Skor penuh bila menyebut setiap siswa tepat satu kursi dan K4 kosong sehingga bukan korespondensi satu-satu." },
+        { "step": "penyelesaian", "type": "numeric", "prompt": "Berapa banyak anggota daerah hasil?", "answer": 5, "cek": "banyakDaerahHasil", "salahUmum": { "6": "M05" } },
+        { "step": "kesimpulan", "type": "mcq", "prompt": "Apa arti selisih 6 − 5 = 1?", "options": ["Ada satu kursi yang bukan anggota daerah hasil", "Ada satu siswa yang tidak mendapat kursi"], "answer": 0, "m": { "1": "M06" } }
+      ],
+      "refleksi": "Bagaimana kamu memastikan tidak ada siswa yang terlewat?",
+      "hints": ["Daerah hasil adalah kursi yang ditempati.", "Hitung kursi yang ditempati, bukan semua kursi."],
+      "explanation": "Setiap siswa punya tepat satu kursi, jadi relasinya fungsi. K4 kosong, jadi bukan korespondensi satu-satu. Daerah hasil berisi 5 kursi yang ditempati."
+    },
+    {
+      "id": "BS-006", "level": "sedang", "unit": "U3", "sumber": "docs02",
+      "stem": "Tabel kota dan provinsi: Medan di Sumatera Utara, Padang di Sumatera Barat, Bukittinggi di Sumatera Barat, dan Pekanbaru di Riau. Kodomain yang dipakai adalah {Sumatera Utara, Sumatera Barat, Riau, Jambi}.",
+      "stemSimple": "Medan–Sumut, Padang–Sumbar, Bukittinggi–Sumbar, Pekanbaru–Riau. Kodomain: Sumut, Sumbar, Riau, Jambi.",
+      "pertanyaan": "Tentukan konsep yang tepat, lalu tentukan domain, kodomain, dan daerah hasilnya.",
+      "model": { "A": ["Medan", "Padang", "Bukittinggi", "Pekanbaru"], "B": ["Sumatera Utara", "Sumatera Barat", "Riau", "Jambi"], "pairs": [["Medan", "Sumatera Utara"], ["Padang", "Sumatera Barat"], ["Bukittinggi", "Sumatera Barat"], ["Pekanbaru", "Riau"]] },
+      "steps": [
+        { "step": "identifikasi", "type": "mcq", "prompt": "Apa yang ditanyakan?", "options": ["Konsep, domain, kodomain, dan daerah hasil", "Jarak antarkota"], "answer": 0, "m": { "1": "M05" } },
+        { "step": "karakteristik", "type": "tf", "prompt": "Apakah setiap kota berada di tepat satu provinsi?", "answer": true, "cek": "setiapA-tepatSatu" },
+        { "step": "karakteristik", "type": "tf", "prompt": "Apakah setiap provinsi dipasangkan tepat satu kali?", "answer": false, "cek": "setiapB-tepatSatu" },
+        { "step": "konsep", "type": "konsep", "prompt": "Relasi ini termasuk …", "answer": "fungsi", "cek": "klasifikasi", "m": { "relasi": "M02", "kss": "M07" } },
+        { "step": "alasan", "type": "reason", "prompt": "Tulis alasanmu. Kamu boleh memakai pilihan di bawah sebagai bantuan.", "freeText": true, "penilaian": "guru",
+          "options": [
+            { "text": "Setiap kota tepat satu provinsi.", "correct": true },
+            { "text": "Jambi tidak punya pasangan, jadi bukan fungsi.", "correct": false, "m": "M02" },
+            { "text": "Padang dan Bukittinggi satu provinsi, jadi bukan fungsi.", "correct": false, "m": "M01" }
+          ],
+          "rubrikGuru": "Skor penuh bila menyebut setiap kota tepat satu provinsi; nilai tambah bila menjelaskan Jambi kosong tetap boleh." },
+        { "step": "penyelesaian", "type": "set-triple", "prompt": "Tentukan domain, kodomain, dan daerah hasil.",
+          "answer": { "domain": ["Medan", "Padang", "Bukittinggi", "Pekanbaru"], "kodomain": ["Sumatera Utara", "Sumatera Barat", "Riau", "Jambi"], "daerahHasil": ["Sumatera Utara", "Sumatera Barat", "Riau"] },
+          "cek": "domain-kodomain-daerahHasil", "m": { "daerahHasil+Jambi": "M05" } },
+        { "step": "kesimpulan", "type": "mcq", "prompt": "Mengapa Jambi ada di kodomain tetapi tidak di daerah hasil?", "options": ["Tidak ada kota di data yang berada di Jambi", "Jambi bukan provinsi"], "answer": 0, "m": { "1": "M05" } }
+      ],
+      "refleksi": "Bagaimana kamu membedakan kodomain dan daerah hasil?",
+      "hints": ["Kodomain sudah disebut di soal.", "Daerah hasil hanya provinsi yang punya pasangan."],
+      "explanation": "Setiap kota berada di tepat satu provinsi, jadi relasinya fungsi. Kodomainnya empat provinsi. Daerah hasilnya {Sumatera Utara, Sumatera Barat, Riau}, karena Jambi tidak punya pasangan."
+    },
+    {
+      "id": "BS-007", "level": "sedang", "unit": "U2", "sumber": "docs02",
+      "stem": "Jadwal les matematika: Senin diajar Pak Rudi, Selasa Bu Sari, Rabu Pak Rudi, dan Kamis Bu Tini. Wali kelas membuat relasi \"mengajar pada hari\" dari himpunan guru ke himpunan hari.",
+      "stemSimple": "Senin Pak Rudi, Selasa Bu Sari, Rabu Pak Rudi, Kamis Bu Tini. Relasi dari guru ke hari.",
+      "pertanyaan": "Apakah relasi dari himpunan guru ke himpunan hari merupakan fungsi?",
+      "model": { "A": ["Pak Rudi", "Bu Sari", "Bu Tini"], "B": ["Senin", "Selasa", "Rabu", "Kamis"], "pairs": [["Pak Rudi", "Senin"], ["Bu Sari", "Selasa"], ["Pak Rudi", "Rabu"], ["Bu Tini", "Kamis"]] },
+      "steps": [
+        { "step": "identifikasi", "type": "mcq", "prompt": "Himpunan mana yang menjadi domain?", "options": ["Himpunan guru", "Himpunan hari"], "answer": 0, "m": { "1": "M06" } },
+        { "step": "identifikasi", "type": "mcq", "prompt": "Pasangan berurutan mana yang ditulis dengan benar?", "options": ["(Pak Rudi, Senin)", "(Senin, Pak Rudi)"], "answer": 0, "m": { "1": "M06" } },
+        { "step": "karakteristik", "type": "tf", "prompt": "Apakah setiap guru punya tepat satu hari?", "answer": false, "cek": "setiapA-tepatSatu" },
+        { "step": "konsep", "type": "konsep", "prompt": "Relasi dari guru ke hari termasuk …", "answer": "relasi", "cek": "klasifikasi", "m": { "fungsi": "M06", "kss": "M06" } },
+        { "step": "alasan", "type": "reason", "prompt": "Tulis alasanmu. Kamu boleh memakai pilihan di bawah sebagai bantuan.", "freeText": true, "penilaian": "guru",
+          "options": [
+            { "text": "Pak Rudi punya dua pasangan, yaitu Senin dan Rabu.", "correct": true },
+            { "text": "Setiap hari punya tepat satu guru, jadi fungsi.", "correct": false, "m": "M06" },
+            { "text": "Bu Sari dan Bu Tini masing-masing satu hari.", "correct": false, "m": "M03" }
+          ],
+          "rubrikGuru": "Skor penuh bila menunjuk Pak Rudi dengan dua pasangan dan menyadari domainnya himpunan guru." },
+        { "step": "penyelesaian", "type": "set", "prompt": "Pilih anggota domain yang melanggar syarat fungsi.", "answer": ["Pak Rudi"], "cek": "pelanggaran" },
+        { "step": "kesimpulan", "type": "mcq", "prompt": "Jika arahnya dibalik menjadi dari hari ke guru, relasinya …", "options": ["Fungsi, karena setiap hari tepat satu guru", "Tetap bukan fungsi"], "answer": 0, "cek": "klasifikasi-dibalik", "m": { "1": "M06" } }
+      ],
+      "refleksi": "Mengapa arah relasi penting saat menentukan konsep?",
+      "hints": ["Domainnya himpunan guru, bukan hari.", "Berapa hari yang dimiliki Pak Rudi?"],
+      "explanation": "Dari guru ke hari, Pak Rudi punya dua pasangan, jadi relasinya bukan fungsi. Jika arahnya dari hari ke guru, setiap hari punya tepat satu guru, jadi relasi itu fungsi."
+    },
+    {
+      "id": "BS-008", "level": "sulit", "unit": "U7", "sumber": "docs02",
+      "stem": "Panitia study tour membuat dua rencana kamar untuk Nia, Oki, dan Pia. Kamar yang tersedia K1, K2, dan K3. Rencana 1: Nia K1, Oki K2, Pia K3. Rencana 2: Nia K1, Oki K1, Pia K3.",
+      "stemSimple": "Rencana 1: Nia K1, Oki K2, Pia K3. Rencana 2: Nia K1, Oki K1, Pia K3.",
+      "pertanyaan": "Tentukan konsep pada setiap rencana. Rencana mana yang membuat setiap kamar dihuni tepat satu siswa?",
+      "models": {
+        "rencana1": { "A": ["Nia", "Oki", "Pia"], "B": ["K1", "K2", "K3"], "pairs": [["Nia", "K1"], ["Oki", "K2"], ["Pia", "K3"]] },
+        "rencana2": { "A": ["Nia", "Oki", "Pia"], "B": ["K1", "K2", "K3"], "pairs": [["Nia", "K1"], ["Oki", "K1"], ["Pia", "K3"]] }
+      },
+      "steps": [
+        { "step": "identifikasi", "type": "mcq", "prompt": "Apa yang dibandingkan?", "options": ["Dua rencana pembagian kamar", "Harga dua kamar"], "answer": 0, "m": { "1": "M05" } },
+        { "step": "karakteristik", "type": "tf", "prompt": "Pada kedua rencana, apakah setiap siswa punya tepat satu kamar?", "answer": true, "cek": "setiapA-tepatSatu@semua" },
+        { "step": "karakteristik", "type": "tf", "prompt": "Pada Rencana 2, apakah setiap kamar dihuni tepat satu siswa?", "answer": false, "cek": "setiapB-tepatSatu@rencana2" },
+        { "step": "konsep", "type": "konsep", "prompt": "Rencana 1 termasuk …", "answer": "kss", "cek": "klasifikasi@rencana1", "m": { "relasi": "M03", "fungsi": "M07" } },
+        { "step": "konsep", "type": "konsep", "prompt": "Rencana 2 termasuk …", "answer": "fungsi", "cek": "klasifikasi@rencana2", "m": { "relasi": "M01", "kss": "M07" } },
+        { "step": "alasan", "type": "reason", "prompt": "Tulis alasan perbedaan kedua rencana.", "freeText": true, "penilaian": "guru",
+          "options": [
+            { "text": "Pada Rencana 2, K1 dihuni dua siswa dan K2 kosong.", "correct": true },
+            { "text": "Pada Rencana 2, Oki punya dua kamar.", "correct": false, "m": "M06" },
+            { "text": "Kedua rencana sama karena jumlah siswa dan kamar sama.", "correct": false, "m": "M07" }
+          ],
+          "rubrikGuru": "Skor penuh bila menjelaskan kedua rencana fungsi, dan hanya Rencana 1 yang setiap kamarnya dihuni tepat satu siswa." },
+        { "step": "kesimpulan", "type": "mcq", "prompt": "Rencana mana yang membuat setiap kamar dihuni tepat satu siswa?", "options": ["Rencana 1", "Rencana 2", "Keduanya"], "answer": 0, "m": { "1": "M07", "2": "M07" } }
+      ],
+      "refleksi": "Ciri mana yang kamu pakai untuk membedakan kedua rencana?",
+      "hints": ["Kedua rencana sama-sama fungsi. Bedanya ada di sisi kamar.", "Berapa siswa di K1 pada Rencana 2?"],
+      "explanation": "Pada kedua rencana, setiap siswa punya tepat satu kamar, jadi keduanya fungsi. Pada Rencana 1, setiap kamar dihuni tepat satu siswa, jadi korespondensi satu-satu. Pada Rencana 2, K1 dihuni dua siswa."
+    },
+    {
+      "id": "BS-009", "level": "sulit", "unit": "U4", "sumber": "docs02",
+      "stem": "Setiap siswa wajib memilih satu ekstrakurikuler: futsal, tari, atau pramuka. Data sementara: Ari futsal, Bela tari, dan Cahyo futsal. Dita belum mengisi formulir.",
+      "stemSimple": "Ari futsal, Bela tari, Cahyo futsal. Dita belum memilih. Pilihan: futsal, tari, pramuka.",
+      "pertanyaan": "Berdasarkan data sementara, apakah relasi dari siswa ke ekstrakurikuler merupakan fungsi? Apa yang harus terjadi agar menjadi fungsi?",
+      "model": { "A": ["Ari", "Bela", "Cahyo", "Dita"], "B": ["futsal", "tari", "pramuka"], "pairs": [["Ari", "futsal"], ["Bela", "tari"], ["Cahyo", "futsal"]] },
+      "steps": [
+        { "step": "identifikasi", "type": "mcq", "prompt": "Data mana yang dinilai?", "options": ["Data sementara yang sudah tercatat", "Aturan wajib memilih satu"], "answer": 0, "m": { "1": "M04" } },
+        { "step": "karakteristik", "type": "tf", "prompt": "Apakah setiap siswa sudah punya pasangan?", "answer": false, "cek": "setiapA-punyaPasangan" },
+        { "step": "konsep", "type": "konsep", "prompt": "Berdasarkan data sementara, relasi ini termasuk …", "answer": "relasi", "cek": "klasifikasi", "m": { "fungsi": "M04", "kss": "M04" } },
+        { "step": "alasan", "type": "reason", "prompt": "Tulis alasanmu. Kamu boleh memakai pilihan di bawah sebagai bantuan.", "freeText": true, "penilaian": "guru",
+          "options": [
+            { "text": "Dita belum punya pasangan.", "correct": true },
+            { "text": "Pramuka belum dipilih siapa pun.", "correct": false, "m": "M02" },
+            { "text": "Ari dan Cahyo sama-sama memilih futsal.", "correct": false, "m": "M01" }
+          ],
+          "rubrikGuru": "Skor penuh bila menunjuk Dita sebagai anggota domain tanpa pasangan." },
+        { "step": "penyelesaian", "type": "mcq", "prompt": "Apa yang harus terjadi agar relasinya menjadi fungsi?", "options": ["Dita memilih tepat satu ekstrakurikuler", "Dita memilih dua ekstrakurikuler", "Ada siswa yang memilih pramuka"], "answer": 0, "cek": "hipotesis-tambahPasangan", "m": { "1": "M03", "2": "M02" } },
+        { "step": "kesimpulan", "type": "mcq", "prompt": "Jika Dita memilih pramuka, apakah relasinya korespondensi satu-satu?", "options": ["Tidak, karena futsal dipilih dua siswa", "Ya, karena semua ekstrakurikuler terpilih"], "answer": 0, "cek": "hipotesis-kss", "m": { "1": "M07" } }
+      ],
+      "refleksi": "Mengapa kita menilai dari data, bukan hanya dari aturannya?",
+      "hints": ["Aturan belum tentu sudah dijalankan. Periksa datanya.", "Siapa yang belum punya pasangan?"],
+      "explanation": "Dita belum punya pasangan, jadi relasi pada data sementara bukan fungsi. Jika Dita memilih tepat satu ekstrakurikuler, relasinya menjadi fungsi. Futsal tetap dipilih dua siswa, jadi bukan korespondensi satu-satu."
+    },
+    {
+      "id": "BS-010", "level": "sulit", "unit": "U3", "sumber": "docs02",
+      "stem": "Siswa mengukur tinggi tanaman setiap minggu. Minggu 1: 5 cm, minggu 2: 7 cm, minggu 3: 7 cm, minggu 4: 10 cm. Kodomain yang dipakai {5, 6, 7, 8, 9, 10} cm.",
+      "stemSimple": "Minggu 1: 5, minggu 2: 7, minggu 3: 7, minggu 4: 10. Kodomain {5, 6, 7, 8, 9, 10}.",
+      "pertanyaan": "Apakah relasi dari minggu ke tinggi tanaman merupakan fungsi? Tentukan daerah hasilnya dan jelaskan artinya.",
+      "model": { "A": ["1", "2", "3", "4"], "B": ["5", "6", "7", "8", "9", "10"], "pairs": [["1", "5"], ["2", "7"], ["3", "7"], ["4", "10"]] },
+      "steps": [
+        { "step": "identifikasi", "type": "mcq", "prompt": "Pasangan berurutan untuk minggu 2 adalah …", "options": ["(2, 7)", "(7, 2)"], "answer": 0, "m": { "1": "M06" } },
+        { "step": "karakteristik", "type": "tf", "prompt": "Apakah setiap minggu punya tepat satu tinggi?", "answer": true, "cek": "setiapA-tepatSatu" },
+        { "step": "konsep", "type": "konsep", "prompt": "Relasi ini termasuk …", "answer": "fungsi", "cek": "klasifikasi", "m": { "relasi": "M01", "kss": "M07" } },
+        { "step": "alasan", "type": "reason", "prompt": "Tulis alasanmu. Kamu boleh memakai pilihan di bawah sebagai bantuan.", "freeText": true, "penilaian": "guru",
+          "options": [
+            { "text": "Setiap minggu tepat satu tinggi, walaupun minggu 2 dan 3 sama-sama 7 cm.", "correct": true },
+            { "text": "Tinggi 7 cm muncul dua kali, jadi bukan fungsi.", "correct": false, "m": "M01" },
+            { "text": "6, 8, dan 9 tidak punya pasangan, jadi bukan fungsi.", "correct": false, "m": "M02" }
+          ],
+          "rubrikGuru": "Skor penuh bila menyebut setiap minggu tepat satu tinggi dan menjelaskan nilai 7 yang sama tetap boleh." },
+        { "step": "penyelesaian", "type": "set", "prompt": "Tentukan daerah hasilnya.", "answer": ["5", "7", "10"], "cek": "daerahHasil", "m": { "6": "M05", "8": "M05", "9": "M05" } },
+        { "step": "kesimpulan", "type": "mcq", "prompt": "Apa arti 6, 8, dan 9 tidak masuk daerah hasil?", "options": ["Tanaman tidak pernah tercatat setinggi itu saat diukur", "Pengukurannya salah"], "answer": 0, "m": { "1": "M05" } }
+      ],
+      "refleksi": "Apakah hasilmu masuk akal untuk tanaman yang tumbuh? Jelaskan.",
+      "hints": ["Domainnya himpunan minggu.", "Daerah hasil hanya tinggi yang benar-benar tercatat."],
+      "explanation": "Setiap minggu punya tepat satu tinggi, jadi relasinya fungsi. Daerah hasilnya {5, 7, 10}. Tinggi 6, 8, dan 9 ada di kodomain, tetapi tidak tercatat saat pengukuran."
+    }
+  ]
+}
