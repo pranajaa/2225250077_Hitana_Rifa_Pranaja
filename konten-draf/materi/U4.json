@@ -1,0 +1,35 @@
+{
+  "id": "U4", "title": "Fungsi atau Bukan?", "sumber": "docs02", "bukuDicek": false,
+  "tujuan": "Kamu bisa membedakan fungsi dan bukan fungsi dalam diagram panah, pasangan berurutan, dan diagram Cartesius.",
+  "makna": "Inilah kunci menentukan konsep: memeriksa syarat fungsi dengan teliti, apa pun bentuk soalnya.",
+  "layar": [
+    { "tahap": "konsep-sehari-hari", "teks": ["Setiap siswa di kelasmu punya satu nomor absen.", "Apakah setiap siswa hanya punya satu makanan favorit?"],
+      "respons": { "prompt": "Mana yang lebih pasti \"tepat satu\": nomor absen atau makanan favorit?", "options": ["Nomor absen", "Makanan favorit"], "dinilai": false } },
+    { "tahap": "representasi", "teks": ["Daftar Periksa Ciri-ciri adalah alat berpikirmu."],
+      "daftarPeriksa": ["Apakah ada aturan yang memasangkan anggota A dengan anggota B? → relasi", "Apakah setiap anggota A punya pasangan?", "Apakah setiap anggota A punya tepat satu pasangan? → jika ya dan ya: fungsi", "Apakah setiap anggota B juga dipasangkan tepat satu kali? → jika ya: korespondensi satu-satu"], "sumberDaftar": "docs/02 §5" },
+    { "tahap": "konsep-ilmiah", "definisi": "Pada fungsi BOLEH dua anggota A berpasangan dengan anggota B yang sama, dan BOLEH ada anggota B yang tidak punya pasangan. TIDAK BOLEH ada anggota A tanpa pasangan, atau satu anggota A punya lebih dari satu pasangan.", "sumberDefinisi": "docs/02 §5",
+      "teks": ["Uji garis vertikal: relasi adalah fungsi jika setiap garis vertikal di x anggota A memotong grafik tepat satu kali."], "ingat": "Dua boleh, dua tidak boleh." },
+    { "tahap": "manipulasi", "contoh": [
+        { "benar": true, "teks": "{(1, a), (2, a), (3, b)}: dua anggota menuju a itu boleh.", "visual": { "kind": "arrow", "A": ["1", "2", "3"], "B": ["a", "b", "c"], "pairs": [["1", "a"], ["2", "a"], ["3", "b"]] }, "m": "M01" },
+        { "benar": false, "teks": "{(1, a), (1, b), (2, c), (3, c)}: 1 punya dua pasangan.", "visual": { "kind": "arrow", "A": ["1", "2", "3"], "B": ["a", "b", "c"], "pairs": [["1", "a"], ["1", "b"], ["2", "c"], ["3", "c"]] }, "sorot": "1" },
+        { "benar": false, "teks": "{(1, a), (2, b)}: 3 tidak punya pasangan.", "visual": { "kind": "arrow", "A": ["1", "2", "3"], "B": ["a", "b", "c"], "pairs": [["1", "a"], ["2", "b"]] }, "sorot": "3", "m": "M04" },
+        { "benar": false, "teks": "Titik (2, 1) dan (2, 3): garis tegak di x = 2 memotong dua kali.", "visual": { "kind": "cartesian", "A": ["1", "2", "3"], "B": ["1", "2", "3"], "pairs": [["1", "2"], ["2", "1"], ["2", "3"], ["3", "2"]] }, "sorot": "2", "m": "M09" }
+      ] },
+    { "tahap": "validasi", "soal": ["MT-401", "MT-402", "MT-403"] },
+    { "tahap": "transendensi", "teks": ["Daftar periksa yang sama dipakai di Kenali Konsep dan Bedah Soal."], "refleksi": "Ciri mana yang paling sering kamu lupakan?" }
+  ],
+  "cekPemahaman": [
+    { "id": "MT-401", "level": "mudah", "type": "mcq", "stem": "Diagram panah dari A = {1, 2, 3} ke B = {a, b}: 1 → a, 2 → a, 3 → b. Relasi ini …",
+      "options": [ { "text": "Fungsi" }, { "text": "Bukan fungsi, karena 1 dan 2 menuju a", "m": "M01" } ], "answer": 0,
+      "cek": { "kind": "klasifikasi", "jawaban": "fungsi", "model": { "A": ["1", "2", "3"], "B": ["a", "b"], "pairs": [["1", "a"], ["2", "a"], ["3", "b"]] } },
+      "hints": ["Hitung panah yang keluar dari setiap anggota A.", "Dua panah menuju a itu dilarang atau boleh?"], "explanation": "Setiap anggota A punya tepat satu pasangan, jadi relasinya fungsi. Dua anggota menuju a itu boleh." },
+    { "id": "MT-402", "level": "mudah", "type": "tf", "stem": "Titik (1, 2), (2, 2), dan (2, 4) pada diagram Cartesius membentuk fungsi dari {1, 2} ke {2, 4}.", "answer": false, "salahM": "M09",
+      "cek": { "kind": "tfFungsi", "model": { "A": ["1", "2"], "B": ["2", "4"], "pairs": [["1", "2"], ["2", "2"], ["2", "4"]] } },
+      "hints": ["Gunakan uji garis vertikal.", "Berapa titik di x = 2?"], "explanation": "Salah. Di x = 2 ada dua titik, (2, 2) dan (2, 4). Jadi relasinya bukan fungsi." },
+    { "id": "MT-403", "level": "sedang", "type": "mcq", "stem": "A = {p, q, r} dan B = {1, 2}. Manakah yang merupakan fungsi dari A ke B?",
+      "options": [ { "text": "{(p, 2), (q, 2), (r, 2)}" }, { "text": "{(p, 1), (q, 2)}", "m": "M04" }, { "text": "{(p, 1), (p, 2), (q, 1), (r, 2)}", "m": "M03" } ], "answer": 0,
+      "cek": { "kind": "pilihFungsi", "A": ["p", "q", "r"], "B": ["1", "2"], "opsiPairs": [ [["p", "2"], ["q", "2"], ["r", "2"]], [["p", "1"], ["q", "2"]], [["p", "1"], ["p", "2"], ["q", "1"], ["r", "2"]] ] },
+      "hints": ["Periksa p, q, dan r pada setiap pilihan.", "Semua menuju 2 itu boleh."], "explanation": "Pada pilihan pertama, p, q, dan r masing-masing punya tepat satu pasangan. Pilihan kedua: r tanpa pasangan. Pilihan ketiga: p punya dua pasangan." }
+  ],
+  "miskonsepsi": ["M01", "M02", "M03", "M04", "M09"]
+}

@@ -1,0 +1,306 @@
+{
+  "status": "DRAF — belum dipakai aplikasi; buku siswa/LKS belum dicek (bukuDicek=false)",
+  "bukuDicek": false,
+  "cakupan": "Indikator penilaian hanya relasi, fungsi, domain, kodomain, dan range/daerah hasil (keputusan pemilik). Banyak pemetaan, korespondensi satu-satu, dan nilai fungsi tidak dinilai di Misi Literasi.",
+  "penilaian": "Skor parsial per tahap. Tahap dengan penilaian 'guru' (alasan tertulis) tidak dinilai otomatis; skor misi menunggu penilaian guru untuk tahap itu. Jumlah skor tahap = maxScore = 6.",
+  "items": [
+    {
+      "id": "LM-001", "indicator": "LR", "context": "sekolah", "level": "sedang", "sumber": "kisi-kisi",
+      "title": "Pilihan Ekstrakurikuler",
+      "stem": "Dalam sebuah kegiatan ekstrakurikuler, terdapat empat siswa, yaitu Andi, Budi, Citra, dan Deni, serta tiga pilihan ekstrakurikuler, yaitu Basket, Futsal, dan Voli. Diperoleh dua kondisi pembagian ekstrakurikuler sebagai berikut: Kondisi A: Andi memilih Basket, Budi memilih Futsal, Citra memilih Basket, dan Deni memilih Voli. Kondisi B: Andi memilih Basket, Budi memilih Futsal, Citra memilih Basket dan Voli, sedangkan Deni memilih Voli. Berdasarkan kedua kondisi tersebut, tentukan kondisi manakah yang merupakan fungsi dari himpunan siswa ke himpunan ekstrakurikuler. Jelaskan alasan Anda dengan menggunakan konsep relasi dan fungsi.",
+      "stemSimple": "Kondisi A: Andi Basket, Budi Futsal, Citra Basket, Deni Voli. Kondisi B: sama, tetapi Citra memilih Basket dan Voli. Mana yang fungsi?",
+      "models": {
+        "kondisiA": { "A": ["Andi", "Budi", "Citra", "Deni"], "B": ["Basket", "Futsal", "Voli"], "pairs": [["Andi", "Basket"], ["Budi", "Futsal"], ["Citra", "Basket"], ["Deni", "Voli"]] },
+        "kondisiB": { "A": ["Andi", "Budi", "Citra", "Deni"], "B": ["Basket", "Futsal", "Voli"], "pairs": [["Andi", "Basket"], ["Budi", "Futsal"], ["Citra", "Basket"], ["Citra", "Voli"], ["Deni", "Voli"]] }
+      },
+      "stages": [
+        { "n": 1, "score": 1, "rmt": "input", "prompt": "Tentukan domain (daerah asal) dan kodomain (daerah kawan).", "type": "set-pair",
+          "answer": { "domain": ["Andi", "Budi", "Citra", "Deni"], "kodomain": ["Basket", "Futsal", "Voli"] }, "m": { "tertukar": "M06" } },
+        { "n": 2, "score": 2, "rmt": "input", "prompt": "Susun pasangan berurutan untuk Kondisi A dan Kondisi B.", "type": "pairs-multi",
+          "answer": { "kondisiA": "models.kondisiA.pairs", "kondisiB": "models.kondisiB.pairs" }, "skorParsial": "1 per kondisi yang benar", "m": { "terbalik": "M06" } },
+        { "n": 3, "score": 1, "rmt": "elaborasi", "prompt": "Bandingkan kedua kondisi. Apa yang berbeda pada Kondisi B?", "type": "mcq",
+          "options": ["Citra memiliki dua pasangan ekstrakurikuler", "Basket dipilih dua siswa", "Voli dipilih dua siswa"], "answer": 0, "m": { "1": "M01", "2": "M01" } },
+        { "n": 4, "score": 1, "rmt": "elaborasi", "prompt": "Kondisi mana yang merupakan fungsi?", "type": "mcq",
+          "options": ["Kondisi A fungsi, Kondisi B hanya relasi", "Kondisi B fungsi, Kondisi A hanya relasi", "Keduanya fungsi", "Keduanya bukan fungsi"], "answer": 0,
+          "m": { "1": "M03", "2": "M03", "3": "M01" }, "cek": { "kondisiA": "fungsi", "kondisiB": "relasi" } },
+        { "n": 5, "score": 1, "rmt": "output", "prompt": "Tuliskan alasanmu dengan konsep relasi dan fungsi.", "type": "reason", "freeText": true, "penilaian": "guru",
+          "bantuan": ["Setiap anggota domain pada Kondisi A punya tepat satu pasangan.", "Pada Kondisi B, Citra punya dua pasangan."],
+          "rubrikGuru": "1: menyebut syarat fungsi (setiap anggota domain tepat satu pasangan) dan menunjuk Citra pada Kondisi B. 0: alasan tidak memakai syarat fungsi." }
+      ],
+      "maxScore": 6,
+      "hints": ["Tuliskan pasangan setiap siswa pada kedua kondisi.", "Periksa siswa yang pasangannya berbeda antara kedua kondisi."],
+      "modelAnswer": "Kondisi A merupakan fungsi, sedangkan Kondisi B hanya merupakan relasi dan bukan fungsi. Suatu relasi disebut fungsi apabila setiap anggota domain memiliki tepat satu pasangan di kodomain. Kondisi B tidak memenuhi syarat fungsi karena Citra memiliki lebih dari satu pasangan.",
+      "refleksi": "Bagaimana caramu membandingkan dua kondisi dengan rapi?"
+    },
+    {
+      "id": "LM-002", "indicator": "LF", "context": "sekolah", "level": "sedang", "sumber": "kisi-kisi",
+      "title": "Peminjaman Buku Perpustakaan",
+      "stem": "Dalam suatu kelas terdapat empat siswa yang mengikuti kegiatan peminjaman buku di perpustakaan. Setiap siswa dicatat berdasarkan jumlah buku yang dipinjam dalam satu kali kunjungan. Diperoleh data sebagai berikut: Rina 2, Sinta 3, Dika 2, Fajar 4. Berdasarkan informasi tersebut, susunlah model matematika yang dapat menggambarkan hubungan antara siswa dan jumlah buku yang dipinjam. Nyatakan dalam bentuk himpunan, pasangan berurutan, dan diagram panah. Kemudian, tentukan apakah hubungan tersebut merupakan fungsi atau bukan.",
+      "stemSimple": "Rina 2 buku, Sinta 3, Dika 2, Fajar 4. Buat himpunan, pasangan berurutan, dan diagram panah. Fungsi atau bukan?",
+      "model": { "A": ["Rina", "Sinta", "Dika", "Fajar"], "B": ["2", "3", "4"], "pairs": [["Rina", "2"], ["Sinta", "3"], ["Dika", "2"], ["Fajar", "4"]] },
+      "stages": [
+        { "n": 1, "score": 1, "rmt": "input", "prompt": "Informasi apa yang diketahui?", "type": "mcq",
+          "options": ["Empat nama siswa dan jumlah buku yang dipinjam masing-masing", "Judul buku yang dipinjam", "Jumlah kunjungan setiap siswa"], "answer": 0, "m": { "1": "M05", "2": "M05" } },
+        { "n": 2, "score": 1, "rmt": "input", "prompt": "Bentuk himpunan siswa A dan himpunan jumlah buku B.", "type": "set-pair",
+          "answer": { "domain": ["Rina", "Sinta", "Dika", "Fajar"], "kodomain": ["2", "3", "4"] }, "m": { "tertukar": "M06" } },
+        { "n": 3, "score": 1, "rmt": "elaborasi", "prompt": "Tentukan pasangan berurutan berdasarkan data.", "type": "pairs", "answer": "model.pairs", "m": { "terbalik": "M06" } },
+        { "n": 4, "score": 1, "rmt": "elaborasi", "prompt": "Pilih diagram panah yang sesuai dengan data, lalu pilih alasanmu.", "type": "diagram-choice",
+          "diagrams": [
+            { "label": "Diagram P", "A": ["Rina", "Sinta", "Dika", "Fajar"], "B": ["2", "3", "4"], "pairs": [["Rina", "2"], ["Sinta", "3"], ["Dika", "2"], ["Fajar", "4"]] },
+            { "label": "Diagram Q", "A": ["2", "3", "4"], "B": ["Rina", "Sinta", "Dika", "Fajar"], "pairs": [["2", "Rina"], ["3", "Sinta"], ["2", "Dika"], ["4", "Fajar"]], "m": "M06" },
+            { "label": "Diagram R", "A": ["Rina", "Sinta", "Dika", "Fajar"], "B": ["2", "3", "4"], "pairs": [["Rina", "2"], ["Sinta", "3"], ["Fajar", "4"]], "m": "M01", "feedback": "Dika juga meminjam 2 buku. Dua siswa boleh menuju angka yang sama." }
+          ],
+          "answer": 0,
+          "reasons": [
+            { "text": "Panah keluar dari setiap siswa menuju jumlah buku yang dipinjamnya, termasuk Rina dan Dika ke 2.", "correct": true },
+            { "text": "Panah keluar dari jumlah buku menuju siswa.", "correct": false, "m": "M06" },
+            { "text": "Angka 2 hanya boleh menerima satu panah.", "correct": false, "m": "M01" }
+          ],
+          "skorJika": "diagram DAN alasan benar (mencegah menebak)" },
+        { "n": 5, "score": 1, "rmt": "elaborasi", "prompt": "Periksa hubungannya: apakah setiap anggota A punya tepat satu pasangan di B?", "type": "tf", "answer": true, "cek": "setiapA-tepatSatu" },
+        { "n": 6, "score": 1, "rmt": "output", "prompt": "Apakah hubungan ini fungsi? Tulis kesimpulan dan alasanmu.", "type": "reason", "freeText": true, "penilaian": "guru",
+          "bantuan": ["Fungsi", "Bukan fungsi"], "cek": { "klasifikasi": "fungsi" },
+          "rubrikGuru": "1: menyimpulkan fungsi karena setiap siswa tepat satu jumlah buku, dan menjelaskan Rina dan Dika yang sama-sama 2 tetap boleh. 0: menyimpulkan bukan fungsi atau tanpa alasan syarat fungsi." }
+      ],
+      "maxScore": 6,
+      "hints": ["Domainnya himpunan siswa.", "Rina dan Dika sama-sama meminjam 2 buku. Apakah itu melanggar syarat fungsi?"],
+      "modelAnswer": "A = {Rina, Sinta, Dika, Fajar}, B = {2, 3, 4}, R = {(Rina, 2), (Sinta, 3), (Dika, 2), (Fajar, 4)}. Setiap anggota A memiliki tepat satu pasangan di B, jadi hubungan ini fungsi. Meskipun Rina dan Dika memiliki jumlah buku yang sama, hubungan tersebut tetap merupakan fungsi.",
+      "refleksi": "Bentuk penyajian mana yang paling membantumu melihat bahwa ini fungsi?"
+    },
+    {
+      "id": "LM-003", "indicator": "LE", "context": "sekolah", "level": "sedang", "sumber": "kisi-kisi",
+      "title": "Waktu Membaca Buku",
+      "stem": "Perpustakaan sekolah sedang melakukan pendataan peminjaman buku. Setiap buku yang dipinjam siswa memiliki jumlah halaman yang berbeda. Petugas perpustakaan ingin memperkirakan waktu yang dibutuhkan siswa untuk membaca buku tersebut. Berdasarkan ketentuan perpustakaan, setiap buku diperkirakan membutuhkan waktu membaca selama 2 menit untuk setiap halaman yang dihitung dalam satuan tertentu. Terdapat empat buku yang sedang dipinjam dengan jumlah halaman yang telah disederhanakan ke dalam satuan tertentu, yaitu 1, 2, 3, dan 4 satuan. Perpustakaan menyediakan pilihan perkiraan waktu membaca sebesar 2, 4, 6, 8, dan 10 menit. Berdasarkan informasi tersebut: 1. Tentukan hubungan antara jumlah satuan halaman buku dengan perkiraan waktu membaca. 2. Tuliskan hubungan tersebut dalam bentuk pasangan berurutan. 3. Tentukan domain, kodomain, dan range dari hubungan tersebut. 4. Apakah hubungan tersebut merupakan fungsi? Jelaskan alasan Anda.",
+      "stemSimple": "Satuan halaman 1, 2, 3, 4. Setiap satuan 2 menit. Pilihan waktu 2, 4, 6, 8, 10 menit.",
+      "model": { "A": ["1", "2", "3", "4"], "B": ["2", "4", "6", "8", "10"], "pairs": [["1", "2"], ["2", "4"], ["3", "6"], ["4", "8"]], "aturan": { "koef": [2, 0] } },
+      "stages": [
+        { "n": 1, "score": 1, "rmt": "input", "prompt": "Aturan hubungan antara x (satuan halaman) dan y (waktu, menit) adalah …", "type": "mcq",
+          "options": ["y = 2x", "y = x ÷ 2", "y = x + 2"], "answer": 0, "m": { "1": "M06", "2": "M10" } },
+        { "n": 2, "score": 2, "rmt": "elaborasi", "prompt": "Tuliskan pasangan berurutannya.", "type": "pairs", "answer": "model.pairs", "skorParsial": "1 jika 2–3 pasangan benar; 2 jika keempatnya benar", "m": { "terbalik": "M06" } },
+        { "n": 3, "score": 2, "rmt": "elaborasi", "prompt": "Tentukan domain, kodomain, dan range.", "type": "set-triple",
+          "answer": { "domain": ["1", "2", "3", "4"], "kodomain": ["2", "4", "6", "8", "10"], "daerahHasil": ["2", "4", "6", "8"] },
+          "skorParsial": "1 jika dua dari tiga benar; 2 jika ketiganya benar", "m": { "range+10": "M05" } },
+        { "n": 4, "score": 1, "rmt": "output", "prompt": "Apakah hubungan ini fungsi? Jelaskan alasanmu.", "type": "reason", "freeText": true, "penilaian": "guru",
+          "bantuan": ["Fungsi", "Bukan fungsi"], "cek": { "klasifikasi": "fungsi" },
+          "rubrikGuru": "1: fungsi karena setiap anggota domain tepat satu pasangan, dan menjelaskan 10 ada di kodomain tetapi tidak di range. 0: tanpa alasan syarat fungsi." }
+      ],
+      "maxScore": 6,
+      "hints": ["Hitung waktu untuk 1 satuan halaman, lalu 2, 3, dan 4.", "Range hanya waktu yang benar-benar muncul."],
+      "modelAnswer": "Aturan y = 2x. R = {(1, 2), (2, 4), (3, 6), (4, 8)}. Domain {1, 2, 3, 4}, kodomain {2, 4, 6, 8, 10}, range {2, 4, 6, 8}. Hubungan tersebut fungsi karena setiap anggota domain memiliki tepat satu pasangan. Angka 10 termasuk kodomain, tetapi tidak termasuk range.",
+      "refleksi": "Bagaimana kamu memastikan aturanmu cocok untuk semua buku?"
+    },
+    {
+      "id": "LM-004", "indicator": "LI", "context": "sekolah", "level": "sedang", "sumber": "kisi-kisi",
+      "title": "Kode Rak Buku",
+      "stem": "Dalam suatu kegiatan sekolah, empat siswa ditugaskan untuk mengambil buku di perpustakaan. Setiap siswa mendapatkan kode rak buku sebagai berikut: Arman: R1, Bella: R2, Candra: R1, Dinda: R3. Setelah melihat data tersebut, seorang siswa menyatakan bahwa hubungan antara nama siswa dan kode rak bukan merupakan fungsi karena terdapat dua siswa yang memiliki kode rak yang sama. Apakah Anda setuju dengan pernyataan tersebut? Analisis hubungan yang terbentuk berdasarkan konsep fungsi dan berikan kesimpulan disertai alasan matematis.",
+      "stemSimple": "Arman R1, Bella R2, Candra R1, Dinda R3. Ada yang bilang bukan fungsi karena R1 dipakai dua kali. Setuju?",
+      "model": { "A": ["Arman", "Bella", "Candra", "Dinda"], "B": ["R1", "R2", "R3"], "pairs": [["Arman", "R1"], ["Bella", "R2"], ["Candra", "R1"], ["Dinda", "R3"]] },
+      "stages": [
+        { "n": 1, "score": 1, "rmt": "input", "prompt": "Tentukan domain dan kodomain.", "type": "set-pair", "answer": { "domain": ["Arman", "Bella", "Candra", "Dinda"], "kodomain": ["R1", "R2", "R3"] }, "m": { "tertukar": "M06" } },
+        { "n": 2, "score": 1, "rmt": "input", "prompt": "Susun pasangan berurutannya.", "type": "pairs", "answer": "model.pairs", "m": { "terbalik": "M06" } },
+        { "n": 3, "score": 1, "rmt": "elaborasi", "prompt": "Berapa pasangan yang dimiliki setiap siswa?", "type": "mcq", "options": ["Tepat satu", "Ada yang dua", "Ada yang tidak punya"], "answer": 0, "m": { "1": "M03", "2": "M04" }, "cek": "setiapA-tepatSatu" },
+        { "n": 4, "score": 1, "rmt": "elaborasi", "prompt": "Apa yang terjadi pada R1?", "type": "mcq", "options": ["Dipasangkan oleh dua siswa berbeda, dan masing-masing siswa tetap punya satu pasangan", "R1 punya dua pasangan, jadi melanggar syarat fungsi"], "answer": 0, "m": { "1": "M01" } },
+        { "n": 5, "score": 1, "rmt": "output", "prompt": "Apakah pernyataan siswa tersebut tepat?", "type": "mcq", "options": ["Tepat", "Tidak tepat"], "answer": 1, "m": { "0": "M01" } },
+        { "n": 6, "score": 1, "rmt": "output", "prompt": "Tulis kesimpulan dan alasan matematismu.", "type": "reason", "freeText": true, "penilaian": "guru",
+          "bantuan": ["Fungsi, karena setiap siswa punya tepat satu kode rak meskipun ada kode yang sama", "Bukan fungsi, karena R1 punya dua pasangan"], "cek": { "klasifikasi": "fungsi" },
+          "rubrikGuru": "1: fungsi, karena setiap anggota domain tepat satu pasangan; beberapa anggota domain boleh berpasangan dengan anggota kodomain yang sama. 0: setuju dengan klaim atau tanpa alasan." }
+      ],
+      "maxScore": 6,
+      "hints": ["Periksa setiap siswa, bukan setiap rak.", "Apakah dua siswa dengan rak sama melanggar syarat fungsi?"],
+      "modelAnswer": "Hubungan tersebut merupakan fungsi. Setiap anggota domain memiliki tepat satu pasangan, meskipun Arman dan Candra memiliki kode rak yang sama. Dalam fungsi, beberapa anggota domain boleh memiliki pasangan yang sama di kodomain, jadi pernyataan siswa tersebut tidak tepat.",
+      "refleksi": "Bagaimana caramu menilai pendapat orang lain tentang fungsi?"
+    },
+    {
+      "id": "LM-005", "indicator": "LF", "context": "sekolah", "level": "sedang", "sumber": "docs02",
+      "title": "Bus Jemputan Sekolah",
+      "stem": "Sekolah punya tiga bus jemputan: Bus 1, Bus 2, dan Bus 3. Bu Wati mencatat data pagi ini dalam tabel. Ia ingin memodelkan hubungan setiap siswa dengan bus yang dinaikinya. Susun model matematikanya, lalu tentukan apakah hubungan itu fungsi.",
+      "stemSimple": "Lala Bus 2, Miko Bus 1, Nana Bus 2, Oki Bus 1. Bus sekolah: Bus 1, 2, 3. Fungsi atau bukan?",
+      "data": { "kind": "table", "columns": ["Siswa", "Bus", "Jam tiba"], "rows": [["Lala", "Bus 2", "06.15"], ["Miko", "Bus 1", "06.20"], ["Nana", "Bus 2", "06.15"], ["Oki", "Bus 1", "06.20"]] },
+      "model": { "A": ["Lala", "Miko", "Nana", "Oki"], "B": ["Bus 1", "Bus 2", "Bus 3"], "pairs": [["Lala", "Bus 2"], ["Miko", "Bus 1"], ["Nana", "Bus 2"], ["Oki", "Bus 1"]] },
+      "stages": [
+        { "n": 1, "score": 1, "rmt": "input", "prompt": "Kolom mana yang dibutuhkan untuk model ini?", "type": "multi", "options": ["Siswa", "Bus", "Jam tiba"], "answer": [0, 1], "m": { "2": "M05" } },
+        { "n": 2, "score": 1, "rmt": "input", "prompt": "Tentukan himpunan A (siswa) dan B (bus).", "type": "set-pair", "answer": { "domain": ["Lala", "Miko", "Nana", "Oki"], "kodomain": ["Bus 1", "Bus 2", "Bus 3"] }, "m": { "tanpaBus3": "M05", "tertukar": "M06" } },
+        { "n": 3, "score": 1, "rmt": "elaborasi", "prompt": "Susun pasangan berurutannya.", "type": "pairs", "answer": "model.pairs", "m": { "terbalik": "M06" } },
+        { "n": 4, "score": 1, "rmt": "elaborasi", "prompt": "Pilih diagram panah yang sesuai, lalu pilih alasanmu.", "type": "diagram-choice",
+          "diagrams": [
+            { "label": "Diagram P", "A": ["Lala", "Miko", "Nana", "Oki"], "B": ["Bus 1", "Bus 2", "Bus 3"], "pairs": [["Lala", "Bus 2"], ["Miko", "Bus 1"], ["Nana", "Bus 2"], ["Oki", "Bus 1"]] },
+            { "label": "Diagram Q", "A": ["Lala", "Miko", "Nana", "Oki"], "B": ["Bus 1", "Bus 2"], "pairs": [["Lala", "Bus 2"], ["Miko", "Bus 1"], ["Nana", "Bus 2"], ["Oki", "Bus 1"]], "m": "M05", "feedback": "Bus 3 tetap bus sekolah, jadi tetap anggota kodomain." },
+            { "label": "Diagram R", "A": ["Lala", "Miko", "Nana", "Oki"], "B": ["Bus 1", "Bus 2", "Bus 3"], "pairs": [["Lala", "Bus 2"], ["Miko", "Bus 1"], ["Nana", "Bus 3"], ["Oki", "Bus 1"]], "m": "M01", "feedback": "Nana naik Bus 2. Dua siswa boleh naik bus yang sama." }
+          ],
+          "answer": 0,
+          "reasons": [
+            { "text": "Setiap siswa menuju bus yang dinaikinya, dan Bus 3 tetap ada tanpa panah.", "correct": true },
+            { "text": "Bus 3 dihapus karena tidak ada yang naik.", "correct": false, "m": "M05" },
+            { "text": "Setiap bus sebaiknya menerima panah dari siswa yang berbeda.", "correct": false, "m": "M01" }
+          ],
+          "skorJika": "diagram DAN alasan benar (mencegah menebak)" },
+        { "n": 5, "score": 1, "rmt": "elaborasi", "prompt": "Bus 3 tidak punya pasangan. Apa artinya?", "type": "mcq", "options": ["Tidak ada siswa yang naik Bus 3 pagi ini; hubungan tetap bisa fungsi", "Hubungan pasti bukan fungsi"], "answer": 0, "m": { "1": "M02" } },
+        { "n": 6, "score": 1, "rmt": "output", "prompt": "Apakah hubungan ini fungsi? Tulis kesimpulan dan alasanmu.", "type": "reason", "freeText": true, "penilaian": "guru",
+          "bantuan": ["Fungsi", "Bukan fungsi"], "cek": { "klasifikasi": "fungsi" },
+          "rubrikGuru": "1: fungsi karena setiap siswa tepat satu bus; menjelaskan dua siswa satu bus dan Bus 3 kosong tetap boleh. 0: bukan fungsi atau tanpa alasan." }
+      ],
+      "maxScore": 6,
+      "hints": ["Jam tiba tidak diperlukan untuk hubungan siswa dan bus.", "Kodomain berisi semua bus sekolah, bukan hanya yang dinaiki."],
+      "modelAnswer": "A = {Lala, Miko, Nana, Oki}, B = {Bus 1, Bus 2, Bus 3}, R = {(Lala, Bus 2), (Miko, Bus 1), (Nana, Bus 2), (Oki, Bus 1)}. Hubungan ini fungsi karena setiap siswa naik tepat satu bus. Dua siswa boleh naik bus yang sama, dan Bus 3 boleh tidak punya pasangan.",
+      "refleksi": "Bagaimana kamu tahu data jam tiba tidak dibutuhkan?"
+    },
+    {
+      "id": "LM-006", "indicator": "LF", "context": "sosial", "level": "sulit", "sumber": "docs02",
+      "title": "Grafik Pengunjung Perpustakaan",
+      "stem": "Petugas perpustakaan menggambar grafik titik. Sumbu mendatar menunjukkan hari, sumbu tegak menunjukkan jumlah pengunjung. Titiknya: Senin 12, Selasa 15, Rabu 12, Kamis 20. Petugas memakai kodomain {10, 12, 15, 20, 25}. Ubah grafik ini menjadi model relasi, lalu tentukan apakah relasi dari hari ke jumlah pengunjung merupakan fungsi.",
+      "stemSimple": "Senin 12, Selasa 15, Rabu 12, Kamis 20 pengunjung. Kodomain {10, 12, 15, 20, 25}. Fungsi atau bukan?",
+      "data": { "kind": "cartesian", "labelA": "Hari", "labelB": "Pengunjung", "A": ["Senin", "Selasa", "Rabu", "Kamis"], "B": ["10", "12", "15", "20", "25"], "pairs": [["Senin", "12"], ["Selasa", "15"], ["Rabu", "12"], ["Kamis", "20"]] },
+      "model": { "A": ["Senin", "Selasa", "Rabu", "Kamis"], "B": ["10", "12", "15", "20", "25"], "pairs": [["Senin", "12"], ["Selasa", "15"], ["Rabu", "12"], ["Kamis", "20"]] },
+      "stages": [
+        { "n": 1, "score": 1, "rmt": "input", "prompt": "Apa yang ditunjukkan sumbu mendatar dan sumbu tegak?", "type": "mcq", "options": ["Mendatar: hari; tegak: jumlah pengunjung", "Mendatar: jumlah pengunjung; tegak: hari"], "answer": 0, "m": { "1": "M06" } },
+        { "n": 2, "score": 1, "rmt": "input", "prompt": "Tentukan domain dan kodomain.", "type": "set-pair", "answer": { "domain": ["Senin", "Selasa", "Rabu", "Kamis"], "kodomain": ["10", "12", "15", "20", "25"] }, "m": { "tertukar": "M06" } },
+        { "n": 3, "score": 1, "rmt": "elaborasi", "prompt": "Tuliskan pasangan berurutan dari setiap titik.", "type": "pairs", "answer": "model.pairs", "m": { "terbalik": "M06" } },
+        { "n": 4, "score": 1, "rmt": "elaborasi", "prompt": "Pilih tabel yang sama dengan grafik.", "type": "mcq",
+          "options": ["Senin 12, Selasa 15, Rabu 12, Kamis 20", "Senin 12, Selasa 15, Kamis 20", "12 Senin, 15 Selasa, 12 Rabu, 20 Kamis (kolom hari di kanan)"], "answer": 0, "m": { "1": "M04", "2": "M06" } },
+        { "n": 5, "score": 1, "rmt": "elaborasi", "prompt": "Gunakan uji garis vertikal. Berapa titik yang dilalui garis tegak di setiap hari?", "type": "mcq", "options": ["Tepat satu titik di setiap hari", "Dua titik di hari Rabu", "Tidak ada titik di hari Senin"], "answer": 0, "m": { "1": "M09", "2": "M04" }, "cek": "setiapA-tepatSatu" },
+        { "n": 6, "score": 1, "rmt": "output", "prompt": "Apakah relasi ini fungsi? Tulis kesimpulan dan alasanmu.", "type": "reason", "freeText": true, "penilaian": "guru",
+          "bantuan": ["Fungsi", "Bukan fungsi"], "cek": { "klasifikasi": "fungsi" },
+          "rubrikGuru": "1: fungsi karena setiap hari tepat satu titik; Senin dan Rabu yang sama-sama 12 tetap boleh. 0: bukan fungsi atau tanpa alasan." }
+      ],
+      "maxScore": 6,
+      "hints": ["Setiap titik dibaca sebagai (hari, jumlah pengunjung).", "Senin dan Rabu sama-sama 12. Apakah itu melanggar syarat fungsi?"],
+      "modelAnswer": "Domain {Senin, Selasa, Rabu, Kamis}, kodomain {10, 12, 15, 20, 25}, R = {(Senin, 12), (Selasa, 15), (Rabu, 12), (Kamis, 20)}. Setiap hari punya tepat satu titik, jadi relasinya fungsi. Senin dan Rabu boleh punya jumlah pengunjung yang sama.",
+      "refleksi": "Apa bedanya membaca data dari grafik dan dari tabel?"
+    },
+    {
+      "id": "LM-007", "indicator": "LR", "context": "sekolah", "level": "sulit", "sumber": "docs02",
+      "title": "Tiga Aturan Pembagian Loker",
+      "stem": "Wali kelas mencoba tiga aturan loker untuk Ani, Budi, Cita, dan Dodi. Loker yang ada L1, L2, dan L3. Aturan 1: Ani L1, Budi L2, Cita L1, Dodi L2. Aturan 2: Ani L1 dan L2, Budi L2, Cita L3, Dodi L1. Aturan 3: hanya siswa yang membawa tas besar mendapat loker, yaitu Ani L1 dan Cita L3. Aturan mana yang membuat relasi dari siswa ke loker merupakan fungsi?",
+      "stemSimple": "Aturan 1: Ani L1, Budi L2, Cita L1, Dodi L2. Aturan 2: Ani L1 dan L2, Budi L2, Cita L3, Dodi L1. Aturan 3: hanya Ani L1 dan Cita L3. Mana yang fungsi?",
+      "models": {
+        "aturan1": { "A": ["Ani", "Budi", "Cita", "Dodi"], "B": ["L1", "L2", "L3"], "pairs": [["Ani", "L1"], ["Budi", "L2"], ["Cita", "L1"], ["Dodi", "L2"]] },
+        "aturan2": { "A": ["Ani", "Budi", "Cita", "Dodi"], "B": ["L1", "L2", "L3"], "pairs": [["Ani", "L1"], ["Ani", "L2"], ["Budi", "L2"], ["Cita", "L3"], ["Dodi", "L1"]] },
+        "aturan3": { "A": ["Ani", "Budi", "Cita", "Dodi"], "B": ["L1", "L2", "L3"], "pairs": [["Ani", "L1"], ["Cita", "L3"]] }
+      },
+      "stages": [
+        { "n": 1, "score": 1, "rmt": "input", "prompt": "Tentukan domain dan kodomain.", "type": "set-pair", "answer": { "domain": ["Ani", "Budi", "Cita", "Dodi"], "kodomain": ["L1", "L2", "L3"] }, "m": { "tertukar": "M06" } },
+        { "n": 2, "score": 2, "rmt": "elaborasi", "prompt": "Untuk setiap aturan, periksa: apakah setiap siswa punya tepat satu loker?", "type": "tf-multi",
+          "answer": { "aturan1": true, "aturan2": false, "aturan3": false }, "skorParsial": "1 jika dua aturan benar; 2 jika ketiganya benar", "cek": "setiapA-tepatSatu@semua" },
+        { "n": 3, "score": 1, "rmt": "elaborasi", "prompt": "Apa pelanggaran pada Aturan 2 dan Aturan 3?", "type": "mcq",
+          "options": ["Aturan 2: Ani punya dua loker. Aturan 3: Budi dan Dodi tidak punya loker.", "Aturan 2: L2 dipakai dua siswa. Aturan 3: L2 kosong.", "Tidak ada pelanggaran."],
+          "answer": 0, "m": { "1": "M01", "2": "M03" } },
+        { "n": 4, "score": 1, "rmt": "elaborasi", "prompt": "Aturan mana yang membuat relasi fungsi?", "type": "mcq", "options": ["Aturan 1 saja", "Aturan 1 dan Aturan 2", "Aturan 1 dan Aturan 3", "Tidak ada"], "answer": 0,
+          "m": { "1": "M03", "2": "M04", "3": "M01" }, "cek": { "aturan1": "fungsi", "aturan2": "relasi", "aturan3": "relasi" } },
+        { "n": 5, "score": 1, "rmt": "output", "prompt": "Jelaskan keputusanmu dengan syarat fungsi.", "type": "reason", "freeText": true, "penilaian": "guru",
+          "bantuan": ["Pada Aturan 1, L1 dan L2 dipakai dua siswa. Apakah itu melanggar syarat fungsi?"],
+          "rubrikGuru": "1: memilih Aturan 1 dan menjelaskan dua pelanggaran (satu siswa dua loker; siswa tanpa loker), serta loker dipakai bersama tetap boleh. 0: alasan tidak memakai syarat fungsi." }
+      ],
+      "maxScore": 6,
+      "hints": ["Periksa setiap aturan dari sisi siswa.", "Ada dua cara melanggar syarat fungsi: punya dua pasangan atau tidak punya pasangan."],
+      "modelAnswer": "Hanya Aturan 1 yang membuat relasi fungsi, karena setiap siswa punya tepat satu loker. Loker yang dipakai dua siswa tetap boleh. Aturan 2 bukan fungsi karena Ani punya dua loker. Aturan 3 bukan fungsi karena Budi dan Dodi tidak punya loker.",
+      "refleksi": "Pelanggaran mana yang paling mudah terlewat olehmu?"
+    },
+    {
+      "id": "LM-008", "indicator": "LR", "context": "sekolah", "level": "sulit", "sumber": "docs02",
+      "title": "Perubahan Jadwal Piket",
+      "stem": "Jadwal piket: Eka Senin, Fikri Selasa, Gita Rabu, Hani Kamis, Dimas Jumat, dan Ivan Senin. Relasi dibuat dari himpunan siswa ke himpunan hari {Senin, Selasa, Rabu, Kamis, Jumat}. Wali kelas mempertimbangkan tiga perubahan. Perubahan mana yang membuat relasi tidak lagi fungsi?",
+      "stemSimple": "Eka Senin, Fikri Selasa, Gita Rabu, Hani Kamis, Dimas Jumat, Ivan Senin. Perubahan mana yang membuat bukan fungsi?",
+      "model": { "A": ["Eka", "Fikri", "Gita", "Hani", "Dimas", "Ivan"], "B": ["Senin", "Selasa", "Rabu", "Kamis", "Jumat"], "pairs": [["Eka", "Senin"], ["Fikri", "Selasa"], ["Gita", "Rabu"], ["Hani", "Kamis"], ["Dimas", "Jumat"], ["Ivan", "Senin"]] },
+      "hipotesis": {
+        "a": { "deskripsi": "Dimas juga piket hari Senin (tetap piket Jumat).", "tambah": [["Dimas", "Senin"]], "hapus": [] },
+        "b": { "deskripsi": "Ivan pindah dari Senin ke Kamis.", "tambah": [["Ivan", "Kamis"]], "hapus": [["Ivan", "Senin"]] },
+        "c": { "deskripsi": "Hari Sabtu ditambahkan ke kodomain, tetapi tidak ada yang piket Sabtu.", "tambahB": ["Sabtu"], "tambah": [], "hapus": [] }
+      },
+      "stages": [
+        { "n": 1, "score": 1, "rmt": "input", "prompt": "Apakah jadwal awal merupakan fungsi?", "type": "mcq", "options": ["Ya, setiap siswa piket tepat satu hari", "Bukan, karena Senin dipakai dua siswa"], "answer": 0, "m": { "1": "M01" }, "cek": { "klasifikasiAwal": "fungsi" } },
+        { "n": 2, "score": 1, "rmt": "elaborasi", "prompt": "Perubahan (a): Dimas juga piket Senin. Relasinya menjadi …", "type": "mcq", "options": ["Bukan fungsi", "Tetap fungsi"], "answer": 0, "m": { "1": "M03" }, "cek": { "hipotesis": "a", "klasifikasi": "relasi" } },
+        { "n": 3, "score": 1, "rmt": "elaborasi", "prompt": "Perubahan (b): Ivan pindah ke Kamis. Relasinya menjadi …", "type": "mcq", "options": ["Tetap fungsi", "Bukan fungsi"], "answer": 0, "m": { "1": "M01" }, "cek": { "hipotesis": "b", "klasifikasi": "fungsi" } },
+        { "n": 4, "score": 1, "rmt": "elaborasi", "prompt": "Perubahan (c): Sabtu ditambahkan ke kodomain tanpa petugas. Relasinya menjadi …", "type": "mcq", "options": ["Tetap fungsi", "Bukan fungsi"], "answer": 0, "m": { "1": "M02" }, "cek": { "hipotesis": "c", "klasifikasi": "fungsi" } },
+        { "n": 5, "score": 1, "rmt": "output", "prompt": "Perubahan mana yang membuat relasi tidak lagi fungsi?", "type": "mcq", "options": ["Hanya (a)", "(a) dan (c)", "(b) dan (c)", "Semuanya"], "answer": 0, "m": { "1": "M02", "2": "M01", "3": "M03" } },
+        { "n": 6, "score": 1, "rmt": "output", "prompt": "Jelaskan alasanmu untuk ketiga perubahan.", "type": "reason", "freeText": true, "penilaian": "guru",
+          "rubrikGuru": "1: (a) Dimas punya dua pasangan → bukan fungsi; (b) dan (c) setiap siswa tetap tepat satu hari, hari tanpa petugas atau hari yang dipakai dua siswa tetap boleh. 0: tanpa alasan syarat fungsi." }
+      ],
+      "maxScore": 6,
+      "hints": ["Untuk setiap perubahan, tulis ulang pasangan siswa yang berubah.", "Perubahan pada kodomain saja tidak menambah pasangan siswa."],
+      "modelAnswer": "Jadwal awal fungsi karena setiap siswa piket tepat satu hari. Perubahan (a) membuat Dimas punya dua hari, jadi bukan fungsi. Perubahan (b) dan (c) tetap fungsi, karena setiap siswa tetap punya tepat satu hari.",
+      "refleksi": "Bagaimana kamu memeriksa perubahan tanpa menulis ulang semua data?"
+    },
+    {
+      "id": "LM-009", "indicator": "LE", "context": "sekolah", "level": "sulit", "sumber": "docs02",
+      "title": "Kupon Antrean Kantin",
+      "stem": "Kantin memakai aturan: siswa dengan nomor antrean x mendapat kupon bernomor x + 2. Nomor antrean A = {1, 2, 3, 4}. Kupon yang tersedia hari ini hanya B = {3, 4, 5}. Gunakan aturan itu untuk membuat relasi dari A ke B, lalu tentukan apakah relasinya fungsi.",
+      "stemSimple": "Aturan: kupon = nomor antrean + 2. Antrean {1, 2, 3, 4}. Kupon tersedia {3, 4, 5}. Fungsi atau bukan?",
+      "model": { "A": ["1", "2", "3", "4"], "B": ["3", "4", "5"], "pairs": [["1", "3"], ["2", "4"], ["3", "5"]], "aturan": { "koef": [1, 2], "catatan": "4 + 2 = 6 bukan anggota B, jadi 4 tidak punya pasangan" } },
+      "stages": [
+        { "n": 1, "score": 1, "rmt": "input", "prompt": "Aturan hubungan antara x (nomor antrean) dan y (nomor kupon) adalah …", "type": "mcq", "options": ["y = x + 2", "y = 2x", "x = y + 2"], "answer": 0, "m": { "1": "M10", "2": "M06" } },
+        { "n": 2, "score": 2, "rmt": "elaborasi", "prompt": "Hitung kupon untuk setiap nomor antrean, lalu tulis pasangan yang ada di B.", "type": "pairs", "answer": "model.pairs",
+          "skorParsial": "1 jika perhitungan benar tetapi (4, 6) ikut ditulis; 2 jika hanya pasangan dengan kupon anggota B", "m": { "termasuk(4,6)": "M05" } },
+        { "n": 3, "score": 2, "rmt": "elaborasi", "prompt": "Tentukan domain, kodomain, dan anggota domain yang tidak punya pasangan.", "type": "set-triple",
+          "answer": { "domain": ["1", "2", "3", "4"], "kodomain": ["3", "4", "5"], "tanpaPasangan": ["4"] }, "skorParsial": "1 jika dua dari tiga benar; 2 jika ketiganya benar", "m": { "abaikan4": "M04" } },
+        { "n": 4, "score": 1, "rmt": "output", "prompt": "Apakah relasi dari A ke B fungsi? Apa yang perlu diubah agar menjadi fungsi?", "type": "reason", "freeText": true, "penilaian": "guru",
+          "bantuan": ["Fungsi", "Bukan fungsi"], "cek": { "klasifikasi": "relasi" },
+          "rubrikGuru": "1: bukan fungsi karena 4 tidak punya pasangan (6 tidak ada di B); usul menambah kupon 6 ke B. 0: menyebut fungsi atau tanpa alasan." }
+      ],
+      "maxScore": 6,
+      "hints": ["Hitung 1 + 2, 2 + 2, 3 + 2, dan 4 + 2.", "Apakah kupon nomor 6 tersedia di B?"],
+      "modelAnswer": "Aturannya y = x + 2. Pasangan di B: {(1, 3), (2, 4), (3, 5)}. Domain {1, 2, 3, 4}, kodomain {3, 4, 5}. Anggota 4 tidak punya pasangan karena 6 bukan anggota B, jadi relasinya bukan fungsi. Agar menjadi fungsi, kupon 6 perlu disediakan.",
+      "refleksi": "Mengapa hasil perhitungan harus dicek terhadap kodomain?"
+    },
+    {
+      "id": "LM-010", "indicator": "LE", "context": "ilmiah", "level": "sedang", "sumber": "docs02",
+      "title": "Suhu Pagi di Halaman Sekolah",
+      "stem": "Siswa mencatat suhu halaman sekolah: pukul 07.00 22 °C, pukul 08.00 24 °C, pukul 09.00 24 °C, dan pukul 10.00 26 °C. Termometer kelas hanya bertanda 20, 22, 24, 26, dan 28 °C, dan himpunan ini dipakai sebagai kodomain. Tuliskan pasangan berurutannya, tentukan domain, kodomain, dan range, lalu tentukan apakah relasi dari jam ke suhu merupakan fungsi.",
+      "stemSimple": "07.00 22 °C, 08.00 24 °C, 09.00 24 °C, 10.00 26 °C. Kodomain {20, 22, 24, 26, 28}.",
+      "model": { "A": ["07.00", "08.00", "09.00", "10.00"], "B": ["20", "22", "24", "26", "28"], "pairs": [["07.00", "22"], ["08.00", "24"], ["09.00", "24"], ["10.00", "26"]] },
+      "stages": [
+        { "n": 1, "score": 1, "rmt": "input", "prompt": "Himpunan mana yang menjadi domain?", "type": "mcq", "options": ["Himpunan jam pencatatan", "Himpunan suhu"], "answer": 0, "m": { "1": "M06" } },
+        { "n": 2, "score": 2, "rmt": "elaborasi", "prompt": "Tuliskan pasangan berurutannya.", "type": "pairs", "answer": "model.pairs", "skorParsial": "1 jika 2–3 pasangan benar; 2 jika keempatnya benar", "m": { "terbalik": "M06" } },
+        { "n": 3, "score": 2, "rmt": "elaborasi", "prompt": "Tentukan domain, kodomain, dan range.", "type": "set-triple",
+          "answer": { "domain": ["07.00", "08.00", "09.00", "10.00"], "kodomain": ["20", "22", "24", "26", "28"], "daerahHasil": ["22", "24", "26"] }, "skorParsial": "1 jika dua dari tiga benar; 2 jika ketiganya benar", "m": { "range=kodomain": "M05" } },
+        { "n": 4, "score": 1, "rmt": "output", "prompt": "Apakah relasi ini fungsi? Mengapa range berbeda dengan kodomain?", "type": "reason", "freeText": true, "penilaian": "guru",
+          "bantuan": ["Fungsi", "Bukan fungsi"], "cek": { "klasifikasi": "fungsi" },
+          "rubrikGuru": "1: fungsi karena setiap jam tepat satu suhu (24 °C dua kali tetap boleh); range {22, 24, 26} lebih kecil karena 20 dan 28 tidak tercatat. 0: tanpa alasan." }
+      ],
+      "maxScore": 6,
+      "hints": ["Setiap jam adalah anggota domain.", "Range hanya suhu yang benar-benar tercatat."],
+      "modelAnswer": "R = {(07.00, 22), (08.00, 24), (09.00, 24), (10.00, 26)}. Domain = empat jam pencatatan, kodomain {20, 22, 24, 26, 28}, range {22, 24, 26}. Relasinya fungsi karena setiap jam punya tepat satu suhu. Suhu 20 dan 28 ada di kodomain, tetapi tidak tercatat.",
+      "refleksi": "Apakah masuk akal jika suhu pukul 08.00 dan 09.00 sama? Jelaskan."
+    },
+    {
+      "id": "LM-011", "indicator": "LI", "context": "pribadi", "level": "sedang", "sumber": "docs02",
+      "title": "Pesanan Makan Siang",
+      "stem": "Kantin punya menu nasi goreng, bakso, mi ayam, dan soto. Pesanan hari ini: Ika nasi goreng, Joni bakso, Kiki nasi goreng, dan Lani mi ayam. Rudi berkata, \"Relasi dari siswa ke menu bukan fungsi, karena soto tidak dipesan siapa pun.\" Apakah kamu setuju? Analisis dengan konsep fungsi.",
+      "stemSimple": "Ika nasi goreng, Joni bakso, Kiki nasi goreng, Lani mi ayam. Soto tidak dipesan. Rudi bilang bukan fungsi. Setuju?",
+      "model": { "A": ["Ika", "Joni", "Kiki", "Lani"], "B": ["nasi goreng", "bakso", "mi ayam", "soto"], "pairs": [["Ika", "nasi goreng"], ["Joni", "bakso"], ["Kiki", "nasi goreng"], ["Lani", "mi ayam"]] },
+      "stages": [
+        { "n": 1, "score": 1, "rmt": "input", "prompt": "Tentukan domain dan kodomain.", "type": "set-pair", "answer": { "domain": ["Ika", "Joni", "Kiki", "Lani"], "kodomain": ["nasi goreng", "bakso", "mi ayam", "soto"] }, "m": { "tanpaSoto": "M05", "tertukar": "M06" } },
+        { "n": 2, "score": 1, "rmt": "input", "prompt": "Susun pasangan berurutannya.", "type": "pairs", "answer": "model.pairs", "m": { "terbalik": "M06" } },
+        { "n": 3, "score": 1, "rmt": "elaborasi", "prompt": "Apakah setiap siswa memesan tepat satu menu?", "type": "tf", "answer": true, "cek": "setiapA-tepatSatu" },
+        { "n": 4, "score": 1, "rmt": "elaborasi", "prompt": "Syarat fungsi berlaku untuk anggota himpunan yang mana?", "type": "mcq", "options": ["Setiap anggota domain (siswa)", "Setiap anggota kodomain (menu)"], "answer": 0, "m": { "1": "M02" } },
+        { "n": 5, "score": 1, "rmt": "output", "prompt": "Apakah pendapat Rudi tepat?", "type": "mcq", "options": ["Tepat", "Tidak tepat"], "answer": 1, "m": { "0": "M02" } },
+        { "n": 6, "score": 1, "rmt": "output", "prompt": "Tulis kesimpulan dan alasan matematismu.", "type": "reason", "freeText": true, "penilaian": "guru",
+          "bantuan": ["Fungsi", "Bukan fungsi"], "cek": { "klasifikasi": "fungsi" },
+          "rubrikGuru": "1: fungsi karena setiap siswa tepat satu menu; anggota kodomain (soto) boleh tidak punya pasangan. 0: setuju dengan Rudi atau tanpa alasan." }
+      ],
+      "maxScore": 6,
+      "hints": ["Periksa siswa satu per satu.", "Apakah anggota kodomain wajib punya pasangan?"],
+      "modelAnswer": "Pendapat Rudi tidak tepat. Setiap siswa memesan tepat satu menu, jadi relasinya fungsi. Pada fungsi, anggota kodomain seperti soto boleh tidak punya pasangan.",
+      "refleksi": "Kesalahan apa yang membuat Rudi salah menilai?"
+    },
+    {
+      "id": "LM-012", "indicator": "LI", "context": "pribadi", "level": "sulit", "sumber": "docs02",
+      "title": "Memeriksa Pekerjaan Teman",
+      "stem": "Data nomor sepatu: Mia 37, Nina 38, Oscar 38, dan Putri 39. Kodomainnya {36, 37, 38, 39, 40}. Sari menulis bahwa relasi dari siswa ke nomor sepatu adalah fungsi. Sari juga menulis daerah hasilnya {36, 37, 38, 39, 40}. Periksa pekerjaan Sari, lalu perbaiki bagian yang keliru.",
+      "stemSimple": "Mia 37, Nina 38, Oscar 38, Putri 39. Kodomain {36, 37, 38, 39, 40}. Sari: daerah hasil {36, 37, 38, 39, 40}. Benarkah?",
+      "model": { "A": ["Mia", "Nina", "Oscar", "Putri"], "B": ["36", "37", "38", "39", "40"], "pairs": [["Mia", "37"], ["Nina", "38"], ["Oscar", "38"], ["Putri", "39"]] },
+      "stages": [
+        { "n": 1, "score": 1, "rmt": "input", "prompt": "Tentukan domain dan kodomain.", "type": "set-pair", "answer": { "domain": ["Mia", "Nina", "Oscar", "Putri"], "kodomain": ["36", "37", "38", "39", "40"] }, "m": { "tertukar": "M06" } },
+        { "n": 2, "score": 1, "rmt": "input", "prompt": "Susun pasangan berurutannya.", "type": "pairs", "answer": "model.pairs", "m": { "terbalik": "M06" } },
+        { "n": 3, "score": 1, "rmt": "elaborasi", "prompt": "Apakah bagian \"relasi ini fungsi\" pada pekerjaan Sari benar?", "type": "mcq", "options": ["Benar, setiap siswa tepat satu nomor sepatu", "Keliru, karena Nina dan Oscar bernomor sama"], "answer": 0, "m": { "1": "M01" }, "cek": { "klasifikasi": "fungsi" } },
+        { "n": 4, "score": 1, "rmt": "elaborasi", "prompt": "Tentukan daerah hasil yang benar.", "type": "set", "answer": ["37", "38", "39"], "cek": "daerahHasil", "m": { "36": "M05", "40": "M05" } },
+        { "n": 5, "score": 1, "rmt": "output", "prompt": "Bagian mana dari pekerjaan Sari yang keliru?", "type": "mcq", "options": ["Daerah hasilnya, karena Sari menuliskan kodomain", "Kesimpulan fungsinya", "Tidak ada yang keliru"], "answer": 0, "m": { "1": "M01", "2": "M05" } },
+        { "n": 6, "score": 1, "rmt": "output", "prompt": "Tulis perbaikan dan alasanmu untuk Sari.", "type": "reason", "freeText": true, "penilaian": "guru",
+          "rubrikGuru": "1: fungsi sudah benar; daerah hasil seharusnya {37, 38, 39} karena 36 dan 40 tidak punya pasangan; kodomain berbeda dengan daerah hasil. 0: tanpa membedakan kodomain dan daerah hasil." }
+      ],
+      "maxScore": 6,
+      "hints": ["Periksa dua bagian pekerjaan Sari secara terpisah.", "Nomor sepatu mana yang benar-benar dipakai siswa?"],
+      "modelAnswer": "Kesimpulan Sari bahwa relasinya fungsi sudah benar, karena setiap siswa punya tepat satu nomor sepatu. Daerah hasilnya keliru. Daerah hasil yang benar {37, 38, 39}, karena 36 dan 40 tidak punya pasangan. Sari menuliskan kodomain, bukan daerah hasil.",
+      "refleksi": "Bagaimana kamu memeriksa pekerjaan orang lain bagian demi bagian?"
+    }
+  ]
+}
