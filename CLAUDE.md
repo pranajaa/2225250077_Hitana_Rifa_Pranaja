@@ -25,16 +25,22 @@ Baca sebelum mengerjakan fitur:
 
 ## Folder Utama & Rilis
 - **Folder ini (`RelaFun - p3r try`) adalah folder UTAMA proyek** (diputuskan pemilik, 17 Nov 2026).
-  Folder `../RelaFun` hanya duplikat lama — jangan dikerjakan, jangan disinkronkan.
-- Versi online: https://pranajaa.github.io/2225250077_Hitana_Rifa_Pranaja/
-  (repo publik `pranajaa/2225250077_Hitana_Rifa_Pranaja`, isinya HANYA hasil `dist/`).
-  Rilis ulang: `tools/siapkan_rilis.py` → salin isi `dist/` ke klon repo itu (pertahankan `.nojekyll`
-  dan `README.md`) → commit → push. GitHub CLI tidak terpasang (per 17 Nov 2026); git login lewat Git Credential Manager.
-- **Repo kode sumber:** https://github.com/pranajaa/RelaFun (branch `main`, isi folder ini di akar repo).
-  Repo git lokal ada di folder induk `alpro` (remote `relafun`; remote `origin` = repo `alpro` yang tidak ada).
-  Commit seperti biasa di `alpro`, lalu kirim ke GitHub dari folder `alpro`:
-  `git subtree push --prefix="RelaFun - p3r try" relafun main`. Jangan push kode sumber ke repo Pages.
-  Versi GitHub Pages **tanpa backend**: Tutor AI & Pembahas Soal otomatis tampil "hanya tersedia di server lokal".
+  Folder `../RelaFun (dupe)` hanya duplikat lama — jangan dikerjakan, jangan disinkronkan.
+- **Repo utama (keputusan pemilik, 27 Nov 2026):** `pranajaa/2225250077_Hitana_Rifa_Pranaja` (publik), dua branch:
+  - `main` = **HANYA hasil `dist/`** + `.nojekyll` + `README.md`, ditayangkan GitHub Pages
+    ("Deploy from branch: main / root") di https://pranajaa.github.io/2225250077_Hitana_Rifa_Pranaja/.
+    Jangan pernah push kode sumber ke `main` — `server/`, `docs/`, `tools/` akan ikut tayang.
+  - `sumber` = **kode sumber** (isi folder ini di akar branch).
+- Repo git lokal ada di folder induk `alpro`. Remote `pages` = repo utama; `relafun` = repo lama `pranajaa/RelaFun`
+  (tidak diperbarui lagi, dibiarkan apa adanya); `origin` = repo `alpro` yang tidak ada (jangan dipakai).
+  `alpro/.gitignore` memakai daftar-putih: hanya folder ini dan `task 1.py` yang bisa dilacak — dokumen siswa,
+  tugas, dan 13 repo `pertemuan-*` diabaikan. Jangan mengubahnya tanpa izin pemilik.
+- **Kirim kode sumber** (commit seperti biasa di `alpro`, lalu dari folder `alpro`):
+  `git subtree push --prefix="RelaFun - p3r try" pages sumber`
+- **Rilis ke Pages:** `tools/siapkan_rilis.py` → klon branch `main` repo utama → ganti isinya dengan `dist/`
+  (pertahankan `.nojekyll` dan `README.md`) → commit → push ke `main`. GitHub CLI tidak terpasang; git login lewat
+  Git Credential Manager. Versi GitHub Pages **tanpa backend**: Tutor AI & Pembahas Soal tampil "hanya tersedia di
+  server lokal".
 - **Penyimpanan di Drive D:** project, `server/node_modules`, npm cache (`D:\npm-cache`), dan npm global prefix
   (`D:\npm-global`) ada di D:. Jangan membuat salinan project di C:. Jika suatu langkah harus memakai C:,
   jelaskan alasannya dulu. Minta izin sebelum memindahkan, menghapus, atau mengubah konfigurasi sistem.
