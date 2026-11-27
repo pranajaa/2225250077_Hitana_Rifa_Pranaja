@@ -173,7 +173,7 @@ masih boleh menyarankan "buka Materi tentang banyak pemetaan" (menyebut topik, b
 ```
 HP siswa ── https://pranajaa.github.io/2225250077_Hitana_Rifa_Pranaja/   (GitHub Pages, hanya file statis)
    │  js/ai.js: coba ./api (404 di Pages) → endpointOnline
-   └──► https://<nama-layanan>.onrender.com/api   (server/ yang sama, mode hosting) ──► Gemini API
+   └──► https://<nama-proyek>.vercel.app/api   (server/ yang sama, mode hosting) ──► Gemini API
 ```
 
 **Yang sama dengan mode lokal:** kode `server/` tidak bercabang; semua aturan §2 tetap. Mode hosting hanya aktif lewat
@@ -188,7 +188,10 @@ variabel lingkungan:
 | `AI_PER_10MIN` | mis. `60` | Batas per perangkat; satu kelas di Wi-Fi sekolah sering berbagi satu IP |
 | `TRUST_PROXY` | `1` | IP tiap siswa terbaca dari header proxy hosting (tanpa ini semua siswa = satu IP) |
 | `SERVE_APP` | `false` | Hanya `/api`; aplikasi tetap di GitHub Pages |
-| `HOST` | `0.0.0.0` | Wajib di hosting. `PORT` diisi otomatis oleh hosting |
+| `HOST` | `0.0.0.0` | Hanya untuk hosting yang menjalankan `npm start` (mis. Render). **Tidak perlu di Vercel** |
+
+**Vercel (serverless):** `server/server.js` mengekspor aplikasi Express sebagai *default export* (`buildApp(process.env)`);
+Vercel memanggilnya tanpa `app.listen`. Klien Gemini dibuat pada permintaan pertama.
 
 **Perilaku aplikasi:** `data/ai.json → endpointOnline` diisi URL backend (`https://…/api`). Di laptop (`npm start`)
 `./api` tetap dipakai lebih dulu. Backend gratis bisa "tidur"; status ditunggu sampai 60 detik dan siswa melihat
@@ -198,28 +201,37 @@ pesan "Server asisten sedang dibangunkan…". Backend mati/kuota habis → pesan
 ### Pilihan hosting (dicek 27 Nov 2026 — ketentuan bisa berubah, cek lagi saat mendaftar)
 | Hosting | Catatan | Kesesuaian |
 |---|---|---|
-| **Render** (Free web service) | Tanpa kartu kredit; menjalankan Express apa adanya dari GitHub; tidur setelah ±15 menit tanpa permintaan, bangun ±30–60 detik; jam pakai gratis bulanan terbatas | **Dipilih** — perubahan kode paling sedikit |
-| Vercel (Hobby) | Gratis untuk penggunaan pribadi non-komersial; perlu mengubah Express menjadi fungsi serverless | Cadangan |
-| Lainnya (Koyeb, dsb.) | Ketentuan gratis belum terverifikasi dari sumber resmi | Tidak dipakai |
+| **Vercel** (Hobby) | Tanpa kartu kredit (cek saat mendaftar); dukungan resmi Express "tanpa konfigurasi"; gratis untuk pemakaian pribadi/non-komersial | **Dipilih** (27 Nov 2026) |
+| Render (Free web service) | Saat pemilik mendaftar (27 Nov 2026) **meminta kartu kredit** | Tidak dipakai |
+| Deno Deploy | Tanpa kartu, tetapi server Node/Express perlu disesuaikan | Cadangan |
+| Koyeb, Google Cloud Run | Meminta kartu kredit | Tidak dipakai |
 
-### Langkah memasang di Render (dikerjakan pemilik; ±15 menit)
-1. Daftar di render.com (masuk dengan akun GitHub boleh). **Jangan** memasukkan kartu kredit.
-2. *New → Web Service* → pilih repo `pranajaa/2225250077_Hitana_Rifa_Pranaja` (atau *Public Git Repository* dengan URL
-   repo itu) → **Branch: `sumber`** → **Root Directory: `server`**.
-3. Runtime **Node** · Build Command `npm ci` · Start Command `npm start` · Instance Type **Free** ·
-   Health Check Path `/api/status`.
-4. *Environment*: isi variabel pada tabel di atas. `GEMINI_API_KEY` diketik langsung di dasbor (tipe secret).
-5. Deploy → buka `https://<nama-layanan>.onrender.com/api/status` → harus `{"ready":true}`.
-6. Kirim URL layanan (bukan API key) ke pengembang: `endpointOnline` diisi `https://<nama-layanan>.onrender.com/api`,
+### Langkah memasang di Vercel (dikerjakan pemilik; ±15 menit)
+0. **GitHub → repo `2225250077_Hitana_Rifa_Pranaja` → Settings → General → Default branch → ganti ke `sumber`.**
+   Vercel membaca branch bawaan; `main` hanya berisi `dist/` (tanpa folder `server`). GitHub Pages **tidak**
+   terpengaruh karena tetap menayangkan branch `main`.
+1. Daftar di vercel.com dengan tombol *Continue with GitHub*, paket **Hobby**. **Jangan** memasukkan kartu kredit.
+2. *Add New → Project* → *Import* repo `2225250077_Hitana_Rifa_Pranaja` (izinkan Vercel mengakses repo itu bila diminta).
+3. *Configure Project*: **Root Directory → `server`** (klik *Edit*) · Framework Preset **Express** (bila terdeteksi;
+   bila tidak, *Other*) · Build/Output/Install Command **biarkan bawaan**.
+4. *Environment Variables*: isi tabel di atas **kecuali `HOST`** (`TRUST_PROXY=1`, `SERVE_APP=false`, dst.).
+   `GEMINI_API_KEY` diketik langsung di dasbor.
+5. *Deploy* → buka `https://<nama-proyek>.vercel.app/api/status` → harus `{"ready":true}`.
+6. (Disarankan) *Settings → Git*: pastikan **Production Branch = `sumber`**. Rilis ke branch `main` (dist) dapat
+   memicu *preview deployment* yang gagal karena tidak ada folder `server` — aman diabaikan.
+7. Kirim URL proyek (bukan API key) ke pengembang: `endpointOnline` diisi `https://<nama-proyek>.vercel.app/api`,
    diuji, lalu dirilis ulang ke GitHub Pages.
 
 ### Risiko khusus mode hosting
 - **Kuota bersama:** semua pengguna situs memakai satu API key. CORS hanya membatasi browser — batas harian & per
   perangkat adalah pelindung utama. Pantau pemakaian di AI Studio.
-- **Privasi:** pertanyaan siswa melewati hosting (Render) dan Google. Server tidak mencatat isi pertanyaan. Cantumkan
+- **Batas pemakaian di serverless:** Vercel bisa menjalankan beberapa salinan server dan memulainya ulang, sehingga
+  batas per perangkat & harian (disimpan di memori) dihitung **per salinan** dan bisa sedikit terlampaui. Pasang
+  `AI_DAILY_LIMIT` lebih rendah dan pantau kuota di AI Studio.
+- **Privasi:** pertanyaan siswa melewati hosting (Vercel) dan Google. Server tidak mencatat isi pertanyaan. Cantumkan
   pemakaian AI online di surat izin/persetujuan penelitian.
 - **Penelitian:** bila AI tidak menjadi bagian perlakuan, kosongkan `endpointOnline` selama pengambilan data.
 
-Diuji 27 Nov 2026: `npm test` 30/30 (termasuk CORS, preflight, situs lain ditolak, hanya-API, trust proxy per siswa);
-`tools/test.html` 57/57 (klien beralih ke backend online); uji lintas-situs dengan Gemini asli
-(aplikasi :8000 → backend mode hosting :3001) berhasil. Pemasangan di Render **belum** dilakukan.
+Diuji 27 Nov 2026: `npm test` 33/33 (termasuk CORS, preflight, situs lain ditolak, hanya-API, trust proxy per siswa,
+default export untuk Vercel); `tools/test.html` 57/57 (klien beralih ke backend online); uji lintas-situs dengan
+Gemini asli (aplikasi :8000 → backend mode hosting :3001) berhasil. Pemasangan di Vercel **belum** dilakukan.

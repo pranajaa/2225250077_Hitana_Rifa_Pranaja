@@ -206,28 +206,40 @@ function loadEnv() {
   }
 }
 
-async function main() {
-  const hasEnv = loadEnv();
-  const env = process.env;
+/**
+ * Menyusun aplikasi dari variabel lingkungan. Dipakai `npm start` (laptop) dan hosting serverless (Vercel).
+ * Klien Gemini dibuat saat permintaan pertama, sehingga memuat modul ini tidak memanggil layanan apa pun.
+ */
+export function buildApp(env = process.env) {
   const apiKey = (env.GEMINI_API_KEY ?? '').trim();
   const model = (env.GEMINI_MODEL ?? '').trim();
   const simulate = (env.AI_SIMULATE ?? '').trim();
-  const options = readOptions(env);
-  const { port, host } = options;
   const thinking = env.GEMINI_THINKING_BUDGET?.trim();
-
+  const options = readOptions(env);
   const ready = Boolean(apiKey && model) && simulate !== 'nokey';
+  let client = null;
   const gemini = ready
-    ? await createGemini({
-      apiKey,
-      model,
-      fallbackModel: (env.GEMINI_MODEL_FALLBACK ?? '').trim(),
-      thinkingBudget: thinking ? Number(thinking) : null,
-      simulate,
-    })
+    ? {
+      async generate(request) {
+        client ??= createGemini({
+          apiKey,
+          model,
+          fallbackModel: (env.GEMINI_MODEL_FALLBACK ?? '').trim(),
+          thinkingBudget: thinking ? Number(thinking) : null,
+          simulate,
+        });
+        return (await client).generate(request);
+      },
+    }
     : null;
+  return { app: createApp({ gemini, ready, ...options }), options, apiKey, model, simulate };
+}
 
-  const app = createApp({ gemini, ready, ...options });
+async function main() {
+  const hasEnv = loadEnv();
+  const env = process.env;
+  const { app, options, apiKey, model, simulate } = buildApp(env);
+  const { port, host } = options;
   // Express 5 meneruskan galat listen (mis. port sudah dipakai) ke callback ini.
   app.listen(port, host, (err) => {
     if (err) {
@@ -257,9 +269,15 @@ async function main() {
   });
 }
 
-if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
+const runDirectly = Boolean(process.argv[1]) && import.meta.url === pathToFileURL(process.argv[1]).href;
+if (runDirectly) {
   main().catch((err) => {
     console.error('Server gagal berjalan:', err.message);
     process.exit(1);
   });
 }
+
+// Hosting serverless (Vercel, docs/11 §9): aplikasi Express diekspor sebagai default; hosting yang memanggilnya,
+// bukan app.listen. Variabel lingkungan diisi di dasbor hosting (tidak ada server/.env di sana).
+// Saat dijalankan langsung (npm start) atau diimpor uji, ini hanya objek yang tidak dipakai.
+export default runDirectly ? null : buildApp(process.env).app;

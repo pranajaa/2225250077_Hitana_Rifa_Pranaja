@@ -4,7 +4,7 @@ import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { after, before, describe, test } from 'node:test';
 import { AiError, createGemini, mapGeminiError, readResponse } from '../gemini.js';
-import { PUBLIC_DAILY_DEFAULT, createApp, readOptions } from '../server.js';
+import serverlessApp, { PUBLIC_DAILY_DEFAULT, buildApp, createApp, readOptions } from '../server.js';
 import { DEFINITIONS, LIMITS, shapeAnalysis } from '../rules.js';
 
 /** Gemini tiruan: `behave(request)` mengembalikan teks atau melempar error. */
@@ -256,6 +256,38 @@ describe('gemini.js', () => {
     assert.equal(r.konsep, 'Belum dapat ditentukan', 'konsep di luar daftar resmi ditolak');
   });
 });
+
+// ---------- Hosting serverless (Vercel): default export + buildApp dari variabel lingkungan ----------
+describe('buildApp & default export (Vercel)', () => {
+  test('default export adalah aplikasi Express', () => {
+    assert.equal(typeof serverlessApp, 'function');
+    assert.equal(typeof serverlessApp.use, 'function');
+  });
+
+  test('tanpa API key → status nokey; mode hosting aktif dari env', async () => {
+    const { app, options } = buildApp({ ALLOWED_ORIGINS: SITE_URL, SERVE_APP: 'false' });
+    assert.equal(options.isPublic, true);
+    const server = await new Promise((r) => { const s = app.listen(0, '127.0.0.1', () => r(s)); });
+    try {
+      const base = `http://127.0.0.1:${server.address().port}`;
+      assert.deepEqual(await (await fetch(`${base}/api/status`)).json(), { ready: false, reason: 'nokey' });
+      assert.equal((await fetch(`${base}/index.html`)).status, 404, 'hanya API');
+    } finally { await new Promise((r) => server.close(r)); }
+  });
+
+  test('Gemini dibuat saat permintaan pertama (simulasi kuota, tanpa internet)', async () => {
+    const { app } = buildApp({ GEMINI_API_KEY: 'kunci-uji', GEMINI_MODEL: 'model-uji', AI_SIMULATE: 'quota', ALLOWED_ORIGINS: SITE_URL });
+    const server = await new Promise((r) => { const s = app.listen(0, '127.0.0.1', () => r(s)); });
+    try {
+      const base = `http://127.0.0.1:${server.address().port}`;
+      assert.deepEqual(await (await fetch(`${base}/api/status`)).json(), { ready: true });
+      const r = await fetch(`${base}/api/tutor`, { method: 'POST', headers: { 'Content-Type': 'application/json', Origin: SITE_URL }, body: JSON.stringify(tutorBody()) });
+      assert.deepEqual(await r.json(), { error: 'quota' });
+    } finally { await new Promise((r) => server.close(r)); }
+  });
+});
+
+const SITE_URL = 'https://pranajaa.github.io';
 
 // ---------- Mode hosting: backend terpisah dari GitHub Pages (docs/11 §9) ----------
 const SITE = 'https://pranajaa.github.io';
