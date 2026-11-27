@@ -1,11 +1,13 @@
 # 11 — Asisten AI (Google Gemini lewat Server Lokal)
 
-Status: **dibangun (17 Nov 2026)**. Server lokal, Tutor AI, dan Pembahas Soal sudah ada; uji dengan Gemini asli
-menunggu Node.js terpasang dan API key diisi (§6). Fitur ini adalah **F14** di [PRD](PRD.md).
+Status: **dibangun & diuji (17 Nov 2026)**; mode hosting disiapkan 27 Nov 2026 (§9). Fitur ini adalah **F14**
+di [PRD](PRD.md).
 
 > **Perubahan arah (17 Nov 2026, keputusan pemilik):** rancangan lama DeepSeek + Cloudflare Worker **dibatalkan**.
-> Sekarang: Google Gemini API (Free Tier) lewat server **Node.js + Express yang berjalan di localhost**.
-> Tanpa Cloudflare, tanpa hosting atau layanan berbayar. Cukup untuk praktik dan demonstrasi.
+> Sekarang: Google Gemini API (Free Tier) lewat server **Node.js + Express**. Tanpa Cloudflare, tanpa layanan berbayar.
+>
+> **Tambahan (27 Nov 2026, keputusan pemilik):** server yang sama boleh dijalankan di **hosting gratis terpisah**
+> (bukan Cloudflare) agar fitur AI juga bisa dipakai dari versi GitHub Pages. Mode lokal tetap berjalan seperti semula.
 
 ## 1. Tujuan dan Fitur
 Membantu siswa yang kesulitan **menentukan konsep yang tepat** (relasi / fungsi / korespondensi satu-satu).
@@ -165,3 +167,59 @@ dan `gemini-3.5-flash` (cadangan). Saat diuji, `gemini-3.8-flash` dan `3.7-flash
 kalimat pengisi ("semoga membantu", "sepertinya begitu"); Mode Petunjuk menuliskan rumus n(B)^n(A); alasan memakai
 "A" padahal soal memakai P dan Q. Instruksi diperbaiki dan diuji ulang — keempatnya hilang. Catatan: Mode Petunjuk
 masih boleh menyarankan "buka Materi tentang banyak pemetaan" (menyebut topik, bukan rumus/jawaban).
+
+## 9. Mode Hosting — Backend Terpisah dari GitHub Pages (27 Nov 2026)
+
+```
+HP siswa ── https://pranajaa.github.io/2225250077_Hitana_Rifa_Pranaja/   (GitHub Pages, hanya file statis)
+   │  js/ai.js: coba ./api (404 di Pages) → endpointOnline
+   └──► https://<nama-layanan>.onrender.com/api   (server/ yang sama, mode hosting) ──► Gemini API
+```
+
+**Yang sama dengan mode lokal:** kode `server/` tidak bercabang; semua aturan §2 tetap. Mode hosting hanya aktif lewat
+variabel lingkungan:
+
+| Variabel | Nilai di hosting | Fungsi |
+|---|---|---|
+| `GEMINI_API_KEY` | *(secret — diisi pemilik di dasbor hosting)* | Tidak pernah di repo, kode, atau chat |
+| `GEMINI_MODEL` / `GEMINI_MODEL_FALLBACK` | `gemini-3.5-flash-lite` / `gemini-3.5-flash` | Cek ulang dengan `npm run models` bila model berubah |
+| `ALLOWED_ORIGINS` | `https://pranajaa.github.io` | CORS: hanya situs RELAFUN; situs lain & POST tanpa `Origin` ditolak (403) |
+| `AI_DAILY_LIMIT` | mis. `40` (di bawah kuota gratis di AI Studio) | **Wajib** di mode hosting; bila kosong dipakai 100 |
+| `AI_PER_10MIN` | mis. `60` | Batas per perangkat; satu kelas di Wi-Fi sekolah sering berbagi satu IP |
+| `TRUST_PROXY` | `1` | IP tiap siswa terbaca dari header proxy hosting (tanpa ini semua siswa = satu IP) |
+| `SERVE_APP` | `false` | Hanya `/api`; aplikasi tetap di GitHub Pages |
+| `HOST` | `0.0.0.0` | Wajib di hosting. `PORT` diisi otomatis oleh hosting |
+
+**Perilaku aplikasi:** `data/ai.json → endpointOnline` diisi URL backend (`https://…/api`). Di laptop (`npm start`)
+`./api` tetap dipakai lebih dulu. Backend gratis bisa "tidur"; status ditunggu sampai 60 detik dan siswa melihat
+pesan "Server asisten sedang dibangunkan…". Backend mati/kuota habis → pesan ramah; menu lain tetap jalan.
+**Mematikan AI online:** kosongkan `endpointOnline` lalu rilis ulang, atau hentikan layanan di hosting.
+
+### Pilihan hosting (dicek 27 Nov 2026 — ketentuan bisa berubah, cek lagi saat mendaftar)
+| Hosting | Catatan | Kesesuaian |
+|---|---|---|
+| **Render** (Free web service) | Tanpa kartu kredit; menjalankan Express apa adanya dari GitHub; tidur setelah ±15 menit tanpa permintaan, bangun ±30–60 detik; jam pakai gratis bulanan terbatas | **Dipilih** — perubahan kode paling sedikit |
+| Vercel (Hobby) | Gratis untuk penggunaan pribadi non-komersial; perlu mengubah Express menjadi fungsi serverless | Cadangan |
+| Lainnya (Koyeb, dsb.) | Ketentuan gratis belum terverifikasi dari sumber resmi | Tidak dipakai |
+
+### Langkah memasang di Render (dikerjakan pemilik; ±15 menit)
+1. Daftar di render.com (masuk dengan akun GitHub boleh). **Jangan** memasukkan kartu kredit.
+2. *New → Web Service* → pilih repo `pranajaa/2225250077_Hitana_Rifa_Pranaja` (atau *Public Git Repository* dengan URL
+   repo itu) → **Branch: `sumber`** → **Root Directory: `server`**.
+3. Runtime **Node** · Build Command `npm ci` · Start Command `npm start` · Instance Type **Free** ·
+   Health Check Path `/api/status`.
+4. *Environment*: isi variabel pada tabel di atas. `GEMINI_API_KEY` diketik langsung di dasbor (tipe secret).
+5. Deploy → buka `https://<nama-layanan>.onrender.com/api/status` → harus `{"ready":true}`.
+6. Kirim URL layanan (bukan API key) ke pengembang: `endpointOnline` diisi `https://<nama-layanan>.onrender.com/api`,
+   diuji, lalu dirilis ulang ke GitHub Pages.
+
+### Risiko khusus mode hosting
+- **Kuota bersama:** semua pengguna situs memakai satu API key. CORS hanya membatasi browser — batas harian & per
+  perangkat adalah pelindung utama. Pantau pemakaian di AI Studio.
+- **Privasi:** pertanyaan siswa melewati hosting (Render) dan Google. Server tidak mencatat isi pertanyaan. Cantumkan
+  pemakaian AI online di surat izin/persetujuan penelitian.
+- **Penelitian:** bila AI tidak menjadi bagian perlakuan, kosongkan `endpointOnline` selama pengambilan data.
+
+Diuji 27 Nov 2026: `npm test` 30/30 (termasuk CORS, preflight, situs lain ditolak, hanya-API, trust proxy per siswa);
+`tools/test.html` 57/57 (klien beralih ke backend online); uji lintas-situs dengan Gemini asli
+(aplikasi :8000 → backend mode hosting :3001) berhasil. Pemasangan di Render **belum** dilakukan.

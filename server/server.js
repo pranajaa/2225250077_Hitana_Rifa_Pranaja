@@ -29,17 +29,49 @@ const STATUS = {
 };
 
 const TOKENS = { tutor: 1024, analyze: 2048 };
+/** Batas harian bawaan bila backend dibuka untuk situs lain (mode hosting) tetapi AI_DAILY_LIMIT kosong. */
+export const PUBLIC_DAILY_DEFAULT = 100;
+
+/**
+ * Membaca pengaturan dari variabel lingkungan (server/.env di laptop, atau dasbor hosting).
+ * Tanpa ALLOWED_ORIGINS server berjalan seperti mode lokal semula (satu alamat, tanpa CORS).
+ */
+export function readOptions(env) {
+  const list = (v) => String(v ?? '').split(',').map((s) => s.trim().replace(/\/+$/, '')).filter(Boolean);
+  const allowedOrigins = list(env.ALLOWED_ORIGINS);
+  const isPublic = allowedOrigins.length > 0;
+  const rawDaily = Number(env.AI_DAILY_LIMIT);
+  const trust = String(env.TRUST_PROXY ?? '').trim();
+  return {
+    allowedOrigins,
+    isPublic,
+    // Mode hosting WAJIB punya batas harian agar kuota gratis tidak habis oleh pemakai lain.
+    dailyLimit: rawDaily > 0 ? rawDaily : isPublic ? PUBLIC_DAILY_DEFAULT : 0,
+    perWindow: Number(env.AI_PER_10MIN) > 0 ? Number(env.AI_PER_10MIN) : LIMITS.perWindow,
+    // TRUST_PROXY: kosong = false; angka = jumlah proxy di depan server (mis. 1); "true" = percaya semua.
+    trustProxy: trust === '' || trust === 'false' ? false : trust === 'true' ? true : Number(trust) || trust,
+    // SERVE_APP=false: hanya melayani /api (dipakai di hosting; aplikasi tetap di GitHub Pages).
+    serveApp: String(env.SERVE_APP ?? 'true').trim().toLowerCase() !== 'false',
+    host: String(env.HOST ?? '').trim() || '127.0.0.1',
+    port: Number(env.PORT) || 3000,
+  };
+}
 
 /**
  * Membuat aplikasi Express. Diekspor agar bisa diuji dengan Gemini tiruan.
- * @param {{ gemini: { generate: Function } | null, ready: boolean, dailyLimit?: number, log?: Function }} deps
+ * @param {{ gemini: { generate: Function } | null, ready: boolean, dailyLimit?: number, log?: Function,
+ *           allowedOrigins?: string[], perWindow?: number, trustProxy?: boolean|number|string, serveApp?: boolean }} deps
  */
-export function createApp({ gemini, ready, dailyLimit = 0, log = console.warn }) {
+export function createApp({
+  gemini, ready, dailyLimit = 0, log = console.warn,
+  allowedOrigins = [], perWindow = LIMITS.perWindow, trustProxy = false, serveApp = true,
+}) {
   const app = express();
   const daily = createDailyCounter(dailyLimit);
-  const perDevice = createRateLimiter();
+  const perDevice = createRateLimiter(perWindow);
+  const origins = new Set(allowedOrigins);
   app.disable('x-powered-by');
-  app.set('trust proxy', false);
+  app.set('trust proxy', trustProxy);
 
   app.use((req, res, next) => {
     res.set('X-Content-Type-Options', 'nosniff');
@@ -49,6 +81,24 @@ export function createApp({ gemini, ready, dailyLimit = 0, log = console.warn })
 
   // ---------- API ----------
   const api = express.Router();
+  // CORS — hanya bila ALLOWED_ORIGINS diisi (mode hosting). Situs lain ditolak; permintaan POST wajib membawa
+  // Origin yang diizinkan. Catatan: CORS hanya membatasi browser — batas per perangkat & harian tetap pelindung utama.
+  if (origins.size > 0) {
+    api.use((req, res, next) => {
+      const origin = req.get('Origin');
+      if (origin && origins.has(origin)) {
+        res.set('Access-Control-Allow-Origin', origin);
+        res.set('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+        res.set('Access-Control-Allow-Headers', 'Content-Type');
+        res.set('Access-Control-Max-Age', '86400');
+        res.set('Vary', 'Origin');
+      } else if (origin || req.method === 'POST') {
+        return res.status(403).set('Cache-Control', 'no-store').json({ error: 'forbidden' });
+      }
+      if (req.method === 'OPTIONS') return res.status(204).end();
+      return next();
+    });
+  }
   api.use(express.json({ limit: LIMITS.bodyBytes }));
   api.use((req, res, next) => {
     res.set('Cache-Control', 'no-store');
@@ -123,6 +173,13 @@ export function createApp({ gemini, ready, dailyLimit = 0, log = console.warn })
   api.use((err, req, res, next) => sendError(res, err?.type === 'entity.too.large' ? 'tooLong' : 'invalid'));
   app.use('/api', api);
 
+  if (!serveApp) {
+    // Mode hosting: hanya API. Aplikasi tetap disajikan GitHub Pages.
+    app.get('/', (req, res) => res.json({ name: 'RELAFUN AI API', status: '/api/status' }));
+    app.use((req, res) => res.status(404).type('text/plain').send('Tidak ditemukan'));
+    return app;
+  }
+
   // ---------- File aplikasi ----------
   for (const folder of STATIC_FOLDERS) {
     app.use(`/${folder}`, express.static(path.join(ROOT, folder), { dotfiles: 'ignore', index: ['index.html'] }));
@@ -155,8 +212,8 @@ async function main() {
   const apiKey = (env.GEMINI_API_KEY ?? '').trim();
   const model = (env.GEMINI_MODEL ?? '').trim();
   const simulate = (env.AI_SIMULATE ?? '').trim();
-  const port = Number(env.PORT) || 3000;
-  const host = (env.HOST ?? '').trim() || '127.0.0.1';
+  const options = readOptions(env);
+  const { port, host } = options;
   const thinking = env.GEMINI_THINKING_BUDGET?.trim();
 
   const ready = Boolean(apiKey && model) && simulate !== 'nokey';
@@ -170,7 +227,7 @@ async function main() {
     })
     : null;
 
-  const app = createApp({ gemini, ready, dailyLimit: Number(env.AI_DAILY_LIMIT) || 0 });
+  const app = createApp({ gemini, ready, ...options });
   // Express 5 meneruskan galat listen (mis. port sudah dipakai) ke callback ini.
   app.listen(port, host, (err) => {
     if (err) {
@@ -184,7 +241,14 @@ async function main() {
     }
     const shown = host === '0.0.0.0' ? 'localhost' : host;
     console.log(`RELAFUN berjalan di http://${shown}:${port}`);
-    if (!hasEnv) console.log('  ⚠ server/.env belum ada — salin server/.env.example menjadi server/.env');
+    if (options.isPublic) {
+      console.log(`  Mode hosting · situs yang diizinkan: ${options.allowedOrigins.join(', ')}`);
+      console.log(`  Batas: ${options.perWindow} permintaan/10 menit/perangkat · ${options.dailyLimit} permintaan/hari`
+        + `${Number(env.AI_DAILY_LIMIT) > 0 ? '' : ' (bawaan — isi AI_DAILY_LIMIT)'} · trust proxy: ${options.trustProxy}`
+        + ` · ${options.serveApp ? 'menyajikan aplikasi' : 'hanya API'}`);
+    } else if (!hasEnv) {
+      console.log('  ⚠ server/.env belum ada — salin server/.env.example menjadi server/.env');
+    }
     if (!apiKey) console.log('  ⚠ GEMINI_API_KEY kosong — Tutor AI & Pembahas Soal tampil "belum disiapkan".');
     else if (!model) console.log('  ⚠ GEMINI_MODEL kosong — jalankan "npm run models" lalu isi di server/.env.');
     else console.log(`  AI aktif · model ${model}${env.GEMINI_MODEL_FALLBACK ? ` (cadangan ${env.GEMINI_MODEL_FALLBACK})` : ''}`);

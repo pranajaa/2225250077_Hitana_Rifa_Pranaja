@@ -67,6 +67,9 @@ Gemini + Express lokal (tanpa Cloudflare, tanpa layanan berbayar):
       key salah; instruksi disempurnakan — 17 Nov 2026
 - [x] Panduan menjalankan lokal [12-MENJALANKAN-LOKAL](12-MENJALANKAN-LOKAL.md) + peluncur `server/mulai-relafun.cmd`;
       perbaikan pesan "port sudah dipakai" — 17 Nov 2026
+- [x] Mode hosting backend (CORS `ALLOWED_ORIGINS`, `TRUST_PROXY`, `SERVE_APP=false`, batas harian wajib) +
+      klien `endpointOnline` dengan pesan "server dibangunkan"; uji lintas-situs dengan Gemini asli — 27 Nov 2026
+- [ ] Pasang backend di Render (pemilik membuat akun & mengisi API key) → isi `endpointOnline` → rilis ulang → uji di HP
 - [ ] Isi `AI_DAILY_LIMIT` sesuai kuota yang terlihat di AI Studio
 - [ ] Uji isi jawaban miskonsepsi lainnya (M03–M07, M09, M10) & uji di HP lewat `HOST=0.0.0.0`
 - [x] Hapus `server/ai-proxy.js` lama (dihapus pemilik) — 17 Nov 2026

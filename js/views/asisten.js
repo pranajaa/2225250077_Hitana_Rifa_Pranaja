@@ -121,7 +121,7 @@ export async function render(container) {
 
   // Status server diperiksa tanpa memakai kuota AI. Gagal → pesan; menu lain tidak terpengaruh.
   // Tidak ditunggu, agar perpindahan halaman tidak tertahan.
-  checkStatus().then((state) => {
+  checkStatus({ onSlow: () => { if (log.isConnected) status.textContent = msg.waking; } }).then((state) => {
     if (!log.isConnected) return; // halaman sudah ditinggalkan
     ready = state.ready;
     if (!ready) {

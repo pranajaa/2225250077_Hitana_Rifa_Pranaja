@@ -247,6 +247,10 @@ test('ai: alamat API — relatif, https, atau localhost', () => {
   eq(AI.isConfigured({ endpoint: '' }), false);
   eq(AI.isConfigured({ endpoint: 'http://contoh.dev' }), false, 'http ke luar ditolak');
   eq(AI.apiBase({ endpoint: './api/' }), './api', 'relatif (server lokal)');
+  eq(AI.apiBases({ endpoint: './api', endpointOnline: 'https://relafun-ai.contoh.dev/api/' }),
+    ['./api', 'https://relafun-ai.contoh.dev/api'], 'lokal dulu, lalu backend online');
+  eq(AI.apiBases({ endpoint: './api', endpointOnline: 'http://situs-lain.example/api' }), ['./api'], 'http ke luar ditolak');
+  eq(AI.isConfigured({ endpoint: '', endpointOnline: 'https://x.dev/api' }), true);
   eq(AI.apiBase({ endpoint: 'http://localhost:3000/api' }), 'http://localhost:3000/api');
   eq(AI.apiBase({ endpoint: 'https://contoh.dev/api' }), 'https://contoh.dev/api');
   eq(AI.apiBase({ endpoint: 'javascript:alert(1)' }), null);
@@ -508,6 +512,27 @@ await asyncTest('data: semua Misi Literasi mendapat skor penuh dengan kuncinya',
     });
     const sum = summarizeMission(res);
     if (sum.autoScore !== sum.autoMax || sum.maxScore !== 6) throw new Error(`${m.id}: ${sum.autoScore}/${sum.autoMax}, maks ${sum.maxScore}`);
+  }
+});
+
+await asyncTest('ai: ./api tidak ada (GitHub Pages) → beralih ke backend online', async () => {
+  const asli = window.fetch;
+  const dipanggil = [];
+  window.fetch = async (url) => {
+    dipanggil.push(String(url));
+    if (String(url).endsWith('data/ai.json')) return new Response(JSON.stringify({ endpoint: './api', endpointOnline: 'https://relafun-ai.contoh.dev/api' }));
+    if (url === './api/status') return new Response('Not Found', { status: 404 });
+    if (url === 'https://relafun-ai.contoh.dev/api/status') return new Response(JSON.stringify({ ready: true }));
+    if (url === 'https://relafun-ai.contoh.dev/api/tutor') return new Response(JSON.stringify({ reply: 'Jawaban.' }));
+    return new Response('?', { status: 500 });
+  };
+  try {
+    eq(await AI.checkStatus(), { ready: true });
+    const r = await AI.askAi({ history: [{ role: 'user', content: 'Apa itu fungsi?' }] });
+    eq(r, { ok: true, reply: 'Jawaban.' });
+    eq(dipanggil.filter((u) => !u.endsWith('ai.json')), ['./api/status', 'https://relafun-ai.contoh.dev/api/status', 'https://relafun-ai.contoh.dev/api/tutor']);
+  } finally {
+    window.fetch = asli;
   }
 });
 

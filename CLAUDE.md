@@ -39,8 +39,8 @@ Baca sebelum mengerjakan fitur:
   `git subtree push --prefix="RelaFun - p3r try" pages sumber`
 - **Rilis ke Pages:** `tools/siapkan_rilis.py` → klon branch `main` repo utama → ganti isinya dengan `dist/`
   (pertahankan `.nojekyll` dan `README.md`) → commit → push ke `main`. GitHub CLI tidak terpasang; git login lewat
-  Git Credential Manager. Versi GitHub Pages **tanpa backend**: Tutor AI & Pembahas Soal tampil "hanya tersedia di
-  server lokal".
+  Git Credential Manager. GitHub Pages tidak menjalankan backend: fitur AI online memakai backend di hosting terpisah
+  (`data/ai.json → endpointOnline`, docs/11 §9); bila kosong, Tutor AI & Pembahas Soal tampil "tidak tersedia".
 - **Penyimpanan di Drive D:** project, `server/node_modules`, npm cache (`D:\npm-cache`), dan npm global prefix
   (`D:\npm-global`) ada di D:. Jangan membuat salinan project di C:. Jika suatu langkah harus memakai C:,
   jelaskan alasannya dulu. Minta izin sebelum memindahkan, menghapus, atau mengubah konfigurasi sistem.
@@ -115,8 +115,10 @@ Node.js LTS dipakai **hanya** untuk server lokal di `server/`. Alat uji aplikasi
    benar/salah selalu disertai ikon + teks.
 10. **Path relatif** (`./js/...`) agar berjalan di subfolder GitHub Pages. Naikkan versi cache di `sw.js` saat rilis.
 11. **Privasi:** jangan menambah analytics, akun server, atau pengiriman data ke server pada MVP.
-    **Satu-satunya pengecualian:** asisten AI (F14, docs/11) — Google Gemini (Free Tier) lewat server lokal
-    `server/` (Node.js + Express, localhost). Hanya teks pertanyaan/soal & konteks soal, **tanpa** nama/kode
+    **Satu-satunya pengecualian:** asisten AI (F14, docs/11) — Google Gemini (Free Tier) lewat `server/`
+    (Node.js + Express) di localhost **atau** di hosting gratis terpisah (keputusan pemilik 27 Nov 2026, docs/11 §9:
+    `ALLOWED_ORIGINS` hanya situs RELAFUN, `AI_DAILY_LIMIT` wajib, `SERVE_APP=false`, `TRUST_PROXY`; alamat di
+    `data/ai.json → endpointOnline`). Hanya teks pertanyaan/soal & konteks soal, **tanpa** nama/kode
     siswa/progres; riwayat tidak disimpan. Pada Free Tier, Google dapat memakai isi prompt untuk mengembangkan
     layanannya — catatan privasi di layar wajib tetap ada.
     - **API key** hanya di `server/.env` (masuk `.gitignore`); tidak boleh ada di frontend, kode, atau repo.

@@ -1,5 +1,6 @@
 {
   "endpoint": "./api",
+  "endpointOnline": "",
   "privacyNote": "Jangan menulis nama lengkap, alamat, atau nomor HP. Pertanyaanmu dikirim ke layanan AI Google.",
   "checking": "Memeriksa asisten…",
   "tutor": {
@@ -52,7 +53,9 @@
     "outOfTopic": "Soal ini sepertinya bukan tentang relasi dan fungsi. Coba soal tentang himpunan, relasi, atau fungsi."
   },
   "messages": {
-    "unavailable": "Fitur AI hanya tersedia saat RELAFUN dijalankan dari server lokal. Kamu tetap bisa belajar lewat menu lain.",
+    "unavailable": "Asisten AI sedang tidak tersedia. Kamu tetap bisa belajar lewat menu lain.",
+    "waking": "Server asisten sedang dibangunkan. Tunggu sebentar, bisa sampai satu menit.",
+    "forbidden": "Asisten AI tidak bisa dipakai dari alamat ini. Buka RELAFUN dari link resmi.",
     "nokey": "Asisten AI belum disiapkan. Minta guru mengisi API key di server.",
     "badkey": "Asisten AI belum bisa dipakai. Minta guru memeriksa API key di server.",
     "offline": "Asisten butuh internet. Sambungkan internet, lalu coba lagi.",

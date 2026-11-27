@@ -4,7 +4,7 @@ import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { after, before, describe, test } from 'node:test';
 import { AiError, createGemini, mapGeminiError, readResponse } from '../gemini.js';
-import { createApp } from '../server.js';
+import { PUBLIC_DAILY_DEFAULT, createApp, readOptions } from '../server.js';
 import { DEFINITIONS, LIMITS, shapeAnalysis } from '../rules.js';
 
 /** Gemini tiruan: `behave(request)` mengembalikan teks atau melempar error. */
@@ -254,5 +254,76 @@ describe('gemini.js', () => {
     assert.equal(shapeAnalysis('petunjuk', '[]'), null);
     const r = shapeAnalysis('pembahasan', { ...JSON.parse(PEMBAHASAN_JSON), konsep: 'Fungsi injektif' });
     assert.equal(r.konsep, 'Belum dapat ditentukan', 'konsep di luar daftar resmi ditolak');
+  });
+});
+
+// ---------- Mode hosting: backend terpisah dari GitHub Pages (docs/11 §9) ----------
+const SITE = 'https://pranajaa.github.io';
+
+describe('readOptions (variabel lingkungan)', () => {
+  test('mode lokal: sama seperti semula', () => {
+    const o = readOptions({});
+    assert.deepEqual([o.isPublic, o.dailyLimit, o.trustProxy, o.serveApp, o.host, o.port], [false, 0, false, true, '127.0.0.1', 3000]);
+  });
+  test('mode hosting: batas harian wajib & pengaturan proxy', () => {
+    const o = readOptions({ ALLOWED_ORIGINS: `${SITE}/, http://localhost:3000`, TRUST_PROXY: '1', SERVE_APP: 'false', HOST: '0.0.0.0', PORT: '10000', AI_PER_10MIN: '60' });
+    assert.deepEqual(o.allowedOrigins, [SITE, 'http://localhost:3000'], 'garis miring akhir dibuang');
+    assert.equal(o.dailyLimit, PUBLIC_DAILY_DEFAULT, 'AI_DAILY_LIMIT kosong → bawaan');
+    assert.deepEqual([o.trustProxy, o.serveApp, o.host, o.port, o.perWindow], [1, false, '0.0.0.0', 10000, 60]);
+    assert.equal(readOptions({ ALLOWED_ORIGINS: SITE, AI_DAILY_LIMIT: '40' }).dailyLimit, 40);
+  });
+});
+
+describe('server mode hosting (CORS, hanya API, trust proxy)', () => {
+  let app;
+  const gemini = fakeGemini(() => 'Fungsi adalah relasi khusus.');
+  before(async () => {
+    app = await startApp({ gemini, ready: true, allowedOrigins: [SITE], serveApp: false, trustProxy: 1, perWindow: 2, dailyLimit: 50 });
+  });
+  after(() => app.close());
+
+  const tutor = (headers = {}) => fetch(`${app.base}/api/tutor`, {
+    method: 'POST', headers: { 'Content-Type': 'application/json', ...headers }, body: JSON.stringify(tutorBody()),
+  });
+
+  test('situs resmi diizinkan + header CORS', async () => {
+    const r = await tutor({ Origin: SITE });
+    assert.equal(r.status, 200);
+    assert.equal(r.headers.get('access-control-allow-origin'), SITE);
+    assert.equal(r.headers.get('vary'), 'Origin');
+  });
+
+  test('preflight OPTIONS dijawab 204', async () => {
+    const r = await fetch(`${app.base}/api/tutor`, { method: 'OPTIONS', headers: { Origin: SITE, 'Access-Control-Request-Method': 'POST' } });
+    assert.equal(r.status, 204);
+    assert.match(r.headers.get('access-control-allow-methods'), /POST/);
+  });
+
+  test('situs lain & POST tanpa Origin ditolak (kuota tidak terpakai)', async () => {
+    const before = gemini.calls.length;
+    const lain = await tutor({ Origin: 'https://situs-lain.example' });
+    assert.equal(lain.status, 403);
+    assert.deepEqual(await lain.json(), { error: 'forbidden' });
+    assert.equal(lain.headers.get('access-control-allow-origin'), null);
+    assert.equal((await tutor()).status, 403, 'POST tanpa Origin');
+    assert.equal(gemini.calls.length, before, 'Gemini tidak dipanggil');
+  });
+
+  test('status boleh dicek tanpa Origin (pemantauan hosting)', async () => {
+    assert.deepEqual(await (await fetch(`${app.base}/api/status`)).json(), { ready: true });
+  });
+
+  test('hanya API: file aplikasi tidak disajikan', async () => {
+    assert.equal((await fetch(`${app.base}/index.html`)).status, 404);
+    assert.equal((await fetch(`${app.base}/js/ai.js`)).status, 404);
+    assert.deepEqual(await (await fetch(`${app.base}/`)).json(), { name: 'RELAFUN AI API', status: '/api/status' });
+  });
+
+  test('trust proxy: setiap siswa (X-Forwarded-For) dihitung terpisah', async () => {
+    const asIp = (ip) => tutor({ Origin: SITE, 'X-Forwarded-For': ip });
+    const a = [];
+    for (let i = 0; i < 3; i += 1) a.push((await asIp('10.0.0.1')).status);
+    assert.deepEqual(a, [200, 200, 429], 'siswa A kena batas 2/10 menit');
+    assert.equal((await asIp('10.0.0.2')).status, 200, 'siswa B tidak ikut terkena');
   });
 });
