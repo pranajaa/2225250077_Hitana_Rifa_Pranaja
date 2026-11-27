@@ -1,6 +1,6 @@
 {
   "endpoint": "./api",
-  "endpointOnline": "",
+  "endpointOnline": "https://2225250077-hitana-rifa-pranaja.vercel.app/api",
   "privacyNote": "Jangan menulis nama lengkap, alamat, atau nomor HP. Pertanyaanmu dikirim ke layanan AI Google.",
   "checking": "Memeriksa asisten…",
   "tutor": {
