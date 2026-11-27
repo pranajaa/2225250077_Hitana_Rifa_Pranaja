@@ -190,6 +190,12 @@ variabel lingkungan:
 | `SERVE_APP` | `false` | Hanya `/api`; aplikasi tetap di GitHub Pages |
 | `HOST` | `0.0.0.0` | Hanya untuk hosting yang menjalankan `npm start` (mis. Render). **Tidak perlu di Vercel** |
 
+**Pengaman otomatis (27 Nov 2026):** di hosting (terdeteksi lewat variabel `VERCEL`/`RENDER`, atau `HOSTED=true`)
+tanpa `ALLOWED_ORIGINS`, API **menutup diri**: `/api/status` = `{"ready":false,"reason":"config"}`, setiap pertanyaan
+dijawab 503 `{"error":"config"}` tanpa memanggil Gemini, dan aplikasi tidak disajikan (`SERVE_APP` bawaan `false`
+di hosting). Log hosting mencatat **nama** variabel yang terbaca (tanpa nilai). Mode hosting yang benar terlihat dari
+`/api/status` = `{"ready":true,"mode":"hosting"}`. Siswa melihat pesan "Asisten AI online belum diatur dengan benar".
+
 **Vercel (serverless):** `server/server.js` mengekspor aplikasi Express sebagai *default export* (`buildApp(process.env)`);
 Vercel memanggilnya tanpa `app.listen`. Klien Gemini dibuat pada permintaan pertama.
 
@@ -216,7 +222,8 @@ pesan "Server asisten sedang dibangunkan…". Backend mati/kuota habis → pesan
    bila tidak, *Other*) · Build/Output/Install Command **biarkan bawaan**.
 4. *Environment Variables*: isi tabel di atas **kecuali `HOST`** (`TRUST_PROXY=1`, `SERVE_APP=false`, dst.).
    `GEMINI_API_KEY` diketik langsung di dasbor.
-5. *Deploy* → buka `https://<nama-proyek>.vercel.app/api/status` → harus `{"ready":true}`.
+5. *Deploy* → buka `https://<nama-proyek>.vercel.app/api/status` → harus `{"ready":true,"mode":"hosting"}`.
+   `{"ready":false,"reason":"config"}` = `ALLOWED_ORIGINS` tidak terbaca (cek nama, centang *Production*, *Redeploy*).
 6. (Disarankan) *Settings → Git*: pastikan **Production Branch = `sumber`**. Rilis ke branch `main` (dist) dapat
    memicu *preview deployment* yang gagal karena tidak ada folder `server` — aman diabaikan.
 7. Kirim URL proyek (bukan API key) ke pengembang: `endpointOnline` diisi `https://<nama-proyek>.vercel.app/api`,
@@ -232,6 +239,6 @@ pesan "Server asisten sedang dibangunkan…". Backend mati/kuota habis → pesan
   pemakaian AI online di surat izin/persetujuan penelitian.
 - **Penelitian:** bila AI tidak menjadi bagian perlakuan, kosongkan `endpointOnline` selama pengambilan data.
 
-Diuji 27 Nov 2026: `npm test` 33/33 (termasuk CORS, preflight, situs lain ditolak, hanya-API, trust proxy per siswa,
+Diuji 27 Nov 2026: `npm test` 35/35 (termasuk pengaman hosting tanpa `ALLOWED_ORIGINS`, CORS, preflight, situs lain ditolak, hanya-API, trust proxy per siswa,
 default export untuk Vercel); `tools/test.html` 57/57 (klien beralih ke backend online); uji lintas-situs dengan
 Gemini asli (aplikasi :8000 → backend mode hosting :3001) berhasil. Pemasangan di Vercel **belum** dilakukan.

@@ -17,7 +17,7 @@ export const MESSAGE_MAX = 600;     // = LIMITS.messageChars
 // Status: alamat lokal cepat (5 detik); backend online gratis bisa sedang tidur → tunggu sampai 60 detik.
 const TIMEOUT_MS = { tutor: 60000, analyze: 60000, status: 5000, statusOnline: 60000, slowNotice: 4000 };
 const KNOWN_ERRORS = ['limit', 'quota', 'busy', 'invalid', 'server', 'nokey', 'badkey', 'upstream', 'blocked',
-  'tooShort', 'tooLong', 'forbidden'];
+  'tooShort', 'tooLong', 'forbidden', 'config'];
 
 let configPromise = null;
 
@@ -124,7 +124,7 @@ export async function checkStatus({ onSlow } = {}) {
       if (typeof data?.ready === 'boolean') {
         activeBase = base;
         if (data.ready) return { ready: true };
-        return { ready: false, code: data.reason === 'nokey' ? 'nokey' : 'unavailable' };
+        return { ready: false, code: ['nokey', 'config'].includes(data.reason) ? data.reason : 'unavailable' };
       }
       // Tidak ada server di alamat ini (mis. GitHub Pages: ./api/status = 404) → coba alamat berikutnya.
     } catch {

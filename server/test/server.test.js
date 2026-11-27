@@ -270,7 +270,7 @@ describe('buildApp & default export (Vercel)', () => {
     const server = await new Promise((r) => { const s = app.listen(0, '127.0.0.1', () => r(s)); });
     try {
       const base = `http://127.0.0.1:${server.address().port}`;
-      assert.deepEqual(await (await fetch(`${base}/api/status`)).json(), { ready: false, reason: 'nokey' });
+      assert.deepEqual(await (await fetch(`${base}/api/status`)).json(), { ready: false, reason: 'nokey', mode: 'hosting' });
       assert.equal((await fetch(`${base}/index.html`)).status, 404, 'hanya API');
     } finally { await new Promise((r) => server.close(r)); }
   });
@@ -280,7 +280,7 @@ describe('buildApp & default export (Vercel)', () => {
     const server = await new Promise((r) => { const s = app.listen(0, '127.0.0.1', () => r(s)); });
     try {
       const base = `http://127.0.0.1:${server.address().port}`;
-      assert.deepEqual(await (await fetch(`${base}/api/status`)).json(), { ready: true });
+      assert.deepEqual(await (await fetch(`${base}/api/status`)).json(), { ready: true, mode: 'hosting' });
       const r = await fetch(`${base}/api/tutor`, { method: 'POST', headers: { 'Content-Type': 'application/json', Origin: SITE_URL }, body: JSON.stringify(tutorBody()) });
       assert.deepEqual(await r.json(), { error: 'quota' });
     } finally { await new Promise((r) => server.close(r)); }
@@ -288,6 +288,41 @@ describe('buildApp & default export (Vercel)', () => {
 });
 
 const SITE_URL = 'https://pranajaa.github.io';
+
+describe('PENGAMAN: hosting tanpa ALLOWED_ORIGINS menutup API', () => {
+  test('readOptions mendeteksi hosting (Vercel/Render/HOSTED)', () => {
+    assert.equal(readOptions({ VERCEL: '1' }).misconfigured, true);
+    assert.equal(readOptions({ RENDER: 'true' }).misconfigured, true);
+    assert.equal(readOptions({ HOSTED: 'true' }).misconfigured, true);
+    assert.equal(readOptions({ VERCEL: '1', ALLOWED_ORIGINS: SITE_URL }).misconfigured, false);
+    assert.equal(readOptions({}).misconfigured, false, 'laptop: tidak terpengaruh');
+    assert.equal(readOptions({ VERCEL: '1' }).serveApp, false, 'di hosting bawaannya hanya API');
+    assert.equal(readOptions({}).serveApp, true, 'di laptop tetap menyajikan aplikasi');
+  });
+
+  test('API ditutup: status config, pertanyaan 503, Gemini tidak dipanggil, aplikasi tidak disajikan', async () => {
+    const warn = console.warn;
+    const logs = [];
+    console.warn = (m) => logs.push(String(m));
+    let built;
+    try {
+      built = buildApp({ VERCEL: '1', GEMINI_API_KEY: 'kunci-uji', GEMINI_MODEL: 'model-uji', AI_SIMULATE: 'quota' });
+    } finally { console.warn = warn; }
+    assert.ok(logs.some((l) => l.includes('PENGAMAN AKTIF') && l.includes('GEMINI_API_KEY') && !l.includes('kunci-uji')),
+      'log menyebut nama variabel, bukan nilainya');
+    const server = await new Promise((r) => { const s = built.app.listen(0, '127.0.0.1', () => r(s)); });
+    try {
+      const base = `http://127.0.0.1:${server.address().port}`;
+      assert.deepEqual(await (await fetch(`${base}/api/status`)).json(), { ready: false, reason: 'config' });
+      for (const headers of [{}, { Origin: SITE_URL }, { Origin: 'https://situs-lain.example' }]) {
+        const r = await fetch(`${base}/api/tutor`, { method: 'POST', headers: { 'Content-Type': 'application/json', ...headers }, body: JSON.stringify(tutorBody()) });
+        assert.equal(r.status, 503);
+        assert.deepEqual(await r.json(), { error: 'config' }, 'bukan quota → Gemini tidak dipanggil');
+      }
+      assert.equal((await fetch(`${base}/index.html`)).status, 404);
+    } finally { await new Promise((r) => server.close(r)); }
+  });
+});
 
 // ---------- Mode hosting: backend terpisah dari GitHub Pages (docs/11 §9) ----------
 const SITE = 'https://pranajaa.github.io';
@@ -342,7 +377,7 @@ describe('server mode hosting (CORS, hanya API, trust proxy)', () => {
   });
 
   test('status boleh dicek tanpa Origin (pemantauan hosting)', async () => {
-    assert.deepEqual(await (await fetch(`${app.base}/api/status`)).json(), { ready: true });
+    assert.deepEqual(await (await fetch(`${app.base}/api/status`)).json(), { ready: true, mode: 'hosting' });
   });
 
   test('hanya API: file aplikasi tidak disajikan', async () => {

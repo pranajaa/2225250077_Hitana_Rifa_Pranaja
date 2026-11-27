@@ -56,6 +56,7 @@
     "unavailable": "Asisten AI sedang tidak tersedia. Kamu tetap bisa belajar lewat menu lain.",
     "waking": "Server asisten sedang dibangunkan. Tunggu sebentar, bisa sampai satu menit.",
     "forbidden": "Asisten AI tidak bisa dipakai dari alamat ini. Buka RELAFUN dari link resmi.",
+    "config": "Asisten AI online belum diatur dengan benar. Minta guru memeriksa pengaturan server.",
     "nokey": "Asisten AI belum disiapkan. Minta guru mengisi API key di server.",
     "badkey": "Asisten AI belum bisa dipakai. Minta guru memeriksa API key di server.",
     "offline": "Asisten butuh internet. Sambungkan internet, lalu coba lagi.",

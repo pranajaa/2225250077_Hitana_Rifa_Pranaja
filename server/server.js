@@ -25,7 +25,7 @@ const STATIC_FILES = ['index.html', 'manifest.webmanifest', 'sw.js'];
 
 const STATUS = {
   invalid: 400, tooShort: 400, tooLong: 413, limit: 429, quota: 429, blocked: 422,
-  nokey: 503, busy: 503, badkey: 502, upstream: 502, server: 502,
+  nokey: 503, config: 503, busy: 503, badkey: 502, upstream: 502, server: 502,
 };
 
 const TOKENS = { tutor: 1024, analyze: 2048 };
@@ -42,16 +42,22 @@ export function readOptions(env) {
   const isPublic = allowedOrigins.length > 0;
   const rawDaily = Number(env.AI_DAILY_LIMIT);
   const trust = String(env.TRUST_PROXY ?? '').trim();
+  // Terdeteksi berjalan di hosting (Vercel/Render mengisi variabel ini sendiri; HOSTED=true untuk hosting lain).
+  const hosted = Boolean(env.VERCEL || env.RENDER) || String(env.HOSTED ?? '').trim().toLowerCase() === 'true';
+  const serveAppRaw = String(env.SERVE_APP ?? '').trim().toLowerCase();
   return {
     allowedOrigins,
     isPublic,
+    hosted,
+    // PENGAMAN: di hosting tanpa ALLOWED_ORIGINS, API menutup diri (tidak terbuka untuk umum / kuota tidak bocor).
+    misconfigured: hosted && !isPublic,
     // Mode hosting WAJIB punya batas harian agar kuota gratis tidak habis oleh pemakai lain.
     dailyLimit: rawDaily > 0 ? rawDaily : isPublic ? PUBLIC_DAILY_DEFAULT : 0,
     perWindow: Number(env.AI_PER_10MIN) > 0 ? Number(env.AI_PER_10MIN) : LIMITS.perWindow,
     // TRUST_PROXY: kosong = false; angka = jumlah proxy di depan server (mis. 1); "true" = percaya semua.
     trustProxy: trust === '' || trust === 'false' ? false : trust === 'true' ? true : Number(trust) || trust,
-    // SERVE_APP=false: hanya melayani /api (dipakai di hosting; aplikasi tetap di GitHub Pages).
-    serveApp: String(env.SERVE_APP ?? 'true').trim().toLowerCase() !== 'false',
+    // SERVE_APP=false: hanya melayani /api. Bawaan: true di laptop, false di hosting (aplikasi tetap di GitHub Pages).
+    serveApp: serveAppRaw === '' ? !hosted : serveAppRaw !== 'false',
     host: String(env.HOST ?? '').trim() || '127.0.0.1',
     port: Number(env.PORT) || 3000,
   };
@@ -64,8 +70,10 @@ export function readOptions(env) {
  */
 export function createApp({
   gemini, ready, dailyLimit = 0, log = console.warn,
-  allowedOrigins = [], perWindow = LIMITS.perWindow, trustProxy = false, serveApp = true,
+  allowedOrigins = [], perWindow = LIMITS.perWindow, trustProxy = false, serveApp = true, misconfigured = false,
 }) {
+  // Pengaman: pengaturan hosting tidak lengkap → AI tidak pernah dipanggil.
+  if (misconfigured) ready = false; // eslint-disable-line no-param-reassign
   const app = express();
   const daily = createDailyCounter(dailyLimit);
   const perDevice = createRateLimiter(perWindow);
@@ -109,6 +117,7 @@ export function createApp({
 
   /** Batas per perangkat + batas harian server. Mengembalikan kode error atau null. */
   function checkLimits(req) {
+    if (misconfigured) return 'config';
     if (!ready) return 'nokey';
     if (!perDevice(req.ip ?? 'anon')) return 'limit';
     if (!daily.take()) return 'quota'; // batas harian = jatah kuota gratis hari ini
@@ -126,7 +135,9 @@ export function createApp({
   }
 
   api.get('/status', (req, res) => {
-    res.json(ready ? { ready: true } : { ready: false, reason: 'nokey' });
+    const mode = origins.size > 0 ? { mode: 'hosting' } : {};
+    if (misconfigured) return res.json({ ready: false, reason: 'config' });
+    return res.json(ready ? { ready: true, ...mode } : { ready: false, reason: 'nokey', ...mode });
   });
 
   api.post('/tutor', (req, res) => {
@@ -217,6 +228,13 @@ export function buildApp(env = process.env) {
   const thinking = env.GEMINI_THINKING_BUDGET?.trim();
   const options = readOptions(env);
   const ready = Boolean(apiKey && model) && simulate !== 'nokey';
+  if (options.misconfigured) {
+    // Tampil di log hosting (mis. Vercel → Logs). Hanya NAMA variabel, tidak pernah nilainya.
+    const known = ['GEMINI_API_KEY', 'GEMINI_MODEL', 'ALLOWED_ORIGINS', 'AI_DAILY_LIMIT', 'AI_PER_10MIN', 'TRUST_PROXY', 'SERVE_APP']
+      .filter((k) => String(env[k] ?? '').trim() !== '');
+    console.warn('[RELAFUN AI] PENGAMAN AKTIF: berjalan di hosting tetapi ALLOWED_ORIGINS kosong → API ditutup.'
+      + ` Variabel yang terbaca: ${known.join(', ') || '(tidak ada)'}. Isi ALLOWED_ORIGINS untuk Production lalu Redeploy.`);
+  }
   let client = null;
   const gemini = ready
     ? {
@@ -232,7 +250,7 @@ export function buildApp(env = process.env) {
       },
     }
     : null;
-  return { app: createApp({ gemini, ready, ...options }), options, apiKey, model, simulate };
+  return { app: createApp({ gemini, ready, log: console.warn, ...options }), options, apiKey, model, simulate };
 }
 
 async function main() {
