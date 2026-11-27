@@ -4,7 +4,7 @@
 // Rilis (dibuat oleh tools/siapkan_rilis.py): VERSION = hash isi file, PRECACHE = semua file
 // aplikasi, strategi cache-first → cepat dan berfungsi penuh secara offline.
 
-const VERSION = 'd93f301a27';
+const VERSION = '2f96f3d27f';
 const CACHE = `relafun-${VERSION}`;
 const IS_DEV = VERSION === 'dev';
 

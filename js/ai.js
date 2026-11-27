@@ -1,9 +1,10 @@
-// Klien asisten AI: mengirim permintaan ke server lokal RELAFUN (server/server.js), BUKAN langsung ke Gemini.
+// Klien asisten AI: mengirim permintaan ke server RELAFUN (server/server.js), BUKAN langsung ke Gemini.
 // Tidak ada API key di sini. Nama/kode siswa tidak pernah dikirim. Lihat docs/11-ASISTEN-AI.md.
 //
-// Tutor AI      → POST {endpoint}/tutor    mode 'tanya' | 'salah' | 'bedah'
-// Pembahas Soal → POST {endpoint}/analyze  mode 'petunjuk' | 'pembahasan'
-// Di GitHub Pages (tanpa server) {endpoint}/status tidak ada → fitur AI tampil "belum tersedia".
+// Tutor AI      → POST {base}/tutor    mode 'tanya' | 'salah' | 'bedah'
+// Pembahas Soal → POST {base}/analyze  mode 'petunjuk' | 'pembahasan'
+// Alamat dicoba berurutan (data/ai.json): endpoint ("./api", server lokal) → endpointOnline (backend di hosting).
+// Yang pertama menjawab /status dipakai selama halaman terbuka. Tidak ada yang menjawab → "belum tersedia".
 // AI tidak pernah menilai soal bank — kunci dari data soal/math.js.
 
 export const QUESTION_MIN = 3;
@@ -13,9 +14,10 @@ export const SOAL_MAX = 1500;       // = LIMITS.soalMax
 export const HISTORY_MAX = 6;       // pesan terakhir yang ikut dikirim (konteks percakapan)
 export const MESSAGE_MAX = 600;     // = LIMITS.messageChars
 // Server menunggu ≤ 25 detik per model (utama + cadangan) → aplikasi menunggu 60 detik.
-const TIMEOUT_MS = { tutor: 60000, analyze: 60000, status: 5000 };
+// Status: alamat lokal cepat (5 detik); backend online gratis bisa sedang tidur → tunggu sampai 60 detik.
+const TIMEOUT_MS = { tutor: 60000, analyze: 60000, status: 5000, statusOnline: 60000, slowNotice: 4000 };
 const KNOWN_ERRORS = ['limit', 'quota', 'busy', 'invalid', 'server', 'nokey', 'badkey', 'upstream', 'blocked',
-  'tooShort', 'tooLong'];
+  'tooShort', 'tooLong', 'forbidden', 'config'];
 
 let configPromise = null;
 
@@ -33,8 +35,8 @@ export function loadAiConfig() {
  * Alamat API sah: relatif ('./api'), https, atau http ke localhost/127.0.0.1.
  * Mengembalikan alamat tanpa garis miring akhir, atau null.
  */
-export function apiBase(config) {
-  const raw = typeof config?.endpoint === 'string' ? config.endpoint.trim().replace(/\/+$/, '') : '';
+export function normalizeBase(value) {
+  const raw = typeof value === 'string' ? value.trim().replace(/\/+$/, '') : '';
   if (!raw) return null;
   if (/^\.{0,2}\//.test(raw)) return raw;
   if (/^https:\/\//.test(raw)) return raw;
@@ -42,7 +44,17 @@ export function apiBase(config) {
   return null;
 }
 
-export const isConfigured = (config) => apiBase(config) !== null;
+/** Daftar alamat yang dicoba berurutan: endpoint (lokal) lalu endpointOnline (hosting). */
+export function apiBases(config) {
+  return [...new Set([config?.endpoint, config?.endpointOnline].map(normalizeBase).filter(Boolean))];
+}
+
+export const apiBase = (config) => apiBases(config)[0] ?? null;
+export const isConfigured = (config) => apiBases(config).length > 0;
+const isRemote = (base) => /^https?:\/\//.test(base);
+
+/** Alamat yang sudah terbukti menjawab /status (dipakai selama halaman terbuka). */
+let activeBase = null;
 export const isOnline = () => navigator.onLine !== false;
 
 /** Memeriksa pertanyaan Tutor. Mengembalikan null bila boleh dikirim, atau kode pesan (tooShort/tooLong). */
@@ -97,28 +109,38 @@ async function fetchWithTimeout(url, init, timeoutMs, signal) {
 }
 
 /**
- * Apakah server AI tersedia? Tidak memakai kuota Gemini.
+ * Apakah server AI tersedia? Tidak memakai kuota Gemini. Mencoba setiap alamat berurutan.
+ * @param {{ onSlow?: () => void }} [opts]  dipanggil sekali bila backend online lambat menjawab (sedang bangun)
  * @returns {Promise<{ ready: true } | { ready: false, code: 'unavailable'|'nokey' }>}
  */
-export async function checkStatus() {
+export async function checkStatus({ onSlow } = {}) {
   const config = await loadAiConfig().catch(() => null);
-  const base = apiBase(config);
-  if (!base) return { ready: false, code: 'unavailable' };
-  try {
-    const r = await fetchWithTimeout(`${base}/status`, { cache: 'no-store' }, TIMEOUT_MS.status);
-    const data = r.ok ? await r.json().catch(() => null) : null;
-    if (data?.ready === true) return { ready: true };
-    if (data?.reason === 'nokey') return { ready: false, code: 'nokey' };
-    return { ready: false, code: 'unavailable' }; // mis. GitHub Pages: /api/status tidak ada (404)
-  } catch {
-    return { ready: false, code: 'unavailable' };
+  for (const base of apiBases(config)) {
+    const remote = isRemote(base);
+    const slow = remote && onSlow ? setTimeout(onSlow, TIMEOUT_MS.slowNotice) : null;
+    try {
+      const r = await fetchWithTimeout(`${base}/status`, { cache: 'no-store' }, remote ? TIMEOUT_MS.statusOnline : TIMEOUT_MS.status);
+      const data = r.ok ? await r.json().catch(() => null) : null;
+      if (typeof data?.ready === 'boolean') {
+        activeBase = base;
+        if (data.ready) return { ready: true };
+        return { ready: false, code: ['nokey', 'config'].includes(data.reason) ? data.reason : 'unavailable' };
+      }
+      // Tidak ada server di alamat ini (mis. GitHub Pages: ./api/status = 404) → coba alamat berikutnya.
+    } catch {
+      // Gagal tersambung / waktu habis → coba alamat berikutnya.
+    } finally {
+      clearTimeout(slow);
+    }
   }
+  activeBase = null;
+  return { ready: false, code: 'unavailable' };
 }
 
 /** Mengirim POST JSON. Selalu mengembalikan { ok:true, data } atau { ok:false, code }; tidak melempar. */
 async function postJson(path, body, { signal, timeoutMs }) {
-  const config = await loadAiConfig().catch(() => null);
-  const base = apiBase(config);
+  if (!activeBase) await checkStatus();
+  const base = activeBase;
   if (!base) return { ok: false, code: 'unavailable' };
   if (!isOnline()) return { ok: false, code: 'offline' };
   try {

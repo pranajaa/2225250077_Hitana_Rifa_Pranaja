@@ -163,7 +163,7 @@ export async function render(container) {
 
   container.append(pageHeader(text.title, { back: '#/' }), form, output);
 
-  checkStatus().then((state) => {
+  checkStatus({ onSlow: () => { if (form.isConnected) status.textContent = msg.waking; } }).then((state) => {
     if (!form.isConnected) return;
     ready = state.ready;
     if (!ready) {
