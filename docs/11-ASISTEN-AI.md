@@ -193,7 +193,7 @@ variabel lingkungan:
 **Pengaman otomatis (27 Nov 2026):** di hosting (terdeteksi lewat variabel `VERCEL`/`RENDER`, atau `HOSTED=true`)
 tanpa `ALLOWED_ORIGINS`, API **menutup diri**: `/api/status` = `{"ready":false,"reason":"config"}`, setiap pertanyaan
 dijawab 503 `{"error":"config"}` tanpa memanggil Gemini, dan aplikasi tidak disajikan (`SERVE_APP` bawaan `false`
-di hosting). Log hosting mencatat **nama** variabel yang terbaca (tanpa nilai). Mode hosting yang benar terlihat dari
+di hosting). Hosting dikenali dari variabel bawaan (`VERCEL`, `VERCEL_ENV`, `VERCEL_URL`, `VERCEL_REGION`, `RENDER`, `AWS_LAMBDA_FUNCTION_NAME`, `LAMBDA_TASK_ROOT`) **atau** header proxy `x-vercel-id`. Header respons `X-Relafun-Api` menunjukkan versi kode yang tayang. Log hosting mencatat **nama** variabel yang terbaca (tanpa nilai). Mode hosting yang benar terlihat dari
 `/api/status` = `{"ready":true,"mode":"hosting"}`. Siswa melihat pesan "Asisten AI online belum diatur dengan benar".
 
 **Vercel (serverless):** `server/server.js` mengekspor aplikasi Express sebagai *default export* (`buildApp(process.env)`);
@@ -239,6 +239,6 @@ pesan "Server asisten sedang dibangunkan…". Backend mati/kuota habis → pesan
   pemakaian AI online di surat izin/persetujuan penelitian.
 - **Penelitian:** bila AI tidak menjadi bagian perlakuan, kosongkan `endpointOnline` selama pengambilan data.
 
-Diuji 27 Nov 2026: `npm test` 35/35 (termasuk pengaman hosting tanpa `ALLOWED_ORIGINS`, CORS, preflight, situs lain ditolak, hanya-API, trust proxy per siswa,
+Diuji 27 Nov 2026: `npm test` 37/37 (termasuk pengaman hosting tanpa `ALLOWED_ORIGINS`, CORS, preflight, situs lain ditolak, hanya-API, trust proxy per siswa,
 default export untuk Vercel); `tools/test.html` 57/57 (klien beralih ke backend online); uji lintas-situs dengan
 Gemini asli (aplikasi :8000 → backend mode hosting :3001) berhasil. Pemasangan di Vercel **belum** dilakukan.

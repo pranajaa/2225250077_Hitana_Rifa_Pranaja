@@ -290,6 +290,31 @@ describe('buildApp & default export (Vercel)', () => {
 const SITE_URL = 'https://pranajaa.github.io';
 
 describe('PENGAMAN: hosting tanpa ALLOWED_ORIGINS menutup API', () => {
+  test('variabel bawaan hosting lain juga terdeteksi', () => {
+    for (const k of ['VERCEL_ENV', 'VERCEL_URL', 'VERCEL_REGION', 'AWS_LAMBDA_FUNCTION_NAME', 'LAMBDA_TASK_ROOT']) {
+      assert.equal(readOptions({ [k]: 'x' }).misconfigured, true, k);
+    }
+  });
+
+  test('lapis kedua: header x-vercel-id tanpa ALLOWED_ORIGINS → tertutup; dengan ALLOWED_ORIGINS → normal', async () => {
+    const closed = buildApp({ GEMINI_API_KEY: 'k', GEMINI_MODEL: 'm', AI_SIMULATE: 'quota' }).app;
+    const open = buildApp({ GEMINI_API_KEY: 'k', GEMINI_MODEL: 'm', ALLOWED_ORIGINS: SITE_URL }).app;
+    const listen = (a) => new Promise((r) => { const s = a.listen(0, '127.0.0.1', () => r(s)); });
+    const [s1, s2] = [await listen(closed), await listen(open)];
+    try {
+      const b1 = `http://127.0.0.1:${s1.address().port}`;
+      const b2 = `http://127.0.0.1:${s2.address().port}`;
+      const V = { 'x-vercel-id': 'sin1::uji' };
+      assert.deepEqual(await (await fetch(`${b1}/api/status`)).json(), { ready: true }, 'laptop tanpa header: normal');
+      assert.deepEqual(await (await fetch(`${b1}/api/status`, { headers: V })).json(), { ready: false, reason: 'config' });
+      const r = await fetch(`${b1}/api/tutor`, { method: 'POST', headers: { ...V, 'Content-Type': 'application/json' }, body: JSON.stringify(tutorBody()) });
+      assert.equal(r.status, 503);
+      assert.deepEqual(await r.json(), { error: 'config' });
+      assert.equal((await fetch(`${b1}/index.html`, { headers: V })).status, 404);
+      assert.deepEqual(await (await fetch(`${b2}/api/status`, { headers: V })).json(), { ready: true, mode: 'hosting' });
+    } finally { await Promise.all([s1, s2].map((s) => new Promise((r) => s.close(r)))); }
+  });
+
   test('readOptions mendeteksi hosting (Vercel/Render/HOSTED)', () => {
     assert.equal(readOptions({ VERCEL: '1' }).misconfigured, true);
     assert.equal(readOptions({ RENDER: 'true' }).misconfigured, true);

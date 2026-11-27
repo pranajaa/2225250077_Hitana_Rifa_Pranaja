@@ -36,14 +36,24 @@ export const PUBLIC_DAILY_DEFAULT = 100;
  * Membaca pengaturan dari variabel lingkungan (server/.env di laptop, atau dasbor hosting).
  * Tanpa ALLOWED_ORIGINS server berjalan seperti mode lokal semula (satu alamat, tanpa CORS).
  */
+/** Naikkan setiap mengubah perilaku server, agar versi yang tayang di hosting bisa dicek dari header. */
+const API_REVISION = '3-pengaman';
+
+/** Variabel yang diisi sendiri oleh platform hosting (bukan oleh pemilik). */
+const HOSTING_ENV_VARS = ['VERCEL', 'VERCEL_ENV', 'VERCEL_URL', 'VERCEL_REGION', 'RENDER',
+  'AWS_LAMBDA_FUNCTION_NAME', 'LAMBDA_TASK_ROOT'];
+/** Header yang ditambahkan proxy Vercel ke setiap permintaan (lapis kedua bila variabel di atas tidak terlihat). */
+const HOSTING_HEADERS = ['x-vercel-id', 'x-vercel-deployment-url'];
+
 export function readOptions(env) {
   const list = (v) => String(v ?? '').split(',').map((s) => s.trim().replace(/\/+$/, '')).filter(Boolean);
   const allowedOrigins = list(env.ALLOWED_ORIGINS);
   const isPublic = allowedOrigins.length > 0;
   const rawDaily = Number(env.AI_DAILY_LIMIT);
   const trust = String(env.TRUST_PROXY ?? '').trim();
-  // Terdeteksi berjalan di hosting (Vercel/Render mengisi variabel ini sendiri; HOSTED=true untuk hosting lain).
-  const hosted = Boolean(env.VERCEL || env.RENDER) || String(env.HOSTED ?? '').trim().toLowerCase() === 'true';
+  // Terdeteksi berjalan di hosting (variabel bawaan Vercel/Render/AWS Lambda; HOSTED=true untuk hosting lain).
+  const hosted = HOSTING_ENV_VARS.some((k) => String(env[k] ?? '').trim() !== '')
+    || String(env.HOSTED ?? '').trim().toLowerCase() === 'true';
   const serveAppRaw = String(env.SERVE_APP ?? '').trim().toLowerCase();
   return {
     allowedOrigins,
@@ -82,10 +92,23 @@ export function createApp({
   app.set('trust proxy', trustProxy);
 
   app.use((req, res, next) => {
+    res.set('X-Relafun-Api', API_REVISION); // penanda versi kode yang sedang berjalan (untuk cek deploy)
     res.set('X-Content-Type-Options', 'nosniff');
     res.set('Referrer-Policy', 'no-referrer');
     next();
   });
+
+  // PENGAMAN lapis kedua: permintaan lewat proxy hosting padahal ALLOWED_ORIGINS kosong → tutup semuanya
+  // (API tidak memanggil Gemini, aplikasi tidak disajikan). Di laptop header ini tidak ada.
+  if (origins.size === 0) {
+    app.use((req, res, next) => {
+      if (!misconfigured && !HOSTING_HEADERS.some((h) => req.get(h))) return next();
+      res.set('Cache-Control', 'no-store');
+      if (req.path === '/api/status') return res.json({ ready: false, reason: 'config' });
+      if (req.path.startsWith('/api/')) return res.status(STATUS.config).json({ error: 'config' });
+      return res.status(404).type('text/plain').send('Tidak ditemukan');
+    });
+  }
 
   // ---------- API ----------
   const api = express.Router();
